@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Root and pattern · The Morphorian Underground · Aksarium</title>
+<meta name="description" content="An interactive walkthrough of Arabic root-and-pattern morphology; one root, a set of moulds, and a whole family of words.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&family=Eagle+Lake&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<style>
+  :root {
+    --ground: #0b0f0d; --panel: #080c0a; --page: #070d0b;
+    --gold: #c2914c; --gold-bright: #d6a365; --gold-title: #d9a95e;
+    --gold-dull: #a89364; --gold-deep: #6e5227;
+    --ink-head: #e8dcc4; --ink-body: #b3bdb5; --ink-muted: #8b968e;
+    --ink-faint: #8a7a58; --ink-dim: #5f6b64;
+    --hairline: rgba(194,145,76,.16); --hairline-strong: rgba(194,145,76,.3);
+    --glow: rgba(214,163,101,.35);
+    --serif: 'IM Fell DW Pica', serif;
+    --display: 'Eagle Lake', cursive;
+    --arabic: 'Amiri', 'Scheherazade New', serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--page); color: var(--ink-head);
+    font-family: var(--serif); overflow: hidden;
+  }
+  #stage { height: 100vh; display: flex; flex-direction: column; }
+
+  /* Chrome */
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 28px; flex-wrap: wrap; flex-shrink: 0;
+    padding: 20px 36px; border-bottom: 1px solid var(--hairline);
+  }
+  header .brand { display: flex; align-items: baseline; gap: 18px; }
+  header .wordmark { font-size: 15px; letter-spacing: .4em; text-transform: uppercase; color: var(--ink-head); }
+  header .crumb { font-family: var(--display); font-size: 13px; color: var(--gold-dull); }
+  header .modtag { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-faint); }
+  footer {
+    flex-shrink: 0; display: flex; justify-content: center; align-items: center;
+    gap: 10px; padding: 20px; border-top: 1px solid var(--hairline);
+  }
+  .dot { width: 8px; height: 8px; transform: rotate(45deg); background: rgba(194,145,76,.18); transition: background .3s, box-shadow .3s; }
+  .dot.on { background: var(--gold); box-shadow: 0 0 10px var(--glow); }
+  main { flex: 1; display: flex; padding: 14px 60px; overflow: auto; }
+  .beat { display: none; max-width: 1100px; width: 100%; margin: auto; animation: rise .45s ease; }
+  .beat.active { display: block; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .navhint { position: fixed; right: 30px; bottom: 18px; color: var(--ink-dim); font-size: 12px; letter-spacing: 1px; }
+
+  /* Shared */
+  .eyebrow { color: var(--ink-faint); font-size: 12px; letter-spacing: .32em; text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-family: var(--display); font-weight: 400; font-size: 46px; line-height: 1.15; color: var(--gold-title); }
+  h2 { font-family: var(--display); font-weight: 400; font-size: 32px; line-height: 1.2; margin-bottom: 26px; color: var(--gold-title); }
+  .lede { font-size: 21px; line-height: 1.6; color: var(--ink-body); margin-top: 18px; max-width: 780px; }
+  .myth {
+    display: inline-block; margin-top: 26px; padding: 9px 20px;
+    border: 1px solid var(--gold); color: var(--gold-bright); font-size: 17px;
+    box-shadow: 0 0 16px -6px var(--glow);
+  }
+  .callout {
+    border-left: 2px solid var(--gold); background: rgba(10,16,13,.6);
+    padding: 26px 32px; font-size: 24px; line-height: 1.5; max-width: 880px; color: var(--ink-body);
+  }
+  .callout strong { font-weight: 400; color: var(--ink-head); text-shadow: 0 0 14px rgba(232,220,196,.3); }
+  .caption { color: var(--ink-muted); font-size: 15px; margin-top: 22px; max-width: 900px; line-height: 1.6; }
+  .cite { color: var(--ink-dim); font-size: 13px; margin-top: 14px; line-height: 1.7; max-width: 900px; }
+  .qline { margin-top: 32px; font-size: 21px; color: var(--ink-muted); }
+  .btn {
+    display: inline-block; margin-top: 28px; padding: 12px 30px;
+    background: var(--gold); color: #14100a; border: 1px solid var(--gold);
+    font-size: 15px; letter-spacing: .1em; font-family: inherit; cursor: pointer;
+    transition: box-shadow .2s;
+  }
+  .btn:hover { box-shadow: 0 0 20px -2px var(--glow); }
+  .btn.ghost { background: transparent; color: var(--gold); border: 1px solid var(--hairline-strong); }
+  .btn.ghost:hover { color: var(--gold-bright); border-color: var(--gold); }
+  .btn:focus-visible, .menu-item:focus-visible, .rootcard:focus-visible, .pat-chip:focus-visible, .roottab:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .ar { font-family: var(--arabic); }
+
+  /* Menu */
+  .menu-item {
+    display: flex; align-items: baseline; gap: 24px; width: 100%;
+    background: var(--panel); border: 1px solid var(--hairline);
+    padding: 22px 28px; margin-bottom: 13px; cursor: pointer; text-align: left;
+    color: var(--ink-head); font-family: inherit;
+    transition: border-color .2s, box-shadow .25s;
+  }
+  .menu-item:hover { border-color: var(--gold); box-shadow: 0 0 26px -8px var(--glow); }
+  .menu-item .num { color: var(--ink-faint); font-size: 14px; letter-spacing: .26em; }
+  .menu-item .name { font-size: 24px; flex: 1; }
+  .menu-item .state { color: var(--ink-faint); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 10px; }
+  .card, .hcard { background: var(--panel); border: 1px solid var(--hairline); padding: 26px 30px; }
+  .card { font-size: 23px; line-height: 1.5; color: var(--ink-body); }
+  .card em, .hcard em { font-style: normal; color: var(--ink-head); text-shadow: 0 0 14px rgba(232,220,196,.3); }
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 6px; }
+  .hcard h3 { font-weight: 400; font-size: 22px; color: var(--gold-title); margin-bottom: 10px; }
+  .hcard p { font-size: 16px; line-height: 1.6; color: var(--ink-muted); }
+  .hcard .bigar { font-family: var(--arabic); font-size: 44px; color: var(--ink-head); margin-bottom: 6px; }
+  .hcard .tr { color: var(--gold); font-size: 16px; margin-bottom: 10px; }
+  .lbl { font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 14px; }
+
+  /* Root inspector */
+  .rootrow { display: flex; gap: 22px; margin-top: 10px; }
+  .rootcard {
+    width: 150px; height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    background: var(--panel); border: 1px solid var(--hairline-strong); cursor: pointer;
+    font-family: inherit; color: inherit; transition: border-color .2s, box-shadow .2s;
+  }
+  .rootcard:hover { border-color: var(--gold); }
+  .rootcard.on { border-color: var(--gold); box-shadow: 0 0 22px -6px var(--glow); background: rgba(194,145,76,.08); }
+  .rootcard .glyph { font-family: var(--arabic); font-size: 72px; line-height: 1; color: var(--ink-head); }
+  .rootcard.on .glyph { color: var(--gold-bright); }
+  .rootcard .rname { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); }
+  .rootnote { margin-top: 24px; font-size: 19px; line-height: 1.6; color: var(--ink-body); max-width: 760px; min-height: 84px; }
+  .rootnote .t { color: var(--gold-bright); }
+
+  /* Family list */
+  .famrow {
+    display: grid; grid-template-columns: 170px 190px 1fr; gap: 24px; align-items: baseline;
+    padding: 12px 0; border-bottom: 1px solid rgba(194,145,76,.1);
+    opacity: 0; transform: translateY(8px); transition: opacity .5s, transform .5s;
+  }
+  .famrow.shown { opacity: 1; transform: none; }
+  .famrow:last-of-type { border-bottom: none; }
+  .famrow .ar { font-size: 30px; color: var(--ink-head); }
+  .famrow .tr { font-size: 18px; color: var(--ink-muted); }
+  .famrow .tr b { font-weight: 400; color: var(--gold-bright); }
+  .famrow .gl { font-size: 17px; color: var(--ink-muted); }
+
+  /* Pattern builder */
+  .pat-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .pat-chip {
+    font-family: inherit; font-size: 15px; padding: 9px 16px; cursor: pointer;
+    background: var(--panel); color: var(--ink-muted); border: 1px solid var(--hairline);
+    display: flex; align-items: baseline; gap: 10px; transition: border-color .2s, color .2s;
+  }
+  .pat-chip .ar { font-size: 19px; }
+  .pat-chip:hover { color: var(--ink-head); border-color: var(--gold-dull); }
+  .pat-chip.on { color: var(--gold-bright); border-color: var(--gold); box-shadow: 0 0 16px -6px var(--glow); }
+  .buildstage { margin-top: 26px; display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap; }
+  .buildword { min-width: 340px; }
+  .bigword { font-family: var(--arabic); font-size: 84px; line-height: 1.25; color: var(--ink-head); min-height: 110px; }
+  .bigword .shown { animation: rise .5s ease; display: inline-block; }
+  .buildtr { font-size: 24px; color: var(--gold); margin-top: 2px; }
+  .buildtr b { font-weight: 400; color: var(--gold-bright); }
+  .buildgloss { font-size: 20px; color: var(--ink-body); margin-top: 8px; }
+  .chiprow { display: flex; gap: 8px; margin-top: 18px; }
+  .chip {
+    width: 62px; height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    border: 1px solid var(--hairline); background: rgba(20,28,25,.85); color: var(--ink-muted);
+    opacity: 0; transform: translateY(10px); transition: opacity .4s, transform .4s;
+  }
+  .chip.in { opacity: 1; transform: none; }
+  .chip .g { font-family: var(--arabic); font-size: 30px; line-height: 1.2; }
+  .chip .u { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; }
+  .chip.root { border-color: var(--gold); background: rgba(194,145,76,.12); color: var(--ink-head); }
+  .chip.root .u { color: var(--gold); }
+  .build-note { flex: 1; min-width: 280px; font-size: 18px; line-height: 1.65; color: var(--ink-body); }
+  .build-note .pt { color: var(--gold-bright); }
+  .slotlegend { margin-top: 16px; font-size: 14px; color: var(--ink-dim); }
+  .slotlegend .k { display: inline-block; width: 11px; height: 11px; border: 1px solid var(--gold); background: rgba(194,145,76,.12); margin-right: 6px; vertical-align: baseline; }
+  .slotlegend .k2 { display: inline-block; width: 11px; height: 11px; border: 1px solid var(--hairline); background: rgba(20,28,25,.85); margin: 0 6px 0 18px; vertical-align: baseline; }
+
+  /* Factory matrix */
+  .roottabs { display: flex; gap: 10px; margin-top: 4px; flex-wrap: wrap; }
+  .roottab {
+    font-family: inherit; padding: 10px 20px; cursor: pointer;
+    background: var(--panel); border: 1px solid var(--hairline); color: var(--ink-muted);
+    display: flex; align-items: baseline; gap: 12px; transition: border-color .2s, color .2s;
+  }
+  .roottab .ar { font-size: 24px; }
+  .roottab .sense { font-size: 14px; }
+  .roottab:hover { color: var(--ink-head); border-color: var(--gold-dull); }
+  .roottab.on { color: var(--gold-bright); border-color: var(--gold); box-shadow: 0 0 16px -6px var(--glow); }
+  .factory { margin-top: 22px; max-width: 980px; }
+  .factrow {
+    display: grid; grid-template-columns: 210px 170px 190px 1fr; gap: 20px; align-items: baseline;
+    padding: 13px 0; border-bottom: 1px solid rgba(194,145,76,.1);
+    opacity: 0; transform: translateY(8px); transition: opacity .45s, transform .45s;
+  }
+  .factrow.shown { opacity: 1; transform: none; }
+  .factrow .fn { font-size: 15px; letter-spacing: .08em; color: var(--ink-faint); }
+  .factrow .ar { font-size: 30px; color: var(--ink-head); }
+  .factrow .tr { font-size: 18px; color: var(--gold); }
+  .factrow .gl { font-size: 16px; color: var(--ink-muted); }
+  .factnote { margin-top: 18px; font-size: 14px; color: var(--ink-dim); max-width: 860px; line-height: 1.6; }
+
+  /* Quiz */
+  .quizcard { background: var(--panel); border: 1px solid var(--hairline); padding: 22px 28px; margin-bottom: 14px; }
+  .quizcard .setup { font-size: 18px; color: var(--ink-muted); line-height: 1.6; margin-bottom: 10px; }
+  .quizcard .word { font-family: var(--arabic); font-size: 40px; color: var(--ink-head); }
+  .quizcard .word small { font-family: var(--serif); font-size: 18px; color: var(--gold); margin-inline-start: 14px; }
+  .quizcard .ans { display: none; margin-top: 12px; font-size: 20px; color: var(--ink-head); line-height: 1.55; }
+  .quizcard .ans .note { display: block; font-size: 15px; color: var(--ink-muted); margin-top: 6px; }
+  .quizcard.answered .ans { display: block; animation: rise .4s ease; }
+  .quizcard .btn { margin-top: 14px; padding: 8px 20px; font-size: 14px; }
+  .quizcard.answered .btn { display: none; }
+
+  /* Fact rows (m4) */
+  .tl-item {
+    display: grid; grid-template-columns: 180px 1fr; gap: 24px; align-items: start;
+    padding: 16px 0; border-bottom: 1px solid rgba(194,145,76,.1);
+    opacity: 0; transform: translateY(8px); transition: opacity .5s, transform .5s;
+  }
+  .tl-item.shown { opacity: 1; transform: none; }
+  .tl-item:last-of-type { border-bottom: none; }
+  .tl-item .year { font-size: 20px; color: var(--gold-bright); }
+  .tl-item .ttext { font-size: 18px; line-height: 1.6; color: var(--ink-body); }
+  .tl-item .ttext .tsub { display: block; font-size: 15px; color: var(--ink-muted); margin-top: 5px; }
+  .linkrow { display: flex; gap: 16px; margin-top: 30px; flex-wrap: wrap; }
+  .linkrow a {
+    flex: 1; min-width: 220px; padding: 18px 20px; border: 1px solid var(--hairline);
+    display: flex; flex-direction: column; gap: 7px; color: inherit; text-decoration: none;
+    transition: border-color .2s;
+  }
+  .linkrow a:hover { border-color: var(--gold); }
+  .linkrow .sect { font-family: var(--display); font-size: 13px; color: var(--ink-faint); }
+  .linkrow .ttl { font-size: 20px; color: var(--gold-title); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .beat, .quizcard.answered .ans, .bigword .shown { animation: none; }
+    .famrow, .factrow, .tl-item, .chip { transition: none; }
+  }
+  @media (max-width: 900px) {
+    h1 { font-size: 34px; } h2 { font-size: 26px; }
+    main { padding: 0 24px; }
+    .pair, .trio { grid-template-columns: 1fr; }
+    .famrow { grid-template-columns: 1fr; gap: 4px; }
+    .factrow { grid-template-columns: 1fr 1fr; }
+    .rootrow { flex-wrap: wrap; }
+    .bigword { font-size: 60px; }
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <header>
+    <span class="brand"><span class="wordmark">Aksarium</span><span class="crumb">The Morphorian Underground</span></span>
+    <span class="modtag" id="hdrRight">Press M for menu</span>
+  </header>
+  <main id="main">
+
+    <!-- ============ MENU ============ -->
+    <section class="beat" data-scene="menu">
+      <div class="eyebrow">An interactive walkthrough</div>
+      <h1>Root and pattern</h1>
+      <p class="lede">Arabic does not build its vocabulary word by word. It pours a small set of three-consonant roots through a small set of moulds, and the words come out related, predictable and countable. Four short modules; one root does most of the work.</p>
+      <div style="margin-top:40px">
+        <button class="menu-item" onclick="goModule(1)">
+          <span class="num">01</span><span class="name">Three consonants, one idea</span><span class="state">Start</span>
+        </button>
+        <button class="menu-item" onclick="goModule(2)">
+          <span class="num">02</span><span class="name">The mould</span><span class="state">Start</span>
+        </button>
+        <button class="menu-item" onclick="goModule(3)">
+          <span class="num">03</span><span class="name">The word factory</span><span class="state">Start</span>
+        </button>
+        <button class="menu-item" onclick="goModule(4)">
+          <span class="num">04</span><span class="name">The system underneath</span><span class="state">Start</span>
+        </button>
+      </div>
+      <a class="btn ghost" href="index.html" style="margin-top:22px; text-decoration:none">&larr; Back to the Underground</a>
+    </section>
+
+    <!-- ============ MODULE 1 ============ -->
+
+    <section class="beat" data-scene="m1">
+      <div class="eyebrow">Module 01</div>
+      <h1>Three consonants, one idea</h1>
+      <div class="myth">Myth we'll unpick: "Arabic vocabulary is endless one-by-one memorisation"</div>
+      <p class="lede">Most Arabic words are woven, not coined. Underneath them sits a root; usually three consonants carrying one idea.</p>
+    </section>
+
+    <section class="beat" data-scene="m1">
+      <h2>A root is not a word</h2>
+      <div class="callout">Take the three consonants <strong class="ar">ك ت ب</strong> <strong>(k · t · b)</strong>. On their own they are unpronounceable; they are not a word but the raw idea of <strong>writing</strong>, waiting for vowels and affixes to give it a shape. Arabic builds words the way a loom builds cloth: the root is the warp, the pattern is the weft.</div>
+      <p class="caption">Arabic runs right to left, so in the panels that follow the first consonant of the root is the rightmost one. Most roots are three consonants; a smaller number have four.</p>
+    </section>
+
+    <section class="beat" data-scene="m1" data-onenter="resetRoot">
+      <h2>Meet the root, letter by letter</h2>
+      <div class="rootrow" dir="rtl">
+        <button class="rootcard" data-radical="0" onclick="rootPick(0)"><span class="glyph">ك</span><span class="rname">kāf</span></button>
+        <button class="rootcard" data-radical="1" onclick="rootPick(1)"><span class="glyph">ت</span><span class="rname">tā&#702;</span></button>
+        <button class="rootcard" data-radical="2" onclick="rootPick(2)"><span class="glyph">ب</span><span class="rname">bā&#702;</span></button>
+      </div>
+      <div class="rootnote" id="rootNote"></div>
+    </section>
+
+    <section class="beat" data-scene="m1" data-onenter="resetFamily">
+      <h2>One root, eight everyday words</h2>
+      <div id="famList">
+        <div class="famrow"><span class="ar" dir="rtl">كَتَبَ</span><span class="tr"><b>k</b>a<b>t</b>a<b>b</b>a</span><span class="gl">he wrote</span></div>
+        <div class="famrow"><span class="ar" dir="rtl">كِتَاب</span><span class="tr"><b>k</b>i<b>t</b>ā<b>b</b></span><span class="gl">a book</span></div>
+        <div class="famrow"><span class="ar" dir="rtl">كُتُب</span><span class="tr"><b>k</b>u<b>t</b>u<b>b</b></span><span class="gl">books</span></div>
+        <div class="famrow"><span class="ar" dir="rtl">كَاتِب</span><span class="tr"><b>k</b>ā<b>t</b>i<b>b</b></span><span class="gl">a writer; one who writes</span></div>
+        <div class="famrow"><span class="ar" dir="rtl">مَكْتَب</span><span class="tr">ma<b>kt</b>a<b>b</b></span><span class="gl">a desk; an office</span></div>
+        <div class="famrow"><span class="ar" dir="rtl">مَكْتَبَة</span><span class="tr">ma<b>kt</b>a<b>b</b>a</span><span class="gl">a library; a bookshop</span></div>
+        <div class="famrow"><span class="ar" dir="rtl">مَكْتُوب</span><span class="tr">ma<b>kt</b>ū<b>b</b></span><span class="gl">written; a letter</span></div>
+        <div class="famrow"><span class="ar" dir="rtl">كِتَابَة</span><span class="tr"><b>k</b>i<b>t</b>ā<b>b</b>a</span><span class="gl">writing, the activity</span></div>
+      </div>
+      <p class="qline">Eight words; the same three consonants in the same order every time, gold in the transliteration. Everything else is the mould. That is Module 02.</p>
+    </section>
+
+    <!-- ============ MODULE 2 ============ -->
+
+    <section class="beat" data-scene="m2">
+      <div class="eyebrow">Module 02</div>
+      <h1>The mould</h1>
+      <div class="myth">Myth we'll unpick: "You need the dictionary for every new word"</div>
+      <p class="lede">A pattern is a mould with three empty slots. Learn what a mould means once, and it means that for thousands of roots.</p>
+    </section>
+
+    <section class="beat" data-scene="m2">
+      <h2>How grammarians name the moulds</h2>
+      <div class="callout">For over a thousand years, Arabic grammarians have demonstrated every pattern on the same dummy root: <strong class="ar">ف ع ل</strong> <strong>(f · &#703; · l, the root of "doing")</strong>. So the pattern of <em class="ar">كَاتِب</em> is called <strong class="ar">فَاعِل</strong> <strong>(fā&#703;il)</strong>: slot the root of writing into "the one who does" and you get "the one who writes".</div>
+      <p class="caption">Read a pattern name as a stencil: ف marks where the first consonant of your root goes, ع the second, ل the third. Everything around those three slots belongs to the mould, not the root.</p>
+    </section>
+
+    <section class="beat" data-scene="m2" data-onenter="resetBuilder">
+      <h2>Pour the root into a mould</h2>
+      <div class="lbl">Choose a pattern · the root of writing, k · t · b</div>
+      <div class="pat-chips" id="patChips"></div>
+      <div class="buildstage">
+        <div class="buildword">
+          <div class="bigword" dir="rtl" id="buildWord"></div>
+          <div class="buildtr" id="buildTr"></div>
+          <div class="buildgloss" id="buildGloss"></div>
+          <div class="chiprow" dir="rtl" id="buildChips"></div>
+          <div class="slotlegend"><span class="k"></span>root consonant<span class="k2"></span>belongs to the mould</div>
+        </div>
+        <div class="build-note" id="buildNote"></div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m2">
+      <h2>One mould to prove the point: the place</h2>
+      <div class="trio">
+        <div class="hcard">
+          <div class="bigar" dir="rtl">مَكْتَب</div>
+          <div class="tr">maktab</div>
+          <p>Root: writing. The place of writing; a desk, an office. In Dari, this same word is the everyday word for school.</p>
+        </div>
+        <div class="hcard">
+          <div class="bigar" dir="rtl">مَكْتَبَة</div>
+          <div class="tr">maktaba</div>
+          <p>The same mould with a feminine ending. The place of books and writing; a library, a bookshop.</p>
+        </div>
+        <div class="hcard">
+          <div class="bigar" dir="rtl">مَدْرَسَة</div>
+          <div class="tr">madrasa</div>
+          <p>Same mould, different root: د ر س, studying. The place of study; a school. You knew this word before you knew it was a mould.</p>
+        </div>
+      </div>
+      <p class="qline">You just read a word built from a root you had never been shown. That is the machine working. Now run it yourself.</p>
+    </section>
+
+    <!-- ============ MODULE 3 ============ -->
+
+    <section class="beat" data-scene="m3">
+      <div class="eyebrow">Module 03</div>
+      <h1>The word factory</h1>
+      <p class="lede">Same moulds, different roots. Swap the root and watch the whole family change subject while every word keeps its job.</p>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetFactory">
+      <h2>Swap the root</h2>
+      <div class="roottabs" id="rootTabs"></div>
+      <div class="factory" id="factoryRows"></div>
+      <p class="factnote" id="factNote"></p>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetQuiz">
+      <h2>Now you guess</h2>
+      <div class="quizcard" id="qz1">
+        <p class="setup">The root <span class="ar" dir="rtl">ع ل م</span> means knowing. The mould fā&#703;il means "the one who does". So who is:</p>
+        <div class="word" dir="rtl">عَالِم<small>&#703;ālim</small></div>
+        <div class="ans">One who knows: a scholar, a scientist.<span class="note">Its plural is &#703;ulamā&#702;, "the ulama", a word you will have met in the news; it simply means "the scholars".</span></div>
+        <button class="btn ghost" onclick="quizReveal('qz1')">Reveal</button>
+      </div>
+      <div class="quizcard" id="qz2">
+        <p class="setup">The root <span class="ar" dir="rtl">ك ت ب</span> means writing. The mould maf&#703;ūl means "the done-to". So what is:</p>
+        <div class="word" dir="rtl">مَكْتُوب<small>maktūb</small></div>
+        <div class="ans">The written: something written down, a letter; and, figuratively, what is fated.<span class="note">"It is written." The proverb and the grammar are the same word.</span></div>
+        <button class="btn ghost" onclick="quizReveal('qz2')">Reveal</button>
+      </div>
+      <div class="quizcard" id="qz3">
+        <p class="setup">The root <span class="ar" dir="rtl">د ر س</span> means studying. The mould maf&#703;al(a) means "the place where it happens". So what is:</p>
+        <div class="word" dir="rtl">مَدْرَسَة<small>madrasa</small></div>
+        <div class="ans">The place of study: a school.<span class="note">In English news the word often carries a narrower sense; in Arabic it is any school, of any kind.</span></div>
+        <button class="btn ghost" onclick="quizReveal('qz3')">Reveal</button>
+      </div>
+    </section>
+
+    <!-- ============ MODULE 4 ============ -->
+
+    <section class="beat" data-scene="m4">
+      <div class="eyebrow">Module 04</div>
+      <h1>The system underneath</h1>
+      <p class="lede">Root and pattern is not a classroom trick; it is how the language is stored, looked up and lent to its neighbours.</p>
+    </section>
+
+    <section class="beat" data-scene="m4" data-onenter="resetFacts">
+      <h2>Where the loom shows through</h2>
+      <div class="tline">
+        <div class="tl-item" id="fx1"><span class="year">Dictionaries</span><span class="ttext">Traditional Arabic dictionaries are arranged by root, not by spelling. In Hans Wehr, the standard learner's dictionary, maktab and maktūb both live under ك ت ب.<span class="tsub">To look a word up, you first strip it back to its root; the skill this walkthrough has been teaching is literally the lookup skill.</span></span></div>
+        <div class="tl-item" id="fx2"><span class="year">Broken plurals</span><span class="ttext">Many plurals are made by re-pouring the same consonants into a plural mould rather than adding an ending: kitāb becomes kutub, dars becomes durūs, &#703;ilm becomes &#703;ulūm.<span class="tsub">The plural is a pattern too.</span></span></div>
+        <div class="tl-item" id="fx3"><span class="year">Cousins</span><span class="ttext">The architecture is Semitic, not just Arabic. Hebrew builds from the same root: katav "he wrote", ktav "script", mikhtav "a letter"; the same k&#8209;t&#8209;b idea in a sister system.<span class="tsub">Root and pattern also runs through Amharic, Aramaic and beyond.</span></span></div>
+        <div class="tl-item" id="fx4"><span class="year">Neighbours</span><span class="ttext">Persian, Dari and Urdu borrowed thousands of these finished words whole: ketāb for book, maktab for school.<span class="tsub">The borrowed words keep their shape but not the machine; Persian does not weave new words on the Arabic loom.</span></span></div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m4">
+      <h2>Why this matters</h2>
+      <div class="callout">Arabic vocabulary is not a list; it is a <strong>lattice</strong>. Every new root you learn multiplies through moulds you already own, and every new mould multiplies through roots you already own. Learn the loom, and the language stops arriving one word at a time.</div>
+      <div class="linkrow">
+        <a href="../languages/arabic.html"><span class="sect">Languages</span><span class="ttl">The Arabic resource page</span></a>
+        <a href="../codex-lexpressia/keyboard-gallery.html"><span class="sect">Codex Lexpressia</span><span class="ttl">Type it: the keyboard gallery</span></a>
+      </div>
+      <p class="cite">Sources used: K. Ryding, A Reference Grammar of Modern Standard Arabic (Cambridge, 2005), on root-and-pattern morphology, participles, place nouns and broken plurals; Hans Wehr, A Dictionary of Modern Written Arabic (root-ordered lookup); the فعل demonstration-root convention as used throughout the Arabic grammatical tradition. All Arabic forms shown are standard Modern Standard Arabic; Hebrew forms are standard Modern Hebrew; the Dari sense of maktab is the common Afghan usage.</p>
+      <button class="btn ghost" style="margin-top:32px" onclick="goMenu()">Back to menu</button>
+    </section>
+
+  </main>
+  <footer id="dots"></footer>
+</div>
+<div class="navhint">&larr; &rarr; or space &nbsp;|&nbsp; M menu</div>
+
+<script>
+  'use strict';
+
+  /* ================= Deck scaffold ================= */
+  const beats = Array.from(document.querySelectorAll('.beat'));
+  let idx = 0;
+
+  const sceneTitles = {
+    m1: 'Module 01 · Three consonants, one idea',
+    m2: 'Module 02 · The mould',
+    m3: 'Module 03 · The word factory',
+    m4: 'Module 04 · The system underneath'
+  };
+
+  function show(i) {
+    idx = Math.max(0, Math.min(i, beats.length - 1));
+    beats.forEach((b, n) => b.classList.toggle('active', n === idx));
+    const scene = beats[idx].dataset.scene;
+    document.getElementById('hdrRight').textContent =
+      scene === 'menu' ? 'Press M for menu' : sceneTitles[scene];
+    const dots = document.getElementById('dots');
+    dots.innerHTML = '';
+    if (scene !== 'menu') {
+      const moduleBeats = beats.filter(b => b.dataset.scene === scene);
+      const pos = moduleBeats.indexOf(beats[idx]);
+      moduleBeats.forEach((_, n) => {
+        const d = document.createElement('div');
+        d.className = 'dot' + (n === pos ? ' on' : '');
+        dots.appendChild(d);
+      });
+    }
+    const hook = beats[idx].dataset.onenter;
+    if (hook && onEnterHooks[hook]) onEnterHooks[hook]();
+  }
+  function goMenu() { show(0); }
+  function goModule(n) {
+    const i = beats.findIndex(b => b.dataset.scene === 'm' + n);
+    if (i > -1) show(i);
+  }
+  function next() { if (idx < beats.length - 1) show(idx + 1); }
+  function prev() { if (idx > 0) show(idx - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft') prev();
+    else if (e.key === 'm' || e.key === 'M') goMenu();
+    else if (e.key >= '1' && e.key <= '4') goModule(Number(e.key));
+  });
+  document.getElementById('main').addEventListener('click', e => {
+    if (e.target.closest('button, a, input, .quizcard, .rootcard, .pat-chip, .roottab')) return;
+    next();
+  });
+
+  function staggerShow(els, delay) {
+    els.forEach((el, i) => {
+      el.classList.remove('shown');
+      setTimeout(() => el.classList.add('shown'), 150 + i * delay);
+    });
+  }
+
+  /* ================= Module 1: root inspector ================= */
+  const RADICALS = [
+    { note: '<span class="t">kāf · ك · the sound k.</span> The first consonant of the root, and the rightmost, because Arabic runs right to left. Grammarians call it the first radical: the slot ف in a pattern name.' },
+    { note: '<span class="t">tā&#702; · ت · the sound t.</span> The second radical, the middle of the root; the slot ع in a pattern name. Notice the letters connect: Arabic is always joined, even in print.' },
+    { note: '<span class="t">bā&#702; · ب · the sound b.</span> The third radical, the slot ل in a pattern name. Together: k · t · b, the bare idea of writing, waiting for a mould.' }
+  ];
+  let radActive = null;
+  function rootPick(n) {
+    radActive = n === radActive ? null : n;
+    document.querySelectorAll('.rootcard').forEach(c =>
+      c.classList.toggle('on', Number(c.dataset.radical) === radActive));
+    document.getElementById('rootNote').innerHTML = radActive === null
+      ? 'Click a letter. Right to left: the first consonant of the root is the rightmost card.'
+      : RADICALS[radActive].note;
+  }
+  function resetRootState() { radActive = null; rootPick(null); }
+
+  /* ================= Module 1: family reveal ================= */
+  function resetFamilyState() {
+    staggerShow(Array.from(document.querySelectorAll('#famList .famrow')), 350);
+  }
+
+  /* ================= Module 2: pattern builder =================
+     chips: [glyph, isRoot] in logical (reading) order; rendered dir=rtl. */
+  const PATTERNS = [
+    { key: 'faala', name: 'فَعَلَ', tr: 'faʿala', word: 'كَتَبَ', wtr: '<b>k</b>a<b>t</b>a<b>b</b>a', gloss: 'he wrote',
+      chips: [['كَ',1],['تَ',1],['بَ',1]],
+      note: 'The bare past-tense verb: <span class="pt">he did it</span>. Nothing here but the three root consonants and short vowels; the simplest thing Arabic can weave.' },
+    { key: 'fiaal', name: 'فِعَال', tr: 'fiʿāl', word: 'كِتَاب', wtr: '<b>k</b>i<b>t</b>ā<b>b</b>', gloss: 'a book',
+      chips: [['كِ',1],['تَ',1],['ا',0],['ب',1]],
+      note: 'A common noun mould. From the root of writing it gives <span class="pt">the written thing</span>: a book. The long ā in the middle belongs to the mould, not the root.' },
+    { key: 'fuul', name: 'فُعُل', tr: 'fuʿul', word: 'كُتُب', wtr: '<b>k</b>u<b>t</b>u<b>b</b>', gloss: 'books',
+      chips: [['كُ',1],['تُ',1],['ب',1]],
+      note: 'A broken plural: the plural made not by an ending but by <span class="pt">re-pouring the same consonants</span> into a plural-shaped mould. kitāb in, kutub out.' },
+    { key: 'faail', name: 'فَاعِل', tr: 'fāʿil', word: 'كَاتِب', wtr: '<b>k</b>ā<b>t</b>i<b>b</b>', gloss: 'a writer; one who writes',
+      chips: [['كَ',1],['ا',0],['تِ',1],['ب',1]],
+      note: '<span class="pt">The doer.</span> Whatever the root means, fāʿil is the one doing it: writer from writing, scholar from knowing, student from studying.' },
+    { key: 'mafal', name: 'مَفْعَل', tr: 'mafʿal', word: 'مَكْتَب', wtr: 'ma<b>kt</b>a<b>b</b>', gloss: 'a desk; an office',
+      chips: [['مَ',0],['كْ',1],['تَ',1],['ب',1]],
+      note: 'The m up front is pure mould: <span class="pt">the place where it happens</span>. The place of writing is a desk or an office. Watch this m; it marks places and done-to words all over the language.' },
+    { key: 'mafala', name: 'مَفْعَلَة', tr: 'mafʿala', word: 'مَكْتَبَة', wtr: 'ma<b>kt</b>a<b>b</b>a', gloss: 'a library; a bookshop',
+      chips: [['مَ',0],['كْ',1],['تَ',1],['بَ',1],['ة',0]],
+      note: 'The place mould again, with a feminine ending: <span class="pt">the place of books</span>. One letter of difference between your office and your library.' },
+    { key: 'mafuul', name: 'مَفْعُول', tr: 'mafʿūl', word: 'مَكْتُوب', wtr: 'ma<b>kt</b>ū<b>b</b>', gloss: 'written; a letter',
+      chips: [['مَ',0],['كْ',1],['تُ',1],['و',0],['ب',1]],
+      note: '<span class="pt">The done-to.</span> The thing that got written: a letter, a note; and figuratively, what is fated. The passive participle mould.' },
+    { key: 'fiaala', name: 'فِعَالَة', tr: 'fiʿāla', word: 'كِتَابَة', wtr: '<b>k</b>i<b>t</b>ā<b>b</b>a', gloss: 'writing, the activity',
+      chips: [['كِ',1],['تَ',1],['ا',0],['بَ',1],['ة',0]],
+      note: 'The activity or craft itself: <span class="pt">the doing of it</span>, as a noun. This is the verbal noun of kataba; the act of writing, the craft of the kātib.' }
+  ];
+  let patActive = 0;
+  function buildRender(n) {
+    patActive = n;
+    const p = PATTERNS[n];
+    document.querySelectorAll('#patChips .pat-chip').forEach((c, i) =>
+      c.classList.toggle('on', i === n));
+    const w = document.getElementById('buildWord');
+    w.innerHTML = '<span class="shown ar">' + p.word + '</span>';
+    document.getElementById('buildTr').innerHTML = p.wtr;
+    document.getElementById('buildGloss').textContent = p.gloss;
+    const row = document.getElementById('buildChips');
+    row.innerHTML = '';
+    p.chips.forEach(function (ch, i) {
+      const el = document.createElement('div');
+      el.className = 'chip' + (ch[1] ? ' root' : '');
+      el.innerHTML = '<span class="g">' + ch[0] + '</span><span class="u">' + (ch[1] ? 'root' : 'mould') + '</span>';
+      row.appendChild(el);
+      setTimeout(function () { el.classList.add('in'); }, 90 + i * 110);
+    });
+    document.getElementById('buildNote').innerHTML =
+      '<span class="pt ar" style="font-size:26px">' + p.name + '</span> · <span class="pt">' + p.tr + '</span><br><br>' + p.note;
+  }
+  function resetBuilderState() {
+    const wrap = document.getElementById('patChips');
+    if (!wrap.childElementCount) {
+      PATTERNS.forEach(function (p, i) {
+        const b = document.createElement('button');
+        b.className = 'pat-chip';
+        b.innerHTML = '<span class="ar">' + p.name + '</span><span>' + p.tr + '</span>';
+        b.onclick = function () { buildRender(i); };
+        wrap.appendChild(b);
+      });
+    }
+    buildRender(0);
+  }
+
+  /* ================= Module 3: word factory ================= */
+  const FUNCTIONS = ['he did it', 'the doer', 'the place', 'the done-to', 'the doing itself', 'a broken plural'];
+  const ROOTS = [
+    { ar: 'ك ت ب', sense: 'writing', note: '',
+      rows: [
+        ['كَتَبَ', 'kataba', 'he wrote'],
+        ['كَاتِب', 'kātib', 'a writer'],
+        ['مَكْتَب / مَكْتَبَة', 'maktab · maktaba', 'an office; a library'],
+        ['مَكْتُوب', 'maktūb', 'written; a letter'],
+        ['كِتَابَة', 'kitāba', 'writing'],
+        ['كُتُب', 'kutub', 'books, from kitāb']
+      ] },
+    { ar: 'د ر س', sense: 'studying', note: '',
+      rows: [
+        ['دَرَسَ', 'darasa', 'he studied'],
+        ['دَارِس', 'dāris', 'one who studies'],
+        ['مَدْرَسَة', 'madrasa', 'a school'],
+        ['مَدْرُوس', 'madrūs', 'studied; well-considered'],
+        ['دِرَاسَة', 'dirāsa', 'study, studying'],
+        ['دُرُوس', 'durūs', 'lessons, from dars']
+      ] },
+    { ar: 'ع ل م', sense: 'knowing', note: 'The verb here is ʿalima, with an i in the middle; the middle vowel of the bare verb is a quirk of each root, learned with it. The moulds still hold.',
+      rows: [
+        ['عَلِمَ', 'ʿalima', 'he knew'],
+        ['عَالِم', 'ʿālim', 'a scholar; one who knows'],
+        ['مَعْلَم', 'maʿlam', 'a landmark; a feature'],
+        ['مَعْلُوم', 'maʿlūm', 'known'],
+        ['عِلْم', 'ʿilm', 'knowledge; a science'],
+        ['عُلُوم', 'ʿulūm', 'the sciences, from ʿilm']
+      ] }
+  ];
+  let rootActive = 0;
+  function factoryRender(n) {
+    rootActive = n;
+    const R = ROOTS[n];
+    document.querySelectorAll('#rootTabs .roottab').forEach((t, i) =>
+      t.classList.toggle('on', i === n));
+    const wrap = document.getElementById('factoryRows');
+    wrap.innerHTML = '';
+    R.rows.forEach(function (row, i) {
+      const el = document.createElement('div');
+      el.className = 'factrow';
+      el.innerHTML = '<span class="fn">' + FUNCTIONS[i] + '</span>' +
+        '<span class="ar" dir="rtl">' + row[0] + '</span>' +
+        '<span class="tr">' + row[1] + '</span>' +
+        '<span class="gl">' + row[2] + '</span>';
+      wrap.appendChild(el);
+    });
+    staggerShow(Array.from(wrap.children), 220);
+    document.getElementById('factNote').textContent = R.note ||
+      'The verbal-noun mould (the doing itself) varies from root to root; it is the one slot Arabic makes you learn with the verb.';
+  }
+  function resetFactoryState() {
+    const tabs = document.getElementById('rootTabs');
+    if (!tabs.childElementCount) {
+      ROOTS.forEach(function (r, i) {
+        const b = document.createElement('button');
+        b.className = 'roottab';
+        b.innerHTML = '<span class="ar" dir="rtl">' + r.ar + '</span><span class="sense">' + r.sense + '</span>';
+        b.onclick = function () { factoryRender(i); };
+        tabs.appendChild(b);
+      });
+    }
+    factoryRender(0);
+  }
+
+  /* ================= Module 3: quiz ================= */
+  function quizReveal(id) { document.getElementById(id).classList.add('answered'); }
+  function resetQuizState() {
+    ['qz1', 'qz2', 'qz3'].forEach(id => document.getElementById(id).classList.remove('answered'));
+  }
+
+  /* ================= Module 4 ================= */
+  function resetFactsState() {
+    staggerShow(['fx1', 'fx2', 'fx3', 'fx4'].map(id => document.getElementById(id)), 600);
+  }
+
+  const onEnterHooks = {
+    resetRoot: resetRootState, resetFamily: resetFamilyState,
+    resetBuilder: resetBuilderState, resetFactory: resetFactoryState,
+    resetQuiz: resetQuizState, resetFacts: resetFactsState
+  };
+
+  show(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Languages — Aksarium</title>
+<meta name="description" content="The language resource pages: Arabic, Russian, Bahasa Indonesia, Bengali, Persian and Dari, and the special-interest set.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&family=Eagle+Lake&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/aksarium.css">
+<script src="../assets/js/site.js" defer></script>
+<style>
+.lang-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 0 46px 40px; }
+.lang-card { display: flex; flex-direction: column; gap: 12px; color: inherit; }
+.lang-card:hover { color: inherit; }
+.lang-card__art { position: relative; border: 1px solid rgba(194,145,76,.24); aspect-ratio: 1108 / 977; overflow: hidden; }
+.lang-card__art img { width: 100%; height: 100%; object-fit: cover; }
+.lang-card:hover .lang-card__art { border-color: #c2914c; }
+.lang-card__caption { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.lang-card__name { font-size: 21px; color: #e2d3b1; }
+.lang-card__status { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #8a7a58; white-space: nowrap; }
+.lang-card__status--ready { color: #c2914c; }
+.si-list { display: flex; flex-wrap: wrap; gap: 12px 26px; font-size: 18px; color: #8b968e; }
+.si-list span { border-bottom: 1px solid rgba(194,145,76,.14); padding-bottom: 4px; }
+@media (max-width: 1100px) { .lang-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="frame">
+
+<header class="site-header site-header--solid">
+  <a class="brand" href="../index.html">
+    <svg class="brand__mark" width="25" height="25" viewBox="0 0 132 132" fill="none" aria-hidden="true"><path d="M66 8l58 58-58 58L8 66z" stroke="#c2914c" stroke-width="4"/><path d="M66 24l42 42-42 42-42-42z" stroke="#c2914c" stroke-width="4" stroke-opacity=".35"/><text x="66" y="84" text-anchor="middle" font-family="'IM Fell DW Pica',serif" font-size="54" fill="#e8dcc4">A</text></svg>
+    <span class="brand__name">Aksarium</span>
+  </a>
+  <nav class="site-nav" aria-label="Sections">
+    <a href="../codex-lexpressia/index.html">Codex Lexpressia</a>
+    <a href="../somantasia/index.html">Notes from Somantasia</a>
+    <a href="../morphorian/index.html">The Morphorian Underground</a>
+    <a href="index.html" aria-current="page">Languages</a>
+  </nav>
+  <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
+</header>
+
+<div style="padding:34px 46px 24px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap">
+  <div style="display:flex;flex-direction:column;gap:9px">
+    <div class="eyebrow" style="letter-spacing:.34em">The resource pages</div>
+    <h1 style="margin:0;font-family:'Eagle Lake',cursive;font-size:34px;line-height:1.1;color:#d9a95e;font-weight:400">Languages</h1>
+  </div>
+  <p style="margin:0 0 4px;max-width:620px;font-size:17px;line-height:1.65;color:#8b968e;text-wrap:pretty">Every language page carries the same parts: script and history, dialect, domain vocabulary, and a keyboard reference with typing practice. The same desk by the same window; only the keyboard and the view change.</p>
+</div>
+
+<div class="lang-grid">
+  <a class="lang-card" href="arabic.html">
+    <div class="lang-card__art"><img src="../assets/images/arabiclang_hero.png" alt="The desk by the window; an Arabic keyboard, tea and a hookah, a twilight street below."></div>
+    <div class="lang-card__caption"><span class="lang-card__name">العربية · Arabic</span><span class="lang-card__status lang-card__status--ready">In the archive</span></div>
+  </a>
+  <a class="lang-card" href="persian-dari.html">
+    <div class="lang-card__art"><img src="../assets/images/persianlang_hero.png" alt="The desk by the window; a Persian keyboard, a snow-capped peak above the clouds."></div>
+    <div class="lang-card__caption"><span class="lang-card__name">فارسی · Persian &amp; Dari</span><span class="lang-card__status lang-card__status--ready">In the archive</span></div>
+  </a>
+  <a class="lang-card" href="russian.html">
+    <div class="lang-card__art"><img src="../assets/images/russianlang_hero.png" alt="The desk by the window; a ЙЦУКЕН keyboard, a winter village with a church by the river."></div>
+    <div class="lang-card__caption"><span class="lang-card__name">Русский · Russian</span><span class="lang-card__status lang-card__status--ready">In the archive</span></div>
+  </a>
+  <a class="lang-card" href="bahasa-indonesia.html">
+    <div class="lang-card__art"><div class="art-slot" style="position:absolute;inset:0;min-height:0"><div class="art-slot__label"><span class="art-slot__diamond"></span>Bahasa Indonesia — awaiting art</div></div></div>
+    <div class="lang-card__caption"><span class="lang-card__name">Bahasa Indonesia</span><span class="lang-card__status">Awaiting art</span></div>
+  </a>
+  <a class="lang-card" href="bengali.html">
+    <div class="lang-card__art"><div class="art-slot" style="position:absolute;inset:0;min-height:0"><div class="art-slot__label"><span class="art-slot__diamond"></span>Bengali — awaiting art</div></div></div>
+    <div class="lang-card__caption"><span class="lang-card__name">বাংলা · Bengali</span><span class="lang-card__status">Awaiting art</span></div>
+  </a>
+</div>
+
+<div style="padding:10px 46px 46px;display:flex;flex-direction:column;gap:18px;border-top:1px solid rgba(194,145,76,.16);margin:0 46px 40px;padding-left:0;padding-right:0">
+  <div class="eyebrow" style="padding-top:26px">Special interest · lighter treatment, built as sources allow</div>
+  <div class="si-list">
+    <span>Thai</span><span>Amharic</span><span>Hebrew</span><span>Biblical Greek</span><span><a href="korean.html">Korean</a></span><span>Georgian</span><span>Chinese</span><span>Urdu</span><span>Romanian</span>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span class="eyebrow">Aksarium · Languages</span>
+  <nav aria-label="Footer">
+    <a href="../index.html">Home</a>
+    <a href="../codex-lexpressia/keyboard-gallery.html">Keyboard gallery</a>
+    <a href="../morphorian/index.html">The Morphorian Underground</a>
+  </nav>
+</footer>
+
+</div>
+</body>
+</html>

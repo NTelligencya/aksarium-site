@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two ways to count · The Morphorian Underground · Aksarium</title>
+<meta name="description" content="An interactive walkthrough of Korean's two number systems; native Korean and Sino-Korean, when each is used, and how the numbers change shape before a counter.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&family=Eagle+Lake&family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<style>
+  :root {
+    --ground: #0b0f0d; --panel: #080c0a; --page: #070d0b;
+    --gold: #c2914c; --gold-bright: #d6a365; --gold-title: #d9a95e; --gold-dull: #a89364;
+    --ink-head: #e8dcc4; --ink-body: #b3bdb5; --ink-muted: #8b968e; --ink-faint: #8a7a58; --ink-dim: #5f6b64;
+    --hairline: rgba(194,145,76,.16); --hairline-strong: rgba(194,145,76,.3);
+    --glow: rgba(214,163,101,.3);
+    --serif: 'IM Fell DW Pica', serif;
+    --display: 'Eagle Lake', cursive;
+    --ko: 'Noto Serif KR', 'IM Fell DW Pica', serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { background: var(--page); color: var(--ink-head); font-family: var(--serif); overflow: hidden; }
+  #stage { height: 100vh; display: flex; flex-direction: column; }
+
+  header {
+    display: flex; justify-content: space-between; align-items: center; gap: 28px; flex-wrap: wrap;
+    flex-shrink: 0; padding: 20px 36px; border-bottom: 1px solid var(--hairline);
+  }
+  header .brand { display: flex; align-items: baseline; gap: 18px; }
+  header .wordmark { font-size: 15px; letter-spacing: .4em; text-transform: uppercase; color: var(--ink-head); }
+  header .crumb { font-family: var(--display); font-size: 13px; color: var(--gold-dull); }
+  header .modtag { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-faint); }
+  footer { flex-shrink: 0; display: flex; justify-content: center; align-items: center; gap: 10px; padding: 20px; border-top: 1px solid var(--hairline); }
+  .dot { width: 8px; height: 8px; transform: rotate(45deg); background: rgba(194,145,76,.18); transition: background .3s, box-shadow .3s; }
+  .dot.on { background: var(--gold); box-shadow: 0 0 10px var(--glow); }
+  main { flex: 1; display: flex; padding: 14px 60px; overflow: auto; }
+  .beat { display: none; max-width: 1100px; width: 100%; margin: auto; animation: rise .45s ease; }
+  .beat.active { display: block; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .navhint { position: fixed; right: 30px; bottom: 18px; color: var(--ink-dim); font-size: 12px; letter-spacing: 1px; }
+
+  .eyebrow { color: var(--ink-faint); font-size: 12px; letter-spacing: .32em; text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-family: var(--display); font-weight: 400; font-size: 46px; line-height: 1.15; color: var(--gold-title); }
+  h2 { font-family: var(--display); font-weight: 400; font-size: 32px; line-height: 1.2; margin-bottom: 26px; color: var(--gold-title); }
+  .lede { font-size: 21px; line-height: 1.6; color: var(--ink-body); margin-top: 18px; max-width: 800px; }
+  .myth { display: inline-block; margin-top: 26px; padding: 9px 20px; border: 1px solid var(--gold); color: var(--gold-bright); font-size: 17px; }
+  .callout { border-left: 2px solid var(--gold); background: rgba(10,16,13,.6); padding: 26px 32px; font-size: 24px; line-height: 1.5; max-width: 880px; color: var(--ink-body); }
+  .callout strong { font-weight: 400; color: var(--ink-head); }
+  .callout .ko { font-family: var(--ko); }
+  .caption { color: var(--ink-muted); font-size: 15px; margin-top: 22px; max-width: 900px; line-height: 1.6; }
+  .cite { color: var(--ink-dim); font-size: 13px; margin-top: 14px; line-height: 1.7; max-width: 900px; }
+  .qline { margin-top: 32px; font-size: 21px; color: var(--ink-muted); }
+  .btn { display: inline-block; margin-top: 28px; padding: 12px 30px; background: var(--gold); color: #14100a; border: 1px solid var(--gold); font-size: 15px; letter-spacing: .1em; font-family: inherit; cursor: pointer; }
+  .btn.ghost { background: transparent; color: var(--gold); border: 1px solid var(--hairline-strong); }
+  .btn.ghost:hover { color: var(--gold-bright); border-color: var(--gold); }
+  .btn:focus-visible, .menu-item:focus-visible, .ctx-chip:focus-visible, .cnt-chip:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .ko { font-family: var(--ko); }
+
+  .menu-item {
+    display: flex; align-items: baseline; gap: 24px; width: 100%; background: var(--panel);
+    border: 1px solid var(--hairline); padding: 22px 28px; margin-bottom: 13px; cursor: pointer;
+    text-align: left; color: var(--ink-head); font-family: inherit; transition: border-color .2s, box-shadow .25s;
+  }
+  .menu-item:hover { border-color: var(--gold); box-shadow: 0 0 26px -8px var(--glow); }
+  .menu-item .num { color: var(--ink-faint); font-size: 14px; letter-spacing: .26em; }
+  .menu-item .name { font-size: 24px; flex: 1; }
+  .menu-item .state { color: var(--ink-faint); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+
+  /* Two-set number list */
+  .setgrid { display: grid; grid-template-columns: 60px 1fr 1fr; gap: 0 28px; margin-top: 8px; max-width: 720px; }
+  .setgrid .head { padding: 8px 0 12px; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-faint); border-bottom: 1px solid var(--hairline-strong); }
+  .numrow { display: contents; }
+  .numrow > div {
+    padding: 12px 0; border-bottom: 1px solid rgba(194,145,76,.1);
+    opacity: 0; transform: translateY(8px); transition: opacity .45s, transform .45s;
+  }
+  .numrow.shown > div { opacity: 1; transform: none; }
+  .numrow .idx { color: var(--ink-dim); font-size: 17px; }
+  .numrow .ko { font-size: 25px; color: var(--ink-head); }
+  .numrow .ko .rom { font-family: var(--serif); font-size: 15px; color: var(--ink-muted); margin-left: 12px; }
+
+  /* Context swapper */
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .ctx-chip, .cnt-chip {
+    font-family: inherit; font-size: 15px; padding: 9px 16px; cursor: pointer;
+    background: var(--panel); color: var(--ink-muted); border: 1px solid var(--hairline); transition: border-color .2s, color .2s;
+  }
+  .ctx-chip:hover, .cnt-chip:hover { color: var(--ink-head); border-color: var(--gold-dull); }
+  .ctx-chip.on, .cnt-chip.on { color: var(--gold-bright); border-color: var(--gold); box-shadow: 0 0 16px -6px var(--glow); }
+  .swapstage { margin-top: 26px; display: flex; gap: 44px; align-items: flex-start; flex-wrap: wrap; }
+  .swapword { min-width: 340px; }
+  .sys-tag { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); }
+  .bigko { font-family: var(--ko); font-size: 72px; line-height: 1.25; color: var(--ink-head); min-height: 96px; }
+  .bigko .shown { animation: rise .5s ease; display: inline-block; }
+  .swaprom { font-size: 23px; color: var(--gold); margin-top: 2px; }
+  .swapgloss { font-size: 20px; color: var(--ink-body); margin-top: 6px; }
+  .swap-note { flex: 1; min-width: 300px; font-size: 18px; line-height: 1.65; color: var(--ink-body); }
+  .swap-note .pt { color: var(--gold-bright); }
+  .swap-note .ko { font-family: var(--ko); }
+
+  /* Counter builder table */
+  .countertable { margin-top: 22px; max-width: 760px; }
+  .ctrow {
+    display: grid; grid-template-columns: 60px 200px 1fr; gap: 24px; align-items: baseline;
+    padding: 12px 0; border-bottom: 1px solid rgba(194,145,76,.1);
+    opacity: 0; transform: translateY(8px); transition: opacity .45s, transform .45s;
+  }
+  .ctrow.shown { opacity: 1; transform: none; }
+  .ctrow .idx { color: var(--ink-dim); font-size: 16px; }
+  .ctrow .form { font-family: var(--ko); font-size: 30px; color: var(--ink-head); }
+  .ctrow .form .chg { color: var(--gold-bright); }
+  .ctrow .rom { font-size: 17px; color: var(--gold); }
+  .ctrow .gl { font-size: 16px; color: var(--ink-muted); }
+  .counter-note { margin-top: 18px; font-size: 15px; color: var(--ink-dim); max-width: 820px; line-height: 1.6; }
+  .counter-note .pt { color: var(--gold-bright); }
+  .counter-note .ko { font-family: var(--ko); }
+
+  /* Quiz */
+  .quizcard { background: var(--panel); border: 1px solid var(--hairline); padding: 22px 28px; margin-bottom: 14px; }
+  .quizcard .setup { font-size: 18px; color: var(--ink-muted); line-height: 1.6; margin-bottom: 10px; }
+  .quizcard .setup .ko { font-family: var(--ko); color: var(--ink-body); }
+  .quizcard .ans { display: none; margin-top: 12px; font-size: 20px; color: var(--ink-head); line-height: 1.55; }
+  .quizcard .ans .big { font-family: var(--ko); font-size: 30px; color: var(--gold-bright); margin-right: 12px; }
+  .quizcard .ans .note { display: block; font-size: 15px; color: var(--ink-muted); margin-top: 6px; }
+  .quizcard .ans .note .ko { font-family: var(--ko); }
+  .quizcard.answered .ans { display: block; animation: rise .4s ease; }
+  .quizcard .btn { margin-top: 14px; padding: 8px 20px; font-size: 14px; }
+  .quizcard.answered .btn { display: none; }
+
+  /* Fact rows */
+  .tl-item {
+    display: grid; grid-template-columns: 190px 1fr; gap: 24px; align-items: start;
+    padding: 16px 0; border-bottom: 1px solid rgba(194,145,76,.1);
+    opacity: 0; transform: translateY(8px); transition: opacity .5s, transform .5s;
+  }
+  .tl-item.shown { opacity: 1; transform: none; }
+  .tl-item:last-of-type { border-bottom: none; }
+  .tl-item .year { font-size: 19px; color: var(--gold-bright); }
+  .tl-item .ttext { font-size: 18px; line-height: 1.6; color: var(--ink-body); }
+  .tl-item .ttext .ko { font-family: var(--ko); }
+  .tl-item .ttext .tsub { display: block; font-size: 15px; color: var(--ink-muted); margin-top: 5px; }
+  .linkrow { display: flex; gap: 16px; margin-top: 30px; flex-wrap: wrap; }
+  .linkrow a { flex: 1; min-width: 220px; padding: 18px 20px; border: 1px solid var(--hairline); display: flex; flex-direction: column; gap: 7px; color: inherit; text-decoration: none; transition: border-color .2s; }
+  .linkrow a:hover { border-color: var(--gold); }
+  .linkrow .sect { font-family: var(--display); font-size: 13px; color: var(--ink-faint); }
+  .linkrow .ttl { font-size: 20px; color: var(--gold-title); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .beat, .quizcard.answered .ans, .bigko .shown { animation: none; }
+    .numrow > div, .ctrow, .tl-item { transition: none; }
+  }
+  @media (max-width: 900px) {
+    h1 { font-size: 34px; } h2 { font-size: 26px; }
+    main { padding: 0 24px; }
+    .setgrid { grid-template-columns: 40px 1fr 1fr; }
+    .ctrow { grid-template-columns: 40px 1fr; }
+    .tl-item { grid-template-columns: 1fr; gap: 6px; }
+    .bigko { font-size: 52px; }
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <header>
+    <span class="brand"><span class="wordmark">Aksarium</span><span class="crumb">The Morphorian Underground</span></span>
+    <span class="modtag" id="hdrRight">Press M for menu</span>
+  </header>
+  <main id="main">
+
+    <!-- ============ MENU ============ -->
+    <section class="beat" data-scene="menu">
+      <div class="eyebrow">An interactive walkthrough</div>
+      <h1>Two ways to count</h1>
+      <p class="lede">Korean has two complete sets of numbers, learned side by side and used in strict division of labour. Which one you reach for depends on what you are counting; and telling the time forces you to use both at once. Four short modules; the numbers do the teaching.</p>
+      <div style="margin-top:40px">
+        <button class="menu-item" onclick="goModule(1)"><span class="num">01</span><span class="name">Two sets of numbers</span><span class="state">Start</span></button>
+        <button class="menu-item" onclick="goModule(2)"><span class="num">02</span><span class="name">Which system, when</span><span class="state">Start</span></button>
+        <button class="menu-item" onclick="goModule(3)"><span class="num">03</span><span class="name">Numbers that change shape</span><span class="state">Start</span></button>
+        <button class="menu-item" onclick="goModule(4)"><span class="num">04</span><span class="name">Where the two sets came from</span><span class="state">Start</span></button>
+      </div>
+      <a class="btn ghost" href="index.html" style="margin-top:22px; text-decoration:none">&larr; Back to the Underground</a>
+    </section>
+
+    <!-- ============ MODULE 1 ============ -->
+    <section class="beat" data-scene="m1">
+      <div class="eyebrow">Module 01</div>
+      <h1>Two sets of numbers</h1>
+      <div class="myth">Myth we'll unpick: "learning to count in Korean is learning one list"</div>
+      <p class="lede">It is two lists. One is native Korean, grown from the language itself; the other is Sino-Korean, built from Chinese roots. A learner has to hold both.</p>
+    </section>
+
+    <section class="beat" data-scene="m1">
+      <h2>One language, two counting words for everything</h2>
+      <div class="callout">Ask a Korean speaker for the number three and you can get <strong class="ko">셋</strong> <strong>(set)</strong> or <strong class="ko">삼</strong> <strong>(sam)</strong>, and both are right; they just belong to different jobs. The first is a native Korean word, as old as the language. The second is Sino-Korean, borrowed from Chinese more than a thousand years ago, the way English borrowed its Latin numerals for the calendar and the clock.</div>
+      <p class="caption">Japanese has the same double system, for the same reason. English has a faint version of it too: we count one, two, three, but we say January is the first month, not the "oneth".</p>
+    </section>
+
+    <section class="beat" data-scene="m1" data-onenter="resetSets">
+      <h2>One to ten, both ways</h2>
+      <div class="setgrid">
+        <div class="head">&nbsp;</div>
+        <div class="head">Native Korean</div>
+        <div class="head">Sino-Korean</div>
+      </div>
+      <div class="setgrid" id="setList"><!-- rows injected by script --></div>
+      <p class="qline">The native set thins out fast; in everyday use it is rarely pushed past ninety-nine. The Sino set carries zero, the hundreds, and everything large. That division is Module 02.</p>
+    </section>
+
+    <section class="beat" data-scene="m1">
+      <h2>How high each set really goes</h2>
+      <div class="trio" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:6px">
+        <div class="callout" style="border-left-width:2px">
+          <div class="sys-tag">Native Korean</div>
+          <p style="margin-top:12px;font-size:19px;line-height:1.55;color:var(--ink-body)">Has its own words for the tens; <span class="ko">열</span> (10), <span class="ko">스물</span> (20), <span class="ko">서른</span> (30), on to <span class="ko">아흔</span> (90). It has no everyday word for zero, and its old words for a hundred and a thousand have fallen out of use, so in practice it stops around ninety-nine.</p>
+        </div>
+        <div class="callout" style="border-left-width:2px">
+          <div class="sys-tag">Sino-Korean</div>
+          <p style="margin-top:12px;font-size:19px;line-height:1.55;color:var(--ink-body)">Runs without limit: <span class="ko">백</span> (100), <span class="ko">천</span> (1,000), <span class="ko">만</span> (10,000), <span class="ko">억</span> (100 million). It also has zero, <span class="ko">영</span> or <span class="ko">공</span>. Large numbers, money and maths are all its work.</p>
+        </div>
+      </div>
+      <p class="caption">Korean groups large numbers in ten-thousands rather than thousands, so a million is <span class="ko">백만</span> (baengman), literally "a hundred ten-thousands".</p>
+    </section>
+
+    <!-- ============ MODULE 2 ============ -->
+    <section class="beat" data-scene="m2">
+      <div class="eyebrow">Module 02</div>
+      <h1>Which system, when</h1>
+      <p class="lede">The choice is not free; each situation demands one set or the other. Learn the map of which goes where, and the rest is vocabulary.</p>
+    </section>
+
+    <section class="beat" data-scene="m2" data-onenter="resetSwap">
+      <h2>Pick a situation</h2>
+      <div class="chips" id="ctxChips"></div>
+      <div class="swapstage">
+        <div class="swapword">
+          <div class="sys-tag" id="swapSys"></div>
+          <div class="bigko" id="swapWord"></div>
+          <div class="swaprom" id="swapRom"></div>
+          <div class="swapgloss" id="swapGloss"></div>
+        </div>
+        <div class="swap-note" id="swapNote"></div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m2">
+      <h2>The clock makes you use both</h2>
+      <div class="callout">The hour is native, the minutes are Sino-Korean, so a single time runs the two systems together in one breath. Half past three is <strong class="ko">세 시 삼십 분</strong>, <strong>se si samsip bun</strong>: <span class="ko">세</span> (native three) for the hour, <span class="ko">삼십</span> (Sino thirty) for the minutes. Get the halves the wrong way round and you sound, to a Korean ear, like someone reading a clock in a language they half-know.</div>
+      <p class="caption">The counter for the hour is <span class="ko">시</span> (si); for minutes it is <span class="ko">분</span> (bun). The same syllable <span class="ko">분</span> is also the polite counter for people, one of many counters Module 03 introduces.</p>
+    </section>
+
+    <!-- ============ MODULE 3 ============ -->
+    <section class="beat" data-scene="m3">
+      <div class="eyebrow">Module 03</div>
+      <h1>Numbers that change shape</h1>
+      <p class="lede">You rarely count in the bare numbers. You count with a counter word, and a handful of the native numbers quietly change form when a counter follows.</p>
+    </section>
+
+    <section class="beat" data-scene="m3">
+      <h2>The counter word</h2>
+      <div class="callout">Korean does not say "three dogs"; it says <strong>dogs, three head-of-animal</strong>: <strong class="ko">개 세 마리</strong>, gae se mari. The counter names what kind of thing is being counted, the way English says two <em style="color:var(--ink-head)">head</em> of cattle or three <em style="color:var(--ink-head)">sheets</em> of paper, but Korean does it for everything. Different things take different counters: <span class="ko">개</span> for objects, <span class="ko">명</span> for people, <span class="ko">마리</span> for animals, <span class="ko">살</span> for years of age, <span class="ko">시</span> for the hour.</div>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetCounters">
+      <h2>Watch the number change before the counter</h2>
+      <div class="chips" id="cntChips"></div>
+      <div class="countertable" id="counterTable"></div>
+      <p class="counter-note" id="counterNote"></p>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetQuiz">
+      <h2>Now you choose</h2>
+      <div class="quizcard" id="qz1">
+        <p class="setup">Four apples. Objects take the native numbers and the counter <span class="ko">개</span>; and <span class="ko">넷</span> (four) changes shape before a counter. So it is:</p>
+        <div class="ans"><span class="big ko">네 개</span> ne gae<span class="note"><span class="ko">넷</span> shortens to <span class="ko">네</span>. The pattern: apples first, then the number and counter; <span class="ko">사과 네 개</span>, sagwa ne gae.</span></div>
+        <button class="btn ghost" onclick="quizReveal('qz1')">Reveal</button>
+      </div>
+      <div class="quizcard" id="qz2">
+        <p class="setup">Twelve o'clock. The hour is native, with the counter <span class="ko">시</span>; and <span class="ko">열둘</span> (twelve) changes before a counter. So it is:</p>
+        <div class="ans"><span class="big ko">열두 시</span> yeoldu si<span class="note"><span class="ko">열둘</span> becomes <span class="ko">열두</span>. The minutes, if you added them, would switch to Sino-Korean.</span></div>
+        <button class="btn ghost" onclick="quizReveal('qz2')">Reveal</button>
+      </div>
+      <div class="quizcard" id="qz3">
+        <p class="setup">A coffee costs 4,500 won. Money is Sino-Korean. So it is:</p>
+        <div class="ans"><span class="big ko">사천오백 원</span> sacheon-obaek won<span class="note">No shape change at all; the Sino-Korean numbers never shorten before a counter. Only the native set does that, which is half of why the two are worth keeping straight.</span></div>
+        <button class="btn ghost" onclick="quizReveal('qz3')">Reveal</button>
+      </div>
+    </section>
+
+    <!-- ============ MODULE 4 ============ -->
+    <section class="beat" data-scene="m4">
+      <div class="eyebrow">Module 04</div>
+      <h1>Where the two sets came from</h1>
+      <p class="lede">Two number systems in one language is not clutter; it is a fossil record of contact, and Korean is not alone in carrying it.</p>
+    </section>
+
+    <section class="beat" data-scene="m4" data-onenter="resetFacts">
+      <h2>Why a language keeps two</h2>
+      <div class="tline">
+        <div class="tl-item" id="fx1"><span class="year">The native set</span><span class="ttext">The native Korean numbers are inherited, part of the language's own oldest stock, and they attach to the counter words the culture built up for tallying concrete things; people, animals, objects, ages.<span class="tsub">This is the set that changes shape before a counter, a sign of how deeply worn-in it is.</span></span></div>
+        <div class="tl-item" id="fx2"><span class="year">The Sino set</span><span class="ttext">The Sino-Korean numbers came in with centuries of Chinese literary and administrative influence, alongside the Hanja characters, and took over the work of writing; dates, money, measurement, mathematics, anything large or precise.<span class="tsub">Roughly half of the Korean vocabulary is Sino-Korean in origin; the numbers are only its most everyday face.</span></span></div>
+        <div class="tl-item" id="fx3"><span class="year">The parallel</span><span class="ttext">Japanese carries the very same split, native versus Sino-Japanese, for the same historical reason; sustained borrowing from Chinese laid a second numeral system over an older one.<span class="tsub">Where the two languages differ is in exactly which situations take which set.</span></span></div>
+        <div class="tl-item" id="fx4"><span class="year">The divide</span><span class="ttext">The two Koreas have drifted in their vocabulary since 1945, and specialist and borrowed words have drifted most; but the two number systems and the division of labour between them are shared north and south.<span class="tsub">Some things are older and deeper than the politics laid over them.</span></span></div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m4">
+      <h2>Why this matters</h2>
+      <div class="callout">Once you stop seeing two arbitrary lists and start seeing <strong>one native set for handling things and one borrowed set for measuring the world</strong>, the choice stops being memorisation and becomes a question you can answer: am I counting, or am I measuring? Korean asks it of you every time you tell the time.</div>
+      <div class="linkrow">
+        <a href="../languages/korean.html"><span class="sect">Languages</span><span class="ttl">The Korean resource page</span></a>
+        <a href="index.html"><span class="sect">The Morphorian Underground</span><span class="ttl">More grammar walkthroughs</span></a>
+      </div>
+      <p class="cite">Sources used: the native and Sino-Korean numeral systems and their division of usage are standard, uncontested descriptions of Korean; see Ho-min Sohn, The Korean Language (Cambridge, 1999), chapters on numerals and classifiers, and any standard reference grammar. The pre-counter forms (하나 to 한, 둘 to 두, 셋 to 세, 넷 to 네, 스물 to 스무) and the native-hour, Sino-minute clock convention are basic and agreed points of Korean grammar. Romanisation follows the Revised Romanisation of Korean. The parallel with Japanese and the Sino-Korean share of the lexicon are standard historical-linguistic observations.</p>
+      <button class="btn ghost" style="margin-top:32px" onclick="goMenu()">Back to menu</button>
+      <a class="btn ghost" href="index.html" style="margin-left:14px; text-decoration:none">Back to the Underground</a>
+    </section>
+
+  </main>
+  <footer id="dots"></footer>
+</div>
+<div class="navhint">&larr; &rarr; or space &nbsp;|&nbsp; M menu</div>
+
+<script>
+  'use strict';
+
+  const beats = Array.from(document.querySelectorAll('.beat'));
+  let idx = 0;
+  const sceneTitles = {
+    m1: 'Module 01 · Two sets of numbers',
+    m2: 'Module 02 · Which system, when',
+    m3: 'Module 03 · Numbers that change shape',
+    m4: 'Module 04 · Where the two sets came from'
+  };
+
+  function show(i) {
+    idx = Math.max(0, Math.min(i, beats.length - 1));
+    beats.forEach((b, n) => b.classList.toggle('active', n === idx));
+    const scene = beats[idx].dataset.scene;
+    document.getElementById('hdrRight').textContent = scene === 'menu' ? 'Press M for menu' : sceneTitles[scene];
+    const dots = document.getElementById('dots');
+    dots.innerHTML = '';
+    if (scene !== 'menu') {
+      const mb = beats.filter(b => b.dataset.scene === scene);
+      const pos = mb.indexOf(beats[idx]);
+      mb.forEach((_, n) => { const d = document.createElement('div'); d.className = 'dot' + (n === pos ? ' on' : ''); dots.appendChild(d); });
+    }
+    const hook = beats[idx].dataset.onenter;
+    if (hook && onEnterHooks[hook]) onEnterHooks[hook]();
+  }
+  function goMenu() { show(0); }
+  function goModule(n) { const i = beats.findIndex(b => b.dataset.scene === 'm' + n); if (i > -1) show(i); }
+  function next() { if (idx < beats.length - 1) show(idx + 1); }
+  function prev() { if (idx > 0) show(idx - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft') prev();
+    else if (e.key === 'm' || e.key === 'M') goMenu();
+    else if (e.key >= '1' && e.key <= '4') goModule(Number(e.key));
+  });
+  document.getElementById('main').addEventListener('click', e => {
+    if (e.target.closest('button, a, input, .quizcard, .ctx-chip, .cnt-chip')) return;
+    next();
+  });
+
+  function staggerShow(els, delay) {
+    els.forEach((el, i) => { el.classList.remove('shown'); setTimeout(() => el.classList.add('shown'), 150 + i * delay); });
+  }
+
+  /* ---- Module 1: the two sets 1-10 ---- */
+  const SETS = [
+    ['1', '하나', 'hana', '일', 'il'],
+    ['2', '둘', 'dul', '이', 'i'],
+    ['3', '셋', 'set', '삼', 'sam'],
+    ['4', '넷', 'net', '사', 'sa'],
+    ['5', '다섯', 'daseot', '오', 'o'],
+    ['6', '여섯', 'yeoseot', '육', 'yuk'],
+    ['7', '일곱', 'ilgop', '칠', 'chil'],
+    ['8', '여덟', 'yeodeol', '팔', 'pal'],
+    ['9', '아홉', 'ahop', '구', 'gu'],
+    ['10', '열', 'yeol', '십', 'sip']
+  ];
+  function resetSetsState() {
+    const wrap = document.getElementById('setList');
+    wrap.innerHTML = '';
+    const rows = SETS.map(r => {
+      const row = document.createElement('div');
+      row.className = 'numrow';
+      row.innerHTML = '<div class="idx">' + r[0] + '</div>' +
+        '<div class="ko">' + r[1] + '<span class="rom">' + r[2] + '</span></div>' +
+        '<div class="ko">' + r[3] + '<span class="rom">' + r[4] + '</span></div>';
+      wrap.appendChild(row);
+      return row;
+    });
+    staggerShow(rows, 160);
+  }
+
+  /* ---- Module 2: context swapper ---- */
+  const CONTEXTS = [
+    { chip: 'Counting things', sys: 'Native Korean', ko: '사과 세 개', rom: 'sagwa se gae', gloss: 'three apples',
+      note: 'Objects, people and animals are counted with the <span class="pt">native</span> numbers, up to ninety-nine, followed by a counter word. Note <span class="ko">셋</span> becomes <span class="ko">세</span> before the counter; Module 03 is all about that.' },
+    { chip: 'Age', sys: 'Native Korean', ko: '스무 살', rom: 'seumu sal', gloss: 'twenty years old',
+      note: 'Everyday age is <span class="pt">native</span>, with the counter <span class="ko">살</span>. <span class="ko">스물</span> shortens to <span class="ko">스무</span>. Formal or written age switches to the Sino set with the counter <span class="ko">세</span>.' },
+    { chip: 'The hour', sys: 'Native Korean', ko: '세 시', rom: 'se si', gloss: "three o'clock",
+      note: 'The hour is <span class="pt">native</span>, with the counter <span class="ko">시</span>. But the minutes are Sino-Korean, so one clock time uses both sets at once.' },
+    { chip: 'Minutes', sys: 'Sino-Korean', ko: '삼십 분', rom: 'samsip bun', gloss: 'thirty minutes',
+      note: 'Minutes and seconds are <span class="pt">Sino-Korean</span>. So half past three is <span class="ko">세 시 삼십 분</span>, se si samsip bun: a native hour, a Sino minute.' },
+    { chip: 'Money', sys: 'Sino-Korean', ko: '오천 원', rom: 'ocheon won', gloss: '5,000 won',
+      note: 'Prices and currency are <span class="pt">Sino-Korean</span>, which is just as well; the native set barely reaches a hundred.' },
+    { chip: 'Dates', sys: 'Sino-Korean', ko: '삼월 십오일', rom: 'samwol sibo-il', gloss: 'the 15th of March',
+      note: 'Years, months and days are all <span class="pt">Sino-Korean</span>. <span class="ko">삼월</span> is the third month; <span class="ko">십오일</span> is the fifteenth day.' },
+    { chip: 'Phone numbers', sys: 'Sino-Korean', ko: '공일공', rom: 'gong-il-gong', gloss: '0 1 0',
+      note: 'Phone numbers are read digit by digit in <span class="pt">Sino-Korean</span>; zero is <span class="ko">공</span> (or <span class="ko">영</span>). The native set has no everyday word for zero at all.' },
+    { chip: 'Large numbers', sys: 'Sino-Korean', ko: '백 · 천 · 만', rom: 'baek · cheon · man', gloss: '100 · 1,000 · 10,000',
+      note: 'Anything from a hundred up is <span class="pt">Sino-Korean</span>. Korean also groups by ten-thousands, so a million is <span class="ko">백만</span>, "a hundred ten-thousands".' }
+  ];
+  function swapRender(n) {
+    const c = CONTEXTS[n];
+    document.querySelectorAll('#ctxChips .ctx-chip').forEach((el, i) => el.classList.toggle('on', i === n));
+    document.getElementById('swapSys').textContent = c.sys;
+    document.getElementById('swapWord').innerHTML = '<span class="shown">' + c.ko + '</span>';
+    document.getElementById('swapRom').textContent = c.rom;
+    document.getElementById('swapGloss').textContent = c.gloss;
+    document.getElementById('swapNote').innerHTML = c.note;
+  }
+  function resetSwapState() {
+    const wrap = document.getElementById('ctxChips');
+    if (!wrap.childElementCount) {
+      CONTEXTS.forEach((c, i) => {
+        const b = document.createElement('button');
+        b.className = 'ctx-chip'; b.textContent = c.chip;
+        b.onclick = () => swapRender(i);
+        wrap.appendChild(b);
+      });
+    }
+    swapRender(0);
+  }
+
+  /* ---- Module 3: counter builder ----
+     Native numbers 1-5 with their pre-counter forms; the changed ones flagged. */
+  const NUMS = [
+    { base: '하나', pre: '한', rom: 'han', changed: true },
+    { base: '둘', pre: '두', rom: 'du', changed: true },
+    { base: '셋', pre: '세', rom: 'se', changed: true },
+    { base: '넷', pre: '네', rom: 'ne', changed: true },
+    { base: '다섯', pre: '다섯', rom: 'daseot', changed: false }
+  ];
+  const COUNTERS = [
+    { c: '개', rom: 'gae', gloss: 'things', label: 'things · 개' },
+    { c: '명', rom: 'myeong', gloss: 'people', label: 'people · 명' },
+    { c: '마리', rom: 'mari', gloss: 'animals', label: 'animals · 마리' },
+    { c: '시', rom: 'si', gloss: "o'clock", label: "the hour · 시" },
+    { c: '살', rom: 'sal', gloss: 'years old', label: 'age · 살' }
+  ];
+  function counterRender(n) {
+    const ct = COUNTERS[n];
+    document.querySelectorAll('#cntChips .cnt-chip').forEach((el, i) => el.classList.toggle('on', i === n));
+    const wrap = document.getElementById('counterTable');
+    wrap.innerHTML = '';
+    const rows = NUMS.map((num, i) => {
+      const row = document.createElement('div');
+      row.className = 'ctrow';
+      const form = num.changed
+        ? '<span class="chg">' + num.pre + '</span> ' + ct.c
+        : num.pre + ' ' + ct.c;
+      const gloss = (i + 1) + ' ' + ct.gloss + (ct.gloss === "o'clock" ? '' : '');
+      row.innerHTML = '<div class="idx">' + (i + 1) + '</div>' +
+        '<div class="form">' + form + '</div>' +
+        '<div class="rom">' + num.rom + ' ' + ct.rom + ' <span class="gl">&middot; ' + gloss + '</span></div>';
+      wrap.appendChild(row);
+      return row;
+    });
+    staggerShow(rows, 180);
+    document.getElementById('counterNote').innerHTML = 'Counter: <span class="ko">' + ct.c + '</span> (' + ct.rom + '), for ' + ct.gloss + '. The gold syllables are the ones that <span class="pt">changed shape</span>; <span class="ko">하나 둘 셋 넷</span> become <span class="ko">한 두 세 네</span> before any counter, while <span class="ko">다섯</span> and up stay as they are.';
+  }
+  function resetCountersState() {
+    const wrap = document.getElementById('cntChips');
+    if (!wrap.childElementCount) {
+      COUNTERS.forEach((ct, i) => {
+        const b = document.createElement('button');
+        b.className = 'cnt-chip'; b.innerHTML = ct.label.replace(/(\S+)$/, '<span class="ko">$1</span>');
+        b.onclick = () => counterRender(i);
+        wrap.appendChild(b);
+      });
+    }
+    counterRender(0);
+  }
+
+  /* ---- Module 3 quiz ---- */
+  function quizReveal(id) { document.getElementById(id).classList.add('answered'); }
+  function resetQuizState() { ['qz1', 'qz2', 'qz3'].forEach(id => document.getElementById(id).classList.remove('answered')); }
+
+  /* ---- Module 4 ---- */
+  function resetFactsState() { staggerShow(['fx1', 'fx2', 'fx3', 'fx4'].map(id => document.getElementById(id)), 600); }
+
+  const onEnterHooks = {
+    resetSets: resetSetsState, resetSwap: resetSwapState,
+    resetCounters: resetCountersState, resetQuiz: resetQuizState, resetFacts: resetFactsState
+  };
+
+  show(0);
+</script>
+</body>
+</html>

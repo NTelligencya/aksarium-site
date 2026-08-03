@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<title>Cyrillic · an interactive walkthrough · Aksarium</title>
+<!--
+  Interactive walkthrough deck: the Cyrillic alphabet.
+  Aksarium theme. Single self-contained file; web fonts are the only external resource.
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Eagle+Lake&family=IM+Fell+DW+Pica:ital@0;1&display=swap');
+  :root {
+    /* THEME: Aksarium. Gold on near-black green-tinted ground. */
+    --page: #0b0f0d; --panel: #080c0a;
+    --accent: #c2914c; --accent-bright: #d6a365; --accent-title: #d9a95e; --accent-dim: #8a7a58;
+    --ink-head: #e8dcc4; --ink-body: #b3bdb5; --ink-muted: #8b968e; --ink-dim: #5d655f;
+    --hairline: rgba(194,145,76,.16); --hairline-strong: rgba(194,145,76,.34);
+    --glow: rgba(214,163,101,.32);
+    --display: 'Eagle Lake', Georgia, serif;
+    --serif: 'IM Fell DW Pica', Georgia, serif;
+    --cyr: Georgia, 'Times New Roman', serif;  /* big Cyrillic display text; the web faces are Latin-only */
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { background: var(--page); color: var(--ink-head); font-family: var(--serif); overflow: hidden; }
+  #stage { height: 100vh; display: flex; flex-direction: column; }
+
+  header {
+    display: flex; justify-content: space-between; align-items: center; gap: 28px; flex-wrap: wrap;
+    flex-shrink: 0; padding: 18px 36px; border-bottom: 1px solid var(--hairline);
+  }
+  header .brand { font-family: var(--display); font-size: 15px; letter-spacing: .3em; text-transform: uppercase; color: var(--accent-title); }
+  header .modtag { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--accent-dim); }
+  footer {
+    flex-shrink: 0; display: flex; justify-content: center; align-items: center;
+    gap: 12px; padding: 20px; border-top: 1px solid var(--hairline);
+  }
+  /* Diamond progress markers: rotated squares, no rounding anywhere in this deck. */
+  .dot { width: 7px; height: 7px; border-radius: 0; transform: rotate(45deg); background: var(--hairline); transition: background .3s, box-shadow .3s; }
+  .dot.on { background: var(--accent); box-shadow: 0 0 10px var(--glow); }
+  main { flex: 1; display: flex; padding: 14px 60px; overflow: auto; }
+  .beat { display: none; max-width: 1100px; width: 100%; margin: auto; animation: rise .45s ease; }
+  .beat.active { display: block; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .navhint { position: fixed; right: 30px; bottom: 18px; color: var(--ink-dim); font-size: 12px; letter-spacing: 1px; }
+
+  .eyebrow { color: var(--accent-dim); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-family: var(--display); font-weight: 400; font-size: 42px; line-height: 1.2; color: var(--accent-title); }
+  h2 { font-family: var(--display); font-weight: 400; font-size: 28px; line-height: 1.25; margin-bottom: 24px; color: var(--accent-title); }
+  .lede { font-size: 21px; line-height: 1.6; color: var(--ink-body); margin-top: 18px; max-width: 800px; }
+  .myth { display: inline-block; margin-top: 26px; padding: 9px 20px; border: 1px solid var(--accent); color: var(--accent-bright); font-size: 17px; box-shadow: 0 0 16px -6px var(--glow); }
+  .callout { border-left: 2px solid var(--accent); background: var(--panel); padding: 26px 32px; font-size: 22px; line-height: 1.55; max-width: 900px; color: var(--ink-body); border-top: 1px solid var(--hairline); border-right: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+  .callout strong { font-weight: 400; color: var(--ink-head); }
+  .cy { font-family: var(--cyr); }
+  .caption { color: var(--ink-muted); font-size: 15px; margin-top: 22px; max-width: 900px; line-height: 1.6; }
+  .cite { color: var(--ink-dim); font-size: 13px; margin-top: 18px; line-height: 1.7; max-width: 900px; }
+  .qline { margin-top: 30px; font-size: 20px; color: var(--ink-muted); font-style: italic; }
+  .btn { display: inline-block; margin-top: 28px; padding: 12px 30px; background: var(--accent); color: var(--page); border: 1px solid var(--accent); font-size: 15px; font-family: inherit; cursor: pointer; }
+  .btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--hairline-strong); }
+  .btn.ghost:hover { color: var(--accent-bright); border-color: var(--accent); }
+  .btn:focus-visible, .menu-item:focus-visible, .insp-card:focus-visible, .chipbtn:focus-visible, #numIn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .menu-item {
+    display: flex; align-items: baseline; gap: 24px; width: 100%; background: var(--panel);
+    border: 1px solid var(--hairline); padding: 20px 28px; margin-bottom: 13px; cursor: pointer;
+    text-align: left; color: var(--ink-head); font-family: inherit; transition: border-color .2s, box-shadow .25s;
+  }
+  .menu-item:hover { border-color: var(--accent); box-shadow: 0 0 26px -8px var(--glow); }
+  .menu-item .num { color: var(--accent-dim); font-size: 14px; letter-spacing: .24em; }
+  .menu-item .name { font-size: 22px; flex: 1; }
+  .menu-item .state { color: var(--accent-dim); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+
+  /* Staggered list */
+  .tl-item {
+    display: grid; grid-template-columns: 150px 1fr; gap: 24px; padding: 14px 0;
+    border-bottom: 1px solid var(--hairline);
+    opacity: 0; transform: translateY(8px); transition: opacity .5s, transform .5s;
+  }
+  .tl-item.shown { opacity: 1; transform: none; }
+  .tl-item .year { font-size: 19px; color: var(--accent-bright); }
+  .tl-item .ttext { font-size: 17px; line-height: 1.55; color: var(--ink-body); }
+  .tl-item.last .ttext { color: var(--ink-head); }
+
+  /* Clickable inspector */
+  .insp-row { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }
+  .insp-card {
+    width: 132px; height: 132px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    background: var(--panel); border: 1px solid var(--hairline-strong); cursor: pointer; font-family: inherit; color: inherit;
+  }
+  .insp-card:hover { border-color: var(--accent); }
+  .insp-card.on { border-color: var(--accent); box-shadow: 0 0 22px -6px var(--glow); }
+  .insp-card .big { font-family: var(--cyr); font-size: 50px; line-height: 1; }
+  .insp-card .sm { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-dim); }
+  .insp-note { margin-top: 24px; font-size: 18px; line-height: 1.6; color: var(--ink-body); max-width: 820px; min-height: 96px; }
+  .insp-note .t { color: var(--accent-bright); }
+
+  /* Chips */
+  .chiprow-select { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .chipbtn { font-family: inherit; font-size: 15px; padding: 9px 18px; cursor: pointer; background: var(--panel); color: var(--ink-muted); border: 1px solid var(--hairline); }
+  .chipbtn:hover { color: var(--ink-head); border-color: var(--accent-dim); }
+  .chipbtn.on { color: var(--accent-bright); border-color: var(--accent); box-shadow: 0 0 16px -6px var(--glow); }
+
+  /* Cyrillic numeral converter */
+  .numwrap { margin-top: 8px; }
+  .numwrap label { display: block; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 10px; }
+  #numIn {
+    font-family: var(--cyr); font-size: 30px; width: 180px; padding: 8px 14px;
+    background: var(--panel); color: var(--ink-head); border: 1px solid var(--hairline-strong);
+  }
+  .numstage { display: flex; gap: 46px; align-items: flex-start; flex-wrap: wrap; margin-top: 26px; }
+  .cyrnum { font-family: var(--cyr); font-size: 62px; line-height: 1.1; color: var(--ink-head); min-height: 80px; }
+  .cyrnum .ovl { display: inline-block; border-top: 1px solid var(--accent); padding: 8px 6px 0; animation: rise .4s ease; }
+  .partrow { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+  .part {
+    min-width: 64px; height: 68px; padding: 0 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    border: 1px solid var(--hairline); background: var(--panel); color: var(--ink-muted);
+    opacity: 0; transform: translateY(10px); transition: opacity .4s, transform .4s;
+  }
+  .part.in { opacity: 1; transform: none; }
+  .part .g { font-family: var(--cyr); font-size: 26px; color: var(--ink-head); }
+  .part .u { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-dim); }
+  .num-note { flex: 1; min-width: 280px; font-size: 17px; line-height: 1.65; color: var(--ink-body); max-width: 460px; }
+
+  /* Keyboard */
+  .kb { margin-top: 22px; }
+  .kb-rows { display: inline-block; padding: 18px; border: 1px solid var(--hairline); background: var(--panel); }
+  .kb-row { display: flex; gap: 6px; margin-bottom: 6px; }
+  .kb-row:last-child { margin-bottom: 0; }
+  .key {
+    width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; position: relative;
+    border: 1px solid var(--hairline-strong); background: var(--page); color: var(--ink-muted);
+    font-family: var(--cyr); font-size: 19px; text-transform: uppercase;
+    transition: background .3s, color .3s, border-color .3s;
+  }
+  .key.hot { border-color: var(--accent); background: rgba(194,145,76,.16); color: var(--ink-head); box-shadow: 0 0 12px -4px var(--glow); }
+  .key.bump::after { content: ''; position: absolute; bottom: 6px; left: 50%; width: 14px; height: 2px; margin-left: -7px; background: var(--accent-bright); }
+  .kb-legend { margin-top: 14px; font-size: 13px; color: var(--ink-muted); letter-spacing: .04em; }
+  .kb-legend .swatch { display: inline-block; width: 11px; height: 11px; border: 1px solid var(--accent); background: rgba(194,145,76,.16); margin-right: 6px; vertical-align: baseline; }
+  .kb-legend .bline { display: inline-block; width: 14px; height: 2px; background: var(--accent-bright); margin: 0 6px 3px 14px; vertical-align: baseline; }
+  .kb-note { margin-top: 20px; font-size: 18px; line-height: 1.6; color: var(--ink-body); max-width: 860px; min-height: 84px; }
+  .kb-note .t { color: var(--accent-bright); }
+
+  /* Reveal answer */
+  .revealcard { background: var(--panel); border: 1px solid var(--hairline); padding: 26px 32px; max-width: 880px; }
+  .revealcard .q { font-size: 22px; line-height: 1.5; color: var(--ink-body); }
+  .reveal-ans { display: none; margin-top: 18px; font-size: 20px; line-height: 1.6; color: var(--ink-head); }
+  .reveal-ans .note { display: block; font-size: 15px; color: var(--ink-muted); margin-top: 12px; }
+  .revealcard.answered .reveal-ans { display: block; animation: rise .4s ease; }
+  .revealcard.answered .btn { display: none; }
+  .revealcard .btn { margin-top: 18px; padding: 9px 22px; font-size: 14px; }
+
+  /* Quiz */
+  .quizcard { background: var(--panel); border: 1px solid var(--hairline); padding: 20px 28px; margin-bottom: 14px; max-width: 900px; }
+  .quizcard .setup { font-size: 16px; color: var(--ink-muted); line-height: 1.55; margin-bottom: 10px; }
+  .quizcard .word { font-family: var(--cyr); font-size: 28px; color: var(--ink-head); }
+  .quizcard .ans { display: none; margin-top: 12px; font-size: 19px; line-height: 1.55; }
+  .quizcard .ans .note { display: block; font-size: 14px; color: var(--ink-muted); margin-top: 6px; }
+  .quizcard.answered .ans { display: block; animation: rise .4s ease; }
+  .quizcard .btn { margin-top: 12px; padding: 8px 20px; font-size: 14px; }
+  .quizcard.answered .btn { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .beat, .quizcard.answered .ans, .revealcard.answered .reveal-ans, .cyrnum .ovl { animation: none; }
+    .tl-item, .part, .key { transition: none; }
+  }
+  @media (max-width: 900px) {
+    h1 { font-size: 32px; } h2 { font-size: 24px; }
+    main { padding: 0 24px; }
+    .tl-item { grid-template-columns: 1fr; gap: 6px; }
+    .cyrnum { font-size: 44px; }
+    .key { width: 34px; height: 34px; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <header>
+    <span style="display:flex;align-items:baseline;gap:18px"><a href="../index.html" style="color:inherit;text-decoration:none"><span class="brand">Aksarium</span></a><span style="font-size:13px;letter-spacing:0;text-transform:none;color:#a89364">Codex Lexpressia · Cyrillic</span></span>
+    <span class="modtag" id="hdrRight">Press M for menu</span>
+  </header>
+  <main id="main">
+
+    <!-- ============ MENU ============ -->
+    <section class="beat" data-scene="menu">
+      <div class="eyebrow">An interactive walkthrough</div>
+      <h1>The Cyrillic alphabet</h1>
+      <p class="lede">Where the great Slavic script came from, how an emperor and an academy trimmed it, and why the Russian keyboard keeps its commonest letters under your strongest fingers. Three modules, about ten minutes; wander through them in any order.</p>
+      <div style="margin-top:40px">
+        <button class="menu-item" onclick="goModule(1)"><span class="num">01</span><span class="name">The wrong man's alphabet</span><span class="state">Start</span></button>
+        <button class="menu-item" onclick="goModule(2)"><span class="num">02</span><span class="name">The tsar's red pen</span><span class="state">Start</span></button>
+        <button class="menu-item" onclick="goModule(3)"><span class="num">03</span><span class="name">Thirty-three keys</span><span class="state">Start</span></button>
+      </div>
+      <a class="btn ghost" href="index.html" style="margin-top:22px; text-decoration:none">&larr; Back to Codex Lexpressia</a>
+    </section>
+
+    <!-- ============ MODULE 1 ============ -->
+
+    <section class="beat" data-scene="m1">
+      <div class="eyebrow">Module 01</div>
+      <h1>The wrong man's alphabet</h1>
+      <div class="myth">Myth we'll unpick: "Saint Cyril invented Cyrillic"</div>
+      <p class="lede">He did invent an alphabet for the Slavs. It just was not this one. The script that carries his name was built by other hands, in another country, after he was dead.</p>
+    </section>
+
+    <section class="beat" data-scene="m1">
+      <h2>Two brothers and a brand-new script</h2>
+      <div class="callout">In 863 the Byzantine emperor sent two brothers from Thessalonica, <strong>Constantine and Methodius</strong>, on a mission to Great Moravia. For it, Constantine devised <strong>Glagolitic</strong>, the first alphabet ever made for a Slavic language: some forty letters of loops, circles and crosses that look like no other script on earth. Only on his deathbed in Rome, in 869, did Constantine take the monastic name <strong>Cyril</strong>.</div>
+      <p class="caption">So the myth starts from something true: Cyril really was the first person to give the Slavs an alphabet. Hold that thought while the plot moves to Bulgaria.</p>
+    </section>
+
+    <section class="beat" data-scene="m1" data-onenter="resetTimeline">
+      <h2>From Moravia to your phone</h2>
+      <div id="tl">
+        <div class="tl-item"><span class="year">863</span><span class="ttext">Prince Rastislav of Great Moravia asks Byzantium for teachers who can preach in Slavic. Cyril and Methodius arrive, carrying Glagolitic.</span></div>
+        <div class="tl-item"><span class="year">869 &middot; 885</span><span class="ttext">Cyril dies in Rome; Methodius dies in Moravia. Their students are expelled as Latin clergy reclaim the region.</span></div>
+        <div class="tl-item"><span class="year">886</span><span class="ttext">Boris I of Bulgaria takes the exiles in and sets them teaching. Literary schools grow at Preslav and Ohrid.</span></div>
+        <div class="tl-item"><span class="year">c. 900</span><span class="ttext">Around Preslav a second Slavic script emerges: Greek uncial letters for the shared sounds, new letters for the rest. It is named for the teacher: Cyrillic.</span></div>
+        <div class="tl-item"><span class="year">988</span><span class="ttext">Vladimir of Kiev adopts Christianity, and the script travels north into Rus.</span></div>
+        <div class="tl-item last"><span class="year">2007</span><span class="ttext">Bulgaria joins the European Union, and Cyrillic becomes the Union's third official script, after Latin and Greek.</span></div>
+      </div>
+      <p class="qline">Eleven centuries in six lines. Now open the toolbox.</p>
+    </section>
+
+    <section class="beat" data-scene="m1" data-onenter="resetInspector1">
+      <h2>Where the letters came from</h2>
+      <div class="insp-row">
+        <button class="insp-card" onclick="insp1Pick(0)"><span class="big">А</span><span class="sm">borrowed</span></button>
+        <button class="insp-card" onclick="insp1Pick(1)"><span class="big">Б</span><span class="sm">invented</span></button>
+        <button class="insp-card" onclick="insp1Pick(2)"><span class="big">Ж</span><span class="sm">invented</span></button>
+        <button class="insp-card" onclick="insp1Pick(3)"><span class="big">Ш</span><span class="sm">imported</span></button>
+        <button class="insp-card" onclick="insp1Pick(4)"><span class="big">Ы</span><span class="sm">assembled</span></button>
+      </div>
+      <div class="insp-note" id="insp1Note"></div>
+    </section>
+
+    <section class="beat" data-scene="m1" data-onenter="resetReveal">
+      <h2>So who did build Cyrillic?</h2>
+      <div class="revealcard" id="revCard">
+        <p class="q">Cyril died in 869. The script named after him appears in Bulgaria around the year 900. Who made it?</p>
+        <div class="reveal-ans">His students' students. The scholars of the <span class="cy">Preslav</span> literary school, heirs of the expelled Moravian mission, built the new script from the Greek uncial letters they wrote every day and kept Glagolitic-derived signs for the sounds Greek could not spell. They named it in honour of the teacher.
+          <span class="note">Glagolitic did not die quietly: in Croatia it was still being carved and printed into the nineteenth century.</span>
+        </div>
+        <button class="btn ghost" onclick="revealAns()">Reveal</button>
+      </div>
+      <p class="qline">An alphabet named for a man who never wrote it. And it was about to meet an editor with absolute power.</p>
+    </section>
+
+    <!-- ============ MODULE 2 ============ -->
+
+    <section class="beat" data-scene="m2">
+      <div class="eyebrow">Module 02</div>
+      <h1>The tsar's red pen</h1>
+      <div class="myth">Myth we'll unpick: "the alphabet the monks made is the one on screens today"</div>
+      <p class="lede">Between the monastery and your keyboard stand two great prunings: an emperor's, done with his own pen, and an academy's, finished by a revolution.</p>
+    </section>
+
+    <section class="beat" data-scene="m2">
+      <h2>1708 &middot; the civil script</h2>
+      <div class="callout">Between 1708 and 1710 Peter the Great created the <strong>civil script</strong> (<span class="cy">гражданский шрифт</span>) for secular printing: letterforms redrawn to sit comfortably beside the Latin type of Western Europe, and several Greek-inherited letters struck out along with the thicket of accent marks above the line. Peter edited the proofs himself; <strong>a sheet with his own crossings-out survives</strong>. The first book off the press in the new type, in 1708, was a geometry textbook.</div>
+      <p class="caption">The Church kept the old letters, and Church Slavonic is still printed in them today. Among Peter's casualties for civil use: psi (&#1137;) and omega (&#1121;), Greek guests that Russian never needed.</p>
+    </section>
+
+    <section class="beat" data-scene="m2" data-onenter="resetNum">
+      <h2>Before Peter, numbers were letters</h2>
+      <div class="numwrap">
+        <label for="numIn">Type a year &middot; 1 to 9999</label>
+        <input id="numIn" inputmode="numeric" autocomplete="off" value="1708">
+        <div class="numstage">
+          <div>
+            <div class="cyrnum" id="numOut"></div>
+            <div class="partrow" id="numParts"></div>
+          </div>
+          <div class="num-note" id="numNote"></div>
+        </div>
+      </div>
+      <p class="caption">In manuscripts a wavy stroke called a titlo ran above the letters to mean "read me as a number"; here it is drawn as a plain line. Peter's reform swept the whole system away in favour of Arabic digits.</p>
+    </section>
+
+    <section class="beat" data-scene="m2">
+      <h2>1918 &middot; the academy's cut</h2>
+      <div class="callout">The reform that finally deleted four letters was <strong>not a Bolshevik invention</strong>: it was drafted by the orthographic commission of the Imperial Academy of Sciences, first convened in 1904. The Provisional Government ordered the change in 1917, and the Soviet decree of October 1918 made it stick. Two words became one: <span class="cy">миръ</span> (peace) and <span class="cy">міръ</span> (world) collapsed into <span class="cy">мир</span>.</div>
+      <p class="caption">Tolstoy's title was always War and Peace (<span class="cy">Война и миръ</span>); the old spelling is exactly what lets you check the legend that it "really meant" War and the World.</p>
+    </section>
+
+    <section class="beat" data-scene="m2" data-onenter="resetInspector2">
+      <h2>Meet the deleted</h2>
+      <div class="insp-row">
+        <button class="insp-card" onclick="insp2Pick(0)"><span class="big">&#1123;</span><span class="sm">yat</span></button>
+        <button class="insp-card" onclick="insp2Pick(1)"><span class="big">і</span><span class="sm">decimal i</span></button>
+        <button class="insp-card" onclick="insp2Pick(2)"><span class="big">&#1139;</span><span class="sm">fita</span></button>
+        <button class="insp-card" onclick="insp2Pick(3)"><span class="big">ъ</span><span class="sm">final hard sign</span></button>
+      </div>
+      <div class="insp-note" id="insp2Note"></div>
+      <p class="qline">Four letters gone, and the Russian alphabet settled at the 33 letters it has today. Now to lay them on a machine.</p>
+    </section>
+
+    <!-- ============ MODULE 3 ============ -->
+
+    <section class="beat" data-scene="m3">
+      <div class="eyebrow">Module 03</div>
+      <h1>Thirty-three keys</h1>
+      <div class="myth">Myth we'll unpick: "&#1049;&#1062;&#1059;&#1050;&#1045;&#1053; is just QWERTY wearing Cyrillic"</div>
+      <p class="lede">The Russian keyboard is not a translation of the American one. It is a different answer to the same problem, and in one respect a plainly better one.</p>
+    </section>
+
+    <section class="beat" data-scene="m3">
+      <h2>Named by its own top row</h2>
+      <div class="callout">Typewriters fitted for Russian went on sale in the late nineteenth century, and the layout that won the market is the direct ancestor of every Russian keyboard since. Like QWERTY, its name is simply <strong>the top row read left to right</strong>: <span class="cy">Й Ц У К Е Н</span>. Machines built before 1918 carried keys for <span class="cy">&#1123;</span> and <span class="cy">і</span>; when the spelling reform killed those letters, <strong>the reform reached into the hardware</strong> and the dead keys were reassigned.</div>
+      <p class="caption">Thirty-three letters in three rows leaves little room for anything else: on the standard Russian layout the full stop and the comma share a single key, at the far right of the bottom row.</p>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetKb">
+      <h2>Where the common letters live</h2>
+      <div class="chiprow-select" id="kbChips"></div>
+      <div class="kb">
+        <div class="kb-rows" id="kbRows"></div>
+        <div class="kb-legend"><span class="swatch"></span>the language's ten commonest letters<span class="bline"></span>ridged home keys, where the index fingers rest</div>
+        <div class="kb-note" id="kbNote"></div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m3">
+      <h2>The letter in exile</h2>
+      <div class="callout">The youngest letter on the board sits alone in the far top-left corner: <span class="cy">ё</span>. Princess <strong>Yekaterina Dashkova</strong>, head of two academies, proposed it at a session of the Russian Academy in 1783; the writer <strong>Nikolai Karamzin</strong> helped carry it into print. Two centuries on its dots are still optional in most Russian text, required mainly in dictionaries and children's books, and the keyboard shrugs it off to the corner key QWERTY uses for the tilde.</div>
+      <p class="caption">The dots do real work when they appear: <span class="cy">все</span> means "everyone" and <span class="cy">всё</span> means "everything". Most printed text simply trusts you to know which is meant.</p>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetQuiz">
+      <h2>Now you read the board</h2>
+      <div class="quizcard" id="qz1">
+        <p class="setup">The keyboard module put the ten commonest Russian letters under the strongest fingers, and one of them is the single commonest letter in the language. Your right index finger rests on it.</p>
+        <div class="word">Which letter?</div>
+        <div class="ans"><span class="cy">О.</span><span class="note">Its deskmate on QWERTY is j, one of the rarest letters in printed English. Same finger, opposite logic.</span></div>
+        <button class="btn ghost" onclick="quizReveal('qz1')">Reveal</button>
+      </div>
+      <div class="quizcard" id="qz2">
+        <p class="setup">Before 1918, every Russian word ending in a consonant carried one extra letter that made no sound at all; typewriter keys and compositors' cases were built around it.</p>
+        <div class="word">Which letter fell off the ends of words?</div>
+        <div class="ans"><span class="cy">Ъ</span>, the hard sign.<span class="note">It kept its quieter job inside words, where it still separates a prefix from a vowel, as in <span class="cy">объект</span>.</span></div>
+        <button class="btn ghost" onclick="quizReveal('qz2')">Reveal</button>
+      </div>
+      <div class="quizcard" id="qz3">
+        <p class="setup">You met letter-numerals in Module 02: values simply add, and &#1154; marks thousands. The converter's opening example is all the help you need.</p>
+        <div class="word">What year is &#1154;&#1072;&#1137;&#1080;?</div>
+        <div class="ans">1708.<span class="note">&#1154;&#1072; is 1000, &#1137; is 700, &#1080; is 8: the year Peter's geometry textbook came off the press in the new civil type.</span></div>
+        <button class="btn ghost" onclick="quizReveal('qz3')">Reveal</button>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m3">
+      <h2>Why this matters</h2>
+      <div class="callout">An alphabet looks eternal and is anything but. Cyrillic was assembled by exiles from Greek capitals and missionary invention, pruned by an emperor's pen, trimmed by an academy, and finally sorted onto three rows of keys by the arithmetic of tired fingers. <strong>Every key on a Russian keyboard is a decision somebody made</strong>, and you can now read the reasons off the board.</div>
+      <p class="cite">Sources: Encyclopaedia Britannica, "Cyrillic alphabet" and "Saints Cyril and Methodius"; P. Cubberley, "The Slavic Alphabets", in Daniels and Bright (eds), The World's Writing Systems (Oxford, 1996); Decree on the introduction of the new orthography, Sovnarkom, 10 October 1918; Wikipedia, "Civil script", "Reforms of Russian orthography", "Cyrillic numerals", "JCUKEN" and "Yo (Cyrillic)"; letter-frequency ordering from published counts of the Russian National Corpus. Letterforms are shown in your system's fonts.</p>
+      <button class="btn ghost" style="margin-top:32px" onclick="goMenu()">Back to menu</button>
+      <a class="btn ghost" href="index.html" style="margin-left:14px; text-decoration:none">Back to Codex Lexpressia</a>
+    </section>
+
+  </main>
+  <footer id="dots"></footer>
+</div>
+<div class="navhint">&larr; &rarr; or space &nbsp;|&nbsp; M menu</div>
+
+<script>
+  'use strict';
+
+  /* ================= Deck scaffold ================= */
+  const beats = Array.from(document.querySelectorAll('.beat'));
+  let idx = 0;
+  const sceneTitles = {
+    m1: "Module 01 · The wrong man's alphabet",
+    m2: "Module 02 · The tsar's red pen",
+    m3: 'Module 03 · Thirty-three keys'
+  };
+
+  function show(i) {
+    idx = Math.max(0, Math.min(i, beats.length - 1));
+    beats.forEach((b, n) => b.classList.toggle('active', n === idx));
+    const scene = beats[idx].dataset.scene;
+    document.getElementById('hdrRight').textContent =
+      scene === 'menu' ? 'Press M for menu' : sceneTitles[scene];
+    const dots = document.getElementById('dots');
+    dots.innerHTML = '';
+    if (scene !== 'menu') {
+      const moduleBeats = beats.filter(b => b.dataset.scene === scene);
+      const pos = moduleBeats.indexOf(beats[idx]);
+      moduleBeats.forEach((_, n) => {
+        const d = document.createElement('div');
+        d.className = 'dot' + (n === pos ? ' on' : '');
+        dots.appendChild(d);
+      });
+    }
+    const hook = beats[idx].dataset.onenter;
+    if (hook && onEnterHooks[hook]) onEnterHooks[hook]();
+  }
+  function goMenu() { show(0); }
+  function goModule(n) {
+    const i = beats.findIndex(b => b.dataset.scene === 'm' + n);
+    if (i > -1) show(i);
+  }
+  function next() { if (idx < beats.length - 1) show(idx + 1); }
+  function prev() { if (idx > 0) show(idx - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft') prev();
+    else if (e.key === 'm' || e.key === 'M') goMenu();
+    else if (e.key >= '1' && e.key <= '3') goModule(Number(e.key));
+  });
+  /* Background click advances; clicks inside widgets must not. */
+  document.getElementById('main').addEventListener('click', e => {
+    if (e.target.closest('button, a, input, .quizcard, .revealcard, .insp-card, .chipbtn, .numwrap, .kb')) return;
+    next();
+  });
+
+  function staggerShow(els, delay) {
+    els.forEach((el, i) => {
+      el.classList.remove('shown');
+      setTimeout(() => el.classList.add('shown'), 150 + i * delay);
+    });
+  }
+
+  /* ================= Module 1 widgets ================= */
+
+  function resetTimelineState() {
+    staggerShow(Array.from(document.querySelectorAll('#tl .tl-item')), 550);
+  }
+
+  const INSP1 = [
+    { note: '<span class="t">А, borrowed.</span> Straight from Greek uncial alpha, doing the job it had done for over a millennium. Roughly half the early Cyrillic letters are Greek uncial forms carried over with their sounds.' },
+    { note: '<span class="t">Б, invented.</span> By the ninth century Greek beta was pronounced like v, so В took the v sound; a new letter had to be drawn for b, generally seen as a reshaping of В. That is why the alphabet begins а, б, в: alpha, newcomer, beta.' },
+    { note: '<span class="t">Ж, invented.</span> Greek has no zh sound and so no letter for it. This one is generally traced to its counterpart in Glagolitic, zhivete; a sound the mission alphabet had already solved.' },
+    { note: '<span class="t">Ш, imported.</span> Widely traced through Glagolitic to the Semitic letter shin, which it still resembles. Sha has kept nearly the same shape for eleven centuries.' },
+    { note: '<span class="t">Ы, assembled.</span> Originally a digraph written ъі: two existing letters fused into one sign for a vowel Greek never had. You can still see the join.' }
+  ];
+  let insp1Active = null;
+  function insp1Pick(n) {
+    insp1Active = n === insp1Active ? null : n;
+    document.querySelectorAll('[data-onenter="resetInspector1"] .insp-card').forEach((c, i) =>
+      c.classList.toggle('on', i === insp1Active));
+    document.getElementById('insp1Note').innerHTML = insp1Active === null
+      ? 'Click a letter to ask where it came from.'
+      : INSP1[insp1Active].note;
+  }
+  function resetInspector1State() { insp1Active = null; insp1Pick(null); }
+
+  function revealAns() { document.getElementById('revCard').classList.add('answered'); }
+  function resetRevealState() { document.getElementById('revCard').classList.remove('answered'); }
+
+  /* ================= Module 2 widgets ================= */
+
+  /* Cyrillic numerals: units, tens, hundreds rows; 11-19 written units-then-ten. */
+  const CU = ['', 'а', 'в', 'г', 'д', 'є', 'ѕ', 'з', 'и', 'ѳ'];
+  const CT = ['', 'і', 'к', 'л', 'м', 'н', 'ѯ', 'о', 'п', 'ч'];
+  const CH = ['', 'р', 'с', 'т', 'у', 'ф', 'х', 'ѱ', 'ѡ', 'ц'];
+  const THOU = '҂'; /* Cyrillic thousands sign */
+
+  function cyrParts(n) {
+    const parts = [];
+    const th = Math.floor(n / 1000), h = Math.floor((n % 1000) / 100),
+          t = Math.floor((n % 100) / 10), u = n % 10;
+    if (th) parts.push([THOU + CU[th], th * 1000 + '']);
+    if (h) parts.push([CH[h], h * 100 + '']);
+    if (t === 1 && u > 0) { parts.push([CU[u], u + '']); parts.push([CT[1], '10']); }
+    else {
+      if (t) parts.push([CT[t], t * 10 + '']);
+      if (u) parts.push([CU[u], u + '']);
+    }
+    return parts;
+  }
+
+  function renderNum() {
+    const inp = document.getElementById('numIn');
+    let v = inp.value.replace(/\D/g, '').slice(0, 4);
+    if (inp.value !== v) inp.value = v;
+    const out = document.getElementById('numOut');
+    const row = document.getElementById('numParts');
+    const note = document.getElementById('numNote');
+    row.innerHTML = '';
+    if (!v || Number(v) === 0) {
+      out.innerHTML = '';
+      note.innerHTML = 'Type any year from 1 to 9999 and watch the letters add up.';
+      return;
+    }
+    const n = Number(v);
+    const parts = cyrParts(n);
+    out.innerHTML = '<span class="ovl">' + parts.map(p => p[0]).join('') + '</span>';
+    parts.forEach((p, i) => {
+      const el = document.createElement('div');
+      el.className = 'part';
+      el.innerHTML = '<span class="g">' + p[0] + '</span><span class="u">' + p[1] + '</span>';
+      row.appendChild(el);
+      setTimeout(() => el.classList.add('in'), 90 + i * 110);
+    });
+    let extra = '';
+    if (Math.floor((n % 100) / 10) === 1 && n % 10 > 0) {
+      extra = ' Note the order: numbers from 11 to 19 are written units first, exactly the way Russian still says them aloud.';
+    }
+    note.innerHTML = 'Each letter is a value and the values simply add; there is no zero because nothing is written where nothing is counted. The sign ' + THOU + ' multiplies a letter by a thousand.' + extra;
+  }
+  let numWired = false;
+  function resetNumState() {
+    const inp = document.getElementById('numIn');
+    if (!numWired) { inp.addEventListener('input', renderNum); numWired = true; }
+    inp.value = '1708';
+    renderNum();
+  }
+
+  const INSP2 = [
+    { note: '<span class="t">Ѣ, yat.</span> Once a distinct vowel; in standard Russian it had long since come to sound exactly like е, so schoolchildren memorised lists of yat words by rote. Replaced by е.' },
+    { note: '<span class="t">і, decimal i.</span> Worth ten as a numeral, and pronounced the same as и; the rule for choosing between them was almost purely positional. Replaced by и, and the famous pair миръ and міръ fell together.' },
+    { note: '<span class="t">Ѳ, fita.</span> Greek theta, kept for loanwords; Russians pronounced it f, so Fyodor could be spelt with either fita or ф. Merged into ф.' },
+    { note: '<span class="t">Ъ at the end of words.</span> The hard sign kept its job inside words, but the silent ъ that closed every consonant-final word was dropped. Compositors had been setting a letter that said nothing on nearly every word of every page.' }
+  ];
+  let insp2Active = null;
+  function insp2Pick(n) {
+    insp2Active = n === insp2Active ? null : n;
+    document.querySelectorAll('[data-onenter="resetInspector2"] .insp-card').forEach((c, i) =>
+      c.classList.toggle('on', i === insp2Active));
+    document.getElementById('insp2Note').innerHTML = insp2Active === null
+      ? 'Click a letter to read its obituary.'
+      : INSP2[insp2Active].note;
+  }
+  function resetInspector2State() { insp2Active = null; insp2Pick(null); }
+
+  /* ================= Module 3: keyboard ================= */
+
+  const KB = [
+    {
+      chip: 'ЙЦУКЕН',
+      rows: [
+        { keys: 'ё', off: 0 },
+        { keys: 'йцукенгшщзхъ', off: 28 },
+        { keys: 'фывапролджэ', off: 42 },
+        { keys: 'ячсмитьбю', off: 56 }
+      ],
+      hot: 'оеаинтсрвл',
+      bump: 'ао',
+      note: '<span class="t">ЙЦУКЕН.</span> The ten commonest letters of running Russian text (о, е, а, и, н, т, с, р, в, л) pack into the middle columns, under and beside the index fingers. And the two ridged home keys are а and о themselves; your right index finger rests on the single commonest letter in the language.'
+    },
+    {
+      chip: 'QWERTY',
+      rows: [
+        { keys: 'qwertyuiop', off: 0 },
+        { keys: 'asdfghjkl', off: 14 },
+        { keys: 'zxcvbnm', off: 28 }
+      ],
+      hot: 'etaoinshrd',
+      bump: 'fj',
+      note: '<span class="t">QWERTY.</span> English’s commonest letters (the old printers’ order, ETAOIN SHRDLU) scatter: five of the top ten sit on the top row, e and t among them, and your right index finger rests on j, one of the rarest letters in printed English. Whatever QWERTY’s typewriter-era layout was optimising, it was not reach.'
+    }
+  ];
+  let kbActive = 0, kbChipsBuilt = false;
+  function kbRender(n) {
+    kbActive = n;
+    document.querySelectorAll('#kbChips .chipbtn').forEach((c, i) =>
+      c.classList.toggle('on', i === n));
+    const L = KB[n];
+    const wrap = document.getElementById('kbRows');
+    wrap.innerHTML = '';
+    L.rows.forEach(r => {
+      const row = document.createElement('div');
+      row.className = 'kb-row';
+      row.style.marginLeft = r.off + 'px';
+      [...r.keys].forEach(ch => {
+        const k = document.createElement('div');
+        k.className = 'key' + (L.hot.includes(ch) ? ' hot' : '') + (L.bump.includes(ch) ? ' bump' : '');
+        k.textContent = ch;
+        row.appendChild(k);
+      });
+      wrap.appendChild(row);
+    });
+    document.getElementById('kbNote').innerHTML = L.note;
+  }
+  function resetKbState() {
+    if (!kbChipsBuilt) {
+      const wrap = document.getElementById('kbChips');
+      KB.forEach((l, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'chipbtn';
+        btn.textContent = l.chip;
+        btn.onclick = () => kbRender(i);
+        wrap.appendChild(btn);
+      });
+      kbChipsBuilt = true;
+    }
+    kbRender(0);
+  }
+
+  /* ================= Quiz ================= */
+  function quizReveal(id) { document.getElementById(id).classList.add('answered'); }
+  function resetQuizState() {
+    ['qz1', 'qz2', 'qz3'].forEach(id => document.getElementById(id).classList.remove('answered'));
+  }
+
+  const onEnterHooks = {
+    resetTimeline: resetTimelineState,
+    resetInspector1: resetInspector1State,
+    resetReveal: resetRevealState,
+    resetNum: resetNumState,
+    resetInspector2: resetInspector2State,
+    resetKb: resetKbState,
+    resetQuiz: resetQuizState
+  };
+
+  show(0);
+</script>
+</body>
+</html>
