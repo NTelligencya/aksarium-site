@@ -97,7 +97,7 @@
   .menu-item {
     display: flex; align-items: baseline; gap: 24px; width: 100%;
     background: var(--panel); border: 1px solid var(--hairline);
-    padding: 20px 28px; margin-bottom: 13px; cursor: pointer; text-align: left;
+    padding: 15px 28px; margin-bottom: 11px; cursor: pointer; text-align: left;
     color: var(--ink-head); font-family: inherit;
     transition: border-color .2s, box-shadow .25s;
   }
@@ -326,6 +326,37 @@
   }
   .desk .simwater span { color: rgba(240,244,242,.14); transform: rotate(-18deg); }
 
+  /* ---------- menu rationale ---------- */
+  .whyblock { margin-top: 20px; border-top: 1px solid var(--hairline); padding-top: 16px; }
+  .whyblock .whycols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 900px) { .whyblock .whycols { grid-template-columns: 1fr; } }
+  .whyblock p { font-size: 14.5px; line-height: 1.6; color: var(--ink-muted); }
+  .whyblock strong { font-weight: 400; color: var(--ink-body); }
+
+  /* ---------- annotated real-screen explorer ---------- */
+  .shotgrid { display: grid; grid-template-columns: minmax(520px, 660px) 1fr; gap: 36px; align-items: start; }
+  .shotstage {
+    position: relative; border: 1px solid var(--hairline-strong); background: #14181a;
+    padding: 7px; box-shadow: 0 0 40px -14px var(--glow);
+  }
+  .shotstage img { display: block; width: 100%; height: auto; }
+  .spot {
+    position: absolute; z-index: 6; width: 26px; height: 26px; margin: -13px 0 0 -13px;
+    border: 1px solid var(--gold); background: rgba(11,15,13,.78); cursor: pointer; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 10px -1px var(--glow);
+    transition: box-shadow .2s, background .2s;
+  }
+  .spot::after { content: ''; width: 9px; height: 9px; background: var(--gold-bright); transform: rotate(45deg); transition: background .2s; }
+  .spot:hover, .spot.on { box-shadow: 0 0 16px var(--glow); background: rgba(194,145,76,.55); }
+  .spot.on::after { background: var(--ink-head); }
+  .spot:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .shotcap { margin-top: 10px; font-size: 12.5px; line-height: 1.6; color: var(--ink-dim); }
+  .shotnote { min-height: 300px; }
+  .shotnote .ko { font-family: var(--kr); font-size: 24px; line-height: 1.45; color: var(--ink-head); display: block; margin-bottom: 6px; }
+  .shotnote .rom { color: var(--gold-dull); font-size: 15px; display: block; margin-bottom: 2px; }
+  .shotnote .en { color: var(--gold-bright); font-size: 17px; display: block; margin-bottom: 10px; }
+
   /* ---------- clock & Juche widgets ---------- */
   .numgrid { display: grid; grid-template-columns: minmax(380px, 1fr) 1.1fr; gap: 40px; align-items: start; }
   .chiprow { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
@@ -410,12 +441,19 @@
       <div class="eyebrow">Codex Lexpressia · An interactive walkthrough</div>
       <h1>Walled gardens</h1>
       <p class="lede">Two national networks, walked through from the inside. The first is a single app that quietly runs as <strong>two different systems</strong> depending on one field at registration. The second is a network that was <strong>never connected to the world at all</strong>; its operating system gets a module of its own, down to how you read the clock on its screens. About twenty minutes, and every claim is sourced.</p>
-      <div style="margin-top:36px">
+      <div style="margin-top:26px">
         <button class="menu-item" onclick="goModule(1)"><span class="num">01</span><span class="name">One app, two countries</span><span class="state">Start</span></button>
         <button class="menu-item" onclick="goModule(2)"><span class="num">02</span><span class="name">The walled garden made physical</span><span class="state">Start</span></button>
         <button class="menu-item" onclick="goModule(3)"><span class="num">03</span><span class="name">Red Star, up close</span><span class="state">Start</span></button>
       </div>
-      <a class="btn ghost" href="index.html" style="margin-top:18px">&larr; Back to Codex Lexpressia</a>
+      <a class="btn ghost" href="index.html" style="margin-top:10px">&larr; Back to Codex Lexpressia</a>
+      <div class="whyblock">
+        <div class="eyebrow">Why practise behind the wall</div>
+        <div class="whycols">
+          <p>Physical immersion works because it forces you to navigate systems designed by and for native users, not systems translated for outsiders. The same logic applies to screens. A learner who has only ever used an Australian-facing internet has not met the structural logic of a Chinese or North Korean digital environment; they have met a foreign-facing simulacrum of it. The navigation challenges here practise two things at once: <strong>the target language as it actually appears</strong> in interfaces, notifications and payments, and <strong>the information-control architecture</strong> that decides what a native user can see, share and say.</p>
+          <p>This is not a substitute for travel; it is a distinct and complementary literacy, closer to what digital anthropologists call platform ethnography than to a vocabulary app. For a traveller, it front-loads the operational and cultural adjustment that would otherwise happen, expensively, in the first week on the ground. And for the network no traveller can visit, it teaches something else: how open-source research about a closed society actually gets made.</p>
+        </div>
+      </div>
     </section>
 
     <!-- ============ MODULE 01 · Weixin / WeChat ============ -->
@@ -591,7 +629,7 @@
       <div class="eyebrow">Module 03</div>
       <h1>Red Star, up close</h1>
       <div class="myth">Myth we'll unpick: "It's just a Linux skin that looks like a Mac."</div>
-      <p class="lede">Module 02 told you what researchers found. Now stand at the machine. This module puts you in front of a <strong>simulated Red Star desktop</strong> to see where each finding lives, then teaches you to read what every DPRK screen assumes you can: <strong>the clock, the date, and the two number systems</strong> Korean runs at once.</p>
+      <p class="lede">Module 02 told you what researchers found. Now stand at the machine. First a <strong>simulated desktop</strong> shows where each documented mechanism lives; then <strong>archival screenshots of every leaked Red Star version</strong>, annotated so you can learn to read the menus and navigate the environment; then the two things every one of these screens assumes: <strong>the clock, the date, and the two number systems</strong> Korean runs at once.</p>
     </section>
 
     <section class="beat" data-scene="m3" data-onenter="resetDesk">
@@ -624,7 +662,24 @@
         </div>
         <div>
           <div class="lbl">Inspect the machine</div>
-          <div class="noteblock momnote" id="deskNote"><div class="inner"><p class="hint" style="color:var(--ink-dim);font-style:italic">Click a diamond marker to see which documented mechanism lives behind that part of the screen. The desktop is a generic mockup; the mechanisms are from the 2015 analysis of leaked builds.</p></div></div>
+          <div class="noteblock momnote" id="deskNote"><div class="inner"><p class="hint" style="color:var(--ink-dim);font-style:italic">Click a diamond marker to see which documented mechanism lives behind that part of the screen. The desktop is a generic mockup; the mechanisms are from the 2015 analysis of leaked builds. The next screen shows the real thing.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetShots">
+      <h2>Read the real screens</h2>
+      <div class="chiprow" id="shotChips"></div>
+      <div class="shotgrid">
+        <div>
+          <div class="shotstage" id="shotStage">
+            <img id="shotImg" src="" alt="Red Star OS archival screenshot">
+          </div>
+          <p class="shotcap" id="shotCap"></p>
+        </div>
+        <div>
+          <div class="lbl">Read the marked part</div>
+          <div class="noteblock shotnote" id="shotNote"></div>
         </div>
       </div>
     </section>
@@ -632,8 +687,8 @@
     <section class="beat" data-scene="m3">
       <h2>A decade on, the walls got thicker</h2>
       <div class="callout">In mid 2025, offices in Pyongsong began replacing their computers with new machines running Red Star: <strong>fingerprint login, no USB or SD support at all</strong>, and a security suite called Shield Program. The researchers' decade-old finding that the system watches removable media has been answered, in the newest builds, by removing the media.</div>
-      <p class="caption">Reported by Daily NK and 38 North / NK TechLab (August 2025). Version history: Red Star 2.0 and 3.0 leaked and were analysed abroad; 4.0 is confirmed to exist but has never publicly leaked; no version 5.0 is confirmed. Windows XP reportedly remains widespread despite the domestic OS push.</p>
-      <p class="qline">So much for the machine. Now the part every learner meets first: reading its screen.</p>
+      <p class="caption">Reported by Daily NK and 38 North / NK TechLab (August 2025). Version history: 1.0 in 2008; 2.0 completed June 2009; 3.0 released April 2012 and leaked abroad in 2014; 4.0 confirmed by January 2019 and photographed in 2020, but never publicly leaked; no version 5.0 is confirmed. Windows XP reportedly remains widespread despite the domestic OS push.</p>
+      <p class="qline">So much for the machine. Now the part every learner meets first: the numbers on its screens.</p>
     </section>
 
     <section class="beat" data-scene="m3" data-onenter="resetClock">
@@ -670,15 +725,15 @@
         </div>
         <div>
           <div class="lbl">The system behind it</div>
-          <div class="noteblock"><div class="walletnote"><span class="t">Juche year = Gregorian year minus 1911.</span> The calendar counts from 1912, the birth year of Kim Il Sung, and for decades it dated everything: newspapers, documents, screens. In late 2024 it was quietly retired from official use; the 2025 print calendars were the first in a generation without it. The leaked Red Star builds and archived Naenara pages all predate that change, so the screens open-source researchers actually saw carry Juche dates; a reminder that every OSINT snapshot is a photograph of a moment, not a live feed.</div></div>
+          <div class="noteblock"><div class="walletnote"><span class="t">Juche year = Gregorian year minus 1911.</span> The calendar counts from 1912, the birth year of Kim Il Sung, and for decades it dated everything: newspapers, documents, screens. In late 2024 it was quietly retired from official use; the 2025 print calendars were the first in a generation without it. The leaked Red Star builds and archived Naenara pages all predate that change, so the screens open-source researchers actually saw carry Juche dates; a reminder that every OSINT snapshot is a photograph of a moment, not a live feed. You have already read three of them on the real screens: 주체99(2010)-03-20 on the 1.0 taskbar, 주체99(2010)-02-24 on the games screen, and 주체110.04.03 on the 3.0 network panel.</div></div>
         </div>
       </div>
     </section>
 
     <section class="beat" data-scene="m3">
       <h2>What you can now read</h2>
-      <div class="callout">Every Korean screen, North or South, runs <strong>two number systems at once</strong>: native Korean for the hours and for counting things, Sino-Korean for minutes, dates, years and money. And every pre-2025 DPRK document adds one more layer: a calendar that starts in 1912. You can now read both; which means you can date a leaked screenshot <strong>at a glance</strong>, the way the researchers do.</div>
-      <p class="cite">Sources used in this module: Grunow and Schiess, Chaos Communication Congress (2015); Will Scott, "Contextualizing RedStar OS" (2016); Daily NK and 38 North / NK TechLab on the 2025 Red Star deployment (August 2025); NK News (October 2024), Radio Free Asia (December 2024) and Korea Times (February 2025) on the retirement of the Juche calendar; the hour-and-minute reading rule is standard Korean grammar, taught in full in this site's "Two ways to count" walkthrough. Full detail in the project's verified-sources report.</p>
+      <div class="callout">You have now read menus off <strong>real screens of every leaked Red Star version</strong>, met the words the two Koreas split on (내리적재, 탁상화면, 콤퓨터, 회수통), and learned the two number systems every Korean clock runs at once, plus the calendar every pre-2025 DPRK screen carries. Which means you can date a leaked screenshot <strong>at a glance</strong>, the way the researchers do; and read it too.</div>
+      <p class="cite">Sources used in this module: archival screenshots via Wikimedia Commons and the Wikipedia article "Red Star OS" (retrieved 3 August 2026), authors and licences as captioned per image (KCC via archive.org and instiz.net; ItzJezze, own work, CC BY-SA 4.0, 2023; NK Kyongje / NKEconomy, 2020; "Windowing in Red Star Linux", 2011); version dates per the same article; Grunow and Schiess, Chaos Communication Congress (2015); Will Scott, "Contextualizing RedStar OS" (2016); Daily NK and 38 North / NK TechLab on the 2025 Red Star deployment (August 2025); NK News (October 2024), Radio Free Asia (December 2024) and Korea Times (February 2025) on the retirement of the Juche calendar; the North-South vocabulary splits cross-checked against this project's Korean divergence briefing; the hour-and-minute reading rule is standard Korean grammar, taught in full in this site's "Two ways to count" walkthrough.</p>
       <div class="closer-links">
         <a class="btn" href="../morphorian/korean-numbers.html">Two ways to count: the full walkthrough &rarr;</a>
         <button class="btn ghost" onclick="goMenu()">Back to menu</button>
@@ -775,6 +830,71 @@ var WG = {
         body: '<p><strong>The update dialog.</strong> Updates flow from state channels; researchers flagged the Naenara browser’s forced automatic updates as a plausible monitoring path. Will Scott, who used these systems in Pyongyang, offers the counterpoint worth holding: this is a strictly internal, offline system, and its watermarking reads differently in that context than outward-facing spyware would.</p>' }
     ]
   },
+
+  shots: [
+    { chip: '3.0 installer', src: '../assets/images/redstar/redstar-3-installer.jpg',
+      cap: 'Red Star 3.0 installer; version released 15 April 2012, the leaked build analysed abroad from 2014. Screenshot via Wikimedia Commons, from the Wikipedia article "Red Star OS".',
+      spots: [
+        { x: 50, y: 18, tag: 'North · South divergence', ko: '우리 식 조작체계 《붉은별》', rom: 'uri sik chojak ch’egye · Pulgŭnbyŏl', en: 'Our-style operating system, "Red Star"', note: '조작체계 is the North’s term for operating system; the South says 운영체제. 우리 식, "our style", is the Juche self-reliance register, met here before the system even installs.' },
+        { x: 50, y: 61, tag: 'Vocabulary', ko: '사용자용체계 3.0판', rom: 'sayongjayong ch’egye 3.0-p’an', en: 'User system, version 3.0', note: 'The sentence promises system stability and performance, ease of use and security "realised at a high standard". 판 marks an edition or version; 보안 is security; 편리성 is convenience.' },
+        { x: 77, y: 80, tag: 'Context', ko: 'Next', rom: '', en: 'The buttons stay in English', note: 'Even in a Korean-only installer the button conventions travel in English; interface habits cross walls that packets cannot.' },
+        { x: 15, y: 82, tag: 'Vocabulary', ko: '?', rom: 'toummal', en: 'Help', note: 'Everywhere else in the system, help is 도움말; literally "helping words".' }
+      ] },
+    { chip: '3.0 desktop', src: '../assets/images/redstar/redstar-3-desktop.jpg',
+      cap: 'Red Star 3.0 desktop with file viewer, computer information and network panels open. Via Wikimedia Commons, from the Wikipedia article "Red Star OS".',
+      spots: [
+        { x: 5.5, y: 3.2, tag: 'Vocabulary', ko: '파일열람기', rom: 'p’ail yŏllamgi', en: 'File viewer', note: '열람기, a "perusal device", is the North’s suffix for viewer and browser applications. The menu bar sits along the top of the screen, exactly where the Mac it resembles puts it.' },
+        { x: 14, y: 3.2, tag: 'North · South divergence', ko: '파일 · 편집 · 보기 · 가기 · 창문 · 도움말', rom: '', en: 'File, Edit, View, Go, Window, Help', note: '창문 is the everyday word for a house window; the South’s software abbreviates to 창. Six words that repeat on every screen in this archive.' },
+        { x: 33.5, y: 19, tag: 'North · South divergence', ko: '공개 · 내리적재 · 동영상 · 문서 · 사진 · 탁상화면 · 싸이트 · 음악', rom: '', en: 'Public, Downloads, Videos, Documents, Photos, Desktop, Sites, Music', note: '내리적재, "load down", is the North’s own coinage for download where the South borrowed 다운로드. 탁상화면, "tabletop screen", is the South’s 바탕화면. 싸이트 spells site with a tense s; the South writes 사이트.' },
+        { x: 14, y: 53.5, tag: 'North · South divergence', ko: '콤퓨터정보 · 판본 3.0', rom: 'kom’py’ut’ŏ chŏngbo', en: 'Computer information, version 3.0', note: '콤퓨터 is the Northern transliteration; the South writes 컴퓨터. Below it: 처리장치 processor, 기억기 memory (South: 메모리), 기동구획 boot partition, 상세정보 details.' },
+        { x: 72, y: 13, tag: 'Juche date', ko: '주체110.04.03 04:49:52 오후', rom: '', en: 'Juche 110, 3 April, 4:49:52 pm', note: 'A Juche-calendar timestamp on a live window title. Add 1911: Juche 110 is 2021. The calendar was retired from official use in late 2024, which makes screens like this one datable at a glance.' },
+        { x: 62, y: 17, tag: 'North · South divergence', ko: '이써네트', rom: 'issŏnet’ŭ', en: 'Ethernet', note: 'The South writes 이더넷. Around it: 망 net(work), 모뎀 modem, 방화벽 firewall, 환경 environment. 망 does the work "network" does in the South, where 네트워크 is common.' },
+        { x: 52, y: 47, tag: 'North · South divergence', ko: '쏘프트웨어 · 응용프로그람', rom: 'ssop’ŭt’ŭweŏ', en: 'Software · application programs', note: 'Tense consonants and 프로그람 mark Northern loanword spelling; the South writes 소프트웨어 and 프로그램. Under 하드웨어 (hardware), ATA, FireWire and USB read straight through in English.' },
+        { x: 84, y: 92, tag: 'North · South divergence', ko: '회수통', rom: 'hoesut’ong', en: 'Recycle bin', note: 'Literally the "recovery pail". The South’s desktop says 휴지통, the wastepaper basket; two metaphors for the same place files wait.' }
+      ] },
+    { chip: '1.0 boot', src: '../assets/images/redstar/redstar-1-boot.jpg',
+      cap: 'Red Star 1.0 boot splash; version released 2008. Author: KCC, via an archived korea-dpr.com forum page; Wikimedia Commons, from the Wikipedia article "Red Star OS".',
+      spots: [
+        { x: 48, y: 52, tag: 'Vocabulary', ko: '붉은별 · 사용자용체계 1.0판', rom: 'Pulgŭnbyŏl', en: 'Red Star, user system version 1.0', note: '붉은 is the native adjective red; 별 is star. The same wordmark carries through every version to the 3.0 logo you saw in the installer.' }
+      ] },
+    { chip: '1.0 desktop', src: '../assets/images/redstar/redstar-1-desktop.jpg',
+      cap: 'Red Star 1.0 desktop and default file manager, 2008; the taskbar clock reads Juche 99 (2010), 20 March. Author: KCC, via instiz.net; Wikimedia Commons, from the Wikipedia article "Red Star OS".',
+      spots: [
+        { x: 30.6, y: 5.4, tag: 'Context', ko: 'system:/ – 파일열람기', rom: '', en: 'File viewer at system:/', note: 'The same viewer name as version 3.0, five years earlier, in Windows XP dress instead of macOS dress. The look changed; the vocabulary held.' },
+        { x: 20.6, y: 8.8, tag: 'Vocabulary', ko: '파일 · 편집 · 보기 · 가기 · 책갈피 · 도구 · 설정 · 창문 · 도움말', rom: '', en: 'File, Edit, View, Go, Bookmarks, Tools, Settings, Window, Help', note: '책갈피 is a bookmark, literally a book divider; 도구 tools; 설정 settings. Together with the 3.0 menu bar you now hold the full set of Korean menu words.' },
+        { x: 28, y: 24, tag: 'North · South divergence', ko: '나의 등록부 · 리용자등록부', rom: 'naŭi tŭngnokpu', en: 'My directory · user directories', note: '등록부 is a register or ledger where the South says 폴더, folder. 리용자 keeps the initial ㄹ the South drops (이용자); the North never adopted the initial-sound rule, one of the systematic splits in your divergence briefing.' },
+        { x: 90, y: 27.6, tag: 'Vocabulary', ko: '망자원', rom: 'mangjawŏn', en: 'Network resources', note: '망, net, again standing where the South borrows 네트워크.' },
+        { x: 4.5, y: 19.5, tag: 'Vocabulary', ko: '《내나라》열람기 2.0', rom: 'Naenara yŏllamgi', en: '"My Country" browser 2.0', note: 'Naenara, the state portal and browser; the same name in this deck’s Kwangmyong list. Above it 《글》 "Writing", the word processor; below, 《자료기지》 "data base" and 《표》 "Table", the spreadsheet. An office suite named in plain words.' },
+        { x: 94, y: 95, tag: 'Juche date', ko: '주체99(2010)-03-20', rom: '', en: 'Juche 99 (2010), 20 March', note: 'The taskbar clock carries both calendars at once, Juche first and Gregorian in brackets. The date beat two screens ahead teaches the conversion.' },
+        { x: 4.5, y: 95, tag: 'Context', ko: '시작', rom: 'sijak', en: 'Start', note: 'The Start button, in exactly the position Windows XP put it.' }
+      ] },
+    { chip: '2.0 desktop', src: '../assets/images/redstar/redstar-2-desktop.jpg',
+      cap: 'Red Star 2.0 desktop, moments after boot; version completed June 2009. Screenshot by ItzJezze, own work, 21 October 2023, CC BY-SA 4.0; Wikimedia Commons, from the Wikipedia article "Red Star OS".',
+      spots: [
+        { x: 10.7, y: 4.4, tag: 'Vocabulary', ko: '망상태감시기', rom: 'mang sangt’ae kamsigi', en: 'Network status monitor', note: 'The popup reads: "Cannot obtain network configuration information for network device eth0." 감시기 is a monitor, a watcher; the same 감시 that appears in surveillance vocabulary.' },
+        { x: 3.9, y: 33.8, tag: 'Vocabulary', ko: '회수통', rom: 'hoesut’ong', en: 'Recycle bin', note: 'The recovery pail again, one version earlier; above it 나의 콤퓨터, my computer.' },
+        { x: 3.6, y: 20, tag: 'Context', ko: '제품소개', rom: 'chep’um sogae', en: 'Product introduction', note: 'A desktop shortcut to marketing copy for the operating system itself.' }
+      ] },
+    { chip: '4.0 apps', src: '../assets/images/redstar/redstar-4-apps.jpg',
+      cap: 'Red Star 4.0 application screen; version confirmed by January 2019. Photograph published by NK Kyongje (NKEconomy), created 15 June 2020, uploaded to Wikimedia Commons 14 August 2025; via the Wikipedia article "Red Star OS".',
+      spots: [
+        { x: 12.3, y: 17.5, tag: 'Vocabulary', ko: 'PDF열람기', rom: '', en: 'PDF viewer', note: '열람기 again; by version 4.0 the viewer suffix covers PDF, the web (웨브열람기, where the South writes 웹) and files (화일열람기).' },
+        { x: 11.8, y: 56.6, tag: 'Vocabulary', ko: '조작탁', rom: 'chojakt’ak', en: 'Terminal', note: 'Literally the "operation desk"; the same 조작 as in 조작체계, operating system.' },
+        { x: 45.2, y: 56.6, tag: 'Vocabulary', ko: '지뢰찾기', rom: 'chiroe ch’atki', en: 'Minesweeper', note: 'Landmine-finding; one of the few names both Koreas share unchanged.' },
+        { x: 23, y: 43.1, tag: 'North · South divergence', ko: '수산기 · 록음기', rom: 'susan’gi · rogŭmgi', en: 'Calculator · recorder', note: 'The South says 계산기 for calculator. 록음기 keeps the initial ㄹ the South drops (녹음기); the same rule you saw in 리용자.' },
+        { x: 87, y: 43.1, tag: 'North · South divergence', ko: '전자우편', rom: 'chŏnja up’yŏn', en: 'Electronic mail', note: 'Composed from Sino-Korean roots, electron plus post, where the South mostly says 이메일. Beside it, 일정계획, schedule planning.' },
+        { x: 65.3, y: 31.1, tag: 'Vocabulary', ko: '서광사무처리', rom: 'Sŏgwang samu ch’ŏri', en: 'Sogwang office processing', note: 'The office suite; 사무처리 is "office-work processing", assembled from roots rather than borrowed.' },
+        { x: 85, y: 88.5, tag: 'Context', ko: 'NK경제', rom: 'NK Kyŏngje', en: 'The publisher’s watermark', note: 'The South Korean outlet that photographed Red Star 4.0 in 2020. Version 4.0 has never leaked, so photographs of screens like this are the only public view of it; the watermark is part of the provenance.' }
+      ] },
+    { chip: '2.0 games', src: '../assets/images/redstar/redstar-2-games.jpg',
+      cap: 'Built-in games in Red Star 2.0, versions of Atomix and Minesweeper; taskbar clock reads Juche 99 (2010), 24 February. File "Windowing in Red Star Linux.png", uploaded 1 May 2011; Wikimedia Commons, via the Wikipedia article "Red Star OS".',
+      spots: [
+        { x: 64, y: 3, tag: 'North · South divergence', ko: '알색맞추기 · 오락', rom: 'alsaek match’ugi · orak', en: 'Ball-colour matching · Amusement', note: 'The games menu is 오락, amusement, where the South’s software says 게임. 맞추기, matching, names both puzzles on this screen.' },
+        { x: 40, y: 22.5, tag: 'Vocabulary', ko: '원자맞추기', rom: 'wŏnja match’ugi', en: 'Atom matching', note: 'A version of the puzzle game Atomix; 원자 is atom, the same Sino-Korean root in both Koreas.' },
+        { x: 59, y: 68.3, tag: 'Vocabulary', ko: '득점 · 최고 득점 · 현재 득점', rom: 'tŭkchŏm', en: 'Score · high score · current score', note: '최고 highest, 현재 current. Game interfaces are a friendly place to meet quantity words; the clock beat next door finishes the job.' },
+        { x: 92, y: 95, tag: 'Juche date', ko: '주체99(2010)-02-24', rom: '', en: 'Juche 99 (2010), 24 February', note: 'The dual-calendar taskbar clock again, a month before the date on the 1.0 desktop screenshot.' }
+      ] }
+  ],
 
   clock: {
     times: [
@@ -874,7 +994,7 @@ document.addEventListener('keydown', function (e) {
   else if (e.key >= '1' && e.key <= '3') goModule(Number(e.key));
 });
 document.getElementById('main').addEventListener('click', function (e) {
-  if (e.target.closest('button, a, input, .pin, .togglebtn, .wg-tab, .postcard, .phone, .noteblock, .desk, .chipbtn, .clockface, .jucard')) return;
+  if (e.target.closest('button, a, input, .pin, .togglebtn, .wg-tab, .postcard, .phone, .noteblock, .desk, .shotstage, .spot, .chipbtn, .clockface, .jucard')) return;
   next();
 });
 
@@ -1007,7 +1127,7 @@ function resetKwState() {
 /* ================= Red Star desktop inspector ================= */
 var deskActive = null;
 var deskPins = [document.getElementById('dpin0'), document.getElementById('dpin1'), document.getElementById('dpin2')];
-var deskHint = '<p class="hint" style="color:var(--ink-dim);font-style:italic">Click a diamond marker to see which documented mechanism lives behind that part of the screen. The desktop is a generic mockup; the mechanisms are from the 2015 analysis of leaked builds.</p>';
+var deskHint = '<p class="hint" style="color:var(--ink-dim);font-style:italic">Click a diamond marker to see which documented mechanism lives behind that part of the screen. The desktop is a generic mockup; the mechanisms are from the 2015 analysis of leaked builds. The next screen shows the real thing.</p>';
 function deskPick(n) {
   deskActive = (n === deskActive) ? null : n;
   deskPins.forEach(function (p, i) { p.classList.toggle('on', i === deskActive); });
@@ -1021,6 +1141,59 @@ function deskPick(n) {
 }
 deskPins.forEach(function (p, i) { p.addEventListener('click', function () { deskPick(i); }); });
 function resetDeskState() { deskActive = 0; deskPick(0); /* toggles back to null, leaving the hint */ }
+
+/* ================= Annotated real-screen explorer ================= */
+var shotActive = 0, shotSpotActive = null, shotChipsBuilt = false;
+var shotHint = '<div class="inner"><p style="color:var(--ink-dim);font-style:italic">Choose a version above, then click a diamond marker on the screenshot to read that part of the screen: the Korean, a romanisation, the English, and a note. Terms the two Koreas write differently are tagged as divergences.</p></div>';
+function shotSpotPick(i) {
+  shotSpotActive = (i === shotSpotActive) ? null : i;
+  var stage = document.getElementById('shotStage');
+  Array.prototype.forEach.call(stage.querySelectorAll('.spot'), function (s, k) {
+    s.classList.toggle('on', k === shotSpotActive);
+  });
+  var el = document.getElementById('shotNote');
+  if (shotSpotActive === null) { el.innerHTML = shotHint; return; }
+  var a = WG.shots[shotActive].spots[shotSpotActive];
+  el.innerHTML = '<div class="inner"><span class="tagchip">' + a.tag + '</span>' +
+    '<span class="ko">' + a.ko + '</span>' +
+    (a.rom ? '<span class="rom">' + a.rom + '</span>' : '') +
+    '<span class="en">' + a.en + '</span>' +
+    '<p>' + a.note + '</p></div>';
+}
+function shotRender(n) {
+  shotActive = n; shotSpotActive = null;
+  document.querySelectorAll('#shotChips .chipbtn').forEach(function (c, i) { c.classList.toggle('on', i === n); });
+  var d = WG.shots[n];
+  var stage = document.getElementById('shotStage');
+  Array.prototype.forEach.call(stage.querySelectorAll('.spot'), function (s) { s.remove(); });
+  document.getElementById('shotImg').src = d.src;
+  document.getElementById('shotCap').textContent = d.cap;
+  d.spots.forEach(function (sp, i) {
+    var b = document.createElement('button');
+    b.className = 'spot';
+    b.style.left = sp.x + '%';
+    b.style.top = sp.y + '%';
+    b.setAttribute('aria-label', 'Annotation: ' + sp.en);
+    b.addEventListener('click', function () { shotSpotPick(i); });
+    stage.appendChild(b);
+  });
+  document.getElementById('shotNote').innerHTML = shotHint;
+}
+function resetShotsState() {
+  if (!shotChipsBuilt) {
+    shotChipsBuilt = true;
+    var wrap = document.getElementById('shotChips');
+    WG.shots.forEach(function (s, i) {
+      var btn = document.createElement('button');
+      btn.className = 'chipbtn';
+      btn.textContent = s.chip;
+      btn.addEventListener('click', function () { shotRender(i); });
+      wrap.appendChild(btn);
+    });
+  }
+  shotRender(0);
+}
+
 
 /* ================= Clock duality widget ================= */
 var clockActive = 0, clockChipsBuilt = false;
@@ -1102,6 +1275,7 @@ var onEnterHooks = {
   resetMoments: resetMomentsState,
   resetKw: resetKwState,
   resetDesk: resetDeskState,
+  resetShots: resetShotsState,
   resetClock: resetClockState,
   resetJuche: resetJucheState
 };
