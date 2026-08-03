@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Walled gardens · Codex Lexpressia · Aksarium</title>
+<meta name="description" content="An interactive walkthrough of two national walled gardens: China's split Weixin and WeChat ecosystem, and North Korea's Kwangmyong intranet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&family=Eagle+Lake&family=Noto+Sans+SC:wght@400;500&family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<style>
+  :root {
+    --ground: #0b0f0d; --panel: #080c0a; --page: #070d0b;
+    --gold: #c2914c; --gold-bright: #d6a365; --gold-title: #d9a95e;
+    --gold-dull: #a89364; --gold-deep: #6e5227;
+    --ink-head: #e8dcc4; --ink-body: #b3bdb5; --ink-muted: #8b968e;
+    --ink-faint: #8a7a58; --ink-dim: #5f6b64;
+    --hairline: rgba(194,145,76,.16); --hairline-strong: rgba(194,145,76,.3);
+    --glow: rgba(214,163,101,.35);
+    --serif: 'IM Fell DW Pica', serif;
+    --display: 'Eagle Lake', cursive;
+    --sc: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --kr: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    /* simulated app interior; deliberately not Aksarium's palette */
+    --app-bg: #f2f3f1; --app-card: #ffffff; --app-ink: #22282a;
+    --app-muted: #7c8489; --app-accent: #2f7d5d; --app-hairline: #e0e3e1;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { background: var(--page); color: var(--ink-head); font-family: var(--serif); overflow: hidden; }
+  #stage { height: 100vh; display: flex; flex-direction: column; }
+
+  /* Chrome */
+  header {
+    display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
+    flex-shrink: 0; padding: 16px 36px; border-bottom: 1px solid var(--hairline);
+  }
+  header .brand { display: flex; align-items: baseline; gap: 18px; }
+  header .wordmark { font-size: 15px; letter-spacing: .4em; text-transform: uppercase; color: var(--ink-head); }
+  header .wordmark a { color: inherit; text-decoration: none; }
+  header .crumb { font-family: var(--display); font-size: 13px; color: var(--gold-dull); }
+  header .hright { display: flex; align-items: center; gap: 18px; }
+  header .modtag { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-faint); }
+  .simbanner {
+    flex-shrink: 0; text-align: center; font-size: 12px; letter-spacing: .1em; color: var(--gold-dull);
+    border-bottom: 1px solid var(--hairline); padding: 6px 16px; background: rgba(194,145,76,.05);
+  }
+  footer {
+    flex-shrink: 0; display: flex; justify-content: center; align-items: center;
+    gap: 10px; padding: 16px; border-top: 1px solid var(--hairline);
+  }
+  .dot { width: 8px; height: 8px; transform: rotate(45deg); background: rgba(194,145,76,.18); transition: background .3s, box-shadow .3s; }
+  .dot.on { background: var(--gold); box-shadow: 0 0 10px var(--glow); }
+  main { flex: 1; display: flex; padding: 12px 56px; overflow: auto; }
+  .beat { display: none; max-width: 1120px; width: 100%; margin: auto; animation: rise .45s ease; }
+  .beat.active { display: block; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .navhint { position: fixed; right: 30px; bottom: 14px; color: var(--ink-dim); font-size: 12px; letter-spacing: 1px; }
+
+  /* Shared */
+  .eyebrow { color: var(--ink-faint); font-size: 12px; letter-spacing: .32em; text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-family: var(--display); font-weight: 400; font-size: 44px; line-height: 1.15; color: var(--gold-title); }
+  h2 { font-family: var(--display); font-weight: 400; font-size: 30px; line-height: 1.2; margin-bottom: 22px; color: var(--gold-title); }
+  .lede { font-size: 20px; line-height: 1.6; color: var(--ink-body); margin-top: 16px; max-width: 800px; }
+  .lede strong, .callout strong { font-weight: 400; color: var(--ink-head); text-shadow: 0 0 14px rgba(232,220,196,.3); }
+  .myth {
+    display: inline-block; margin-top: 24px; padding: 9px 20px;
+    border: 1px solid var(--gold); color: var(--gold-bright); font-size: 17px;
+    box-shadow: 0 0 16px -6px var(--glow);
+  }
+  .callout {
+    border-left: 2px solid var(--gold); background: rgba(10,16,13,.6);
+    padding: 24px 30px; font-size: 22.5px; line-height: 1.55; max-width: 900px; color: var(--ink-body);
+  }
+  .caption { color: var(--ink-muted); font-size: 15px; margin-top: 20px; max-width: 900px; line-height: 1.6; }
+  .cite { color: var(--ink-dim); font-size: 13px; margin-top: 14px; line-height: 1.7; max-width: 920px; }
+  .qline { margin-top: 26px; font-size: 20px; color: var(--ink-muted); }
+  .btn {
+    display: inline-block; margin-top: 24px; padding: 12px 30px;
+    background: var(--gold); color: #14100a; border: 1px solid var(--gold);
+    font-size: 15px; letter-spacing: .1em; font-family: inherit; cursor: pointer;
+    transition: box-shadow .2s; text-decoration: none;
+  }
+  .btn:hover { box-shadow: 0 0 20px -2px var(--glow); }
+  .btn.ghost { background: transparent; color: var(--gold); border: 1px solid var(--hairline-strong); }
+  .btn.ghost:hover { color: var(--gold-bright); border-color: var(--gold); }
+  .btn:focus-visible, .menu-item:focus-visible, .togglebtn:focus-visible, .glossbtn:focus-visible,
+  .pin:focus-visible, .app-btn:focus-visible, .wg-tab:focus-visible, .postcard:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .tagchip {
+    display: inline-block; font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase;
+    border: 1px solid var(--hairline-strong); color: var(--gold-dull); padding: 3px 9px; margin-bottom: 10px;
+  }
+
+  /* Menu */
+  .menu-item {
+    display: flex; align-items: baseline; gap: 24px; width: 100%;
+    background: var(--panel); border: 1px solid var(--hairline);
+    padding: 20px 28px; margin-bottom: 13px; cursor: pointer; text-align: left;
+    color: var(--ink-head); font-family: inherit;
+    transition: border-color .2s, box-shadow .25s;
+  }
+  .menu-item:hover { border-color: var(--gold); box-shadow: 0 0 26px -8px var(--glow); }
+  .menu-item .num { color: var(--ink-faint); font-size: 14px; letter-spacing: .26em; }
+  .menu-item .name { font-size: 23px; flex: 1; }
+  .menu-item .state { color: var(--ink-faint); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+
+  /* Gloss toggle */
+  .glossbtn {
+    font-family: var(--serif); font-size: 13px; color: var(--gold); background: transparent;
+    border: 1px solid var(--hairline-strong); padding: 6px 14px; cursor: pointer; letter-spacing: .06em;
+    transition: border-color .2s, color .2s;
+  }
+  .glossbtn:hover { border-color: var(--gold); color: var(--gold-bright); }
+  .glossbtn.on { border-color: var(--gold); color: var(--gold-bright); background: rgba(194,145,76,.08); }
+  .gloss { display: none; color: var(--gold-deep); font-size: 11px; letter-spacing: .02em; font-family: var(--serif); }
+  body.glosson .gloss { display: block; }
+  .gloss-dark { display: none; color: var(--gold-dull); font-size: 12.5px; font-family: var(--serif); }
+  body.glosson .gloss-dark { display: block; }
+
+  /* ---------- branch-point widget ---------- */
+  .branchgrid { display: grid; grid-template-columns: 330px 1fr; gap: 44px; align-items: start; }
+  .phonewrap { position: relative; width: 306px; margin-left: 18px; }
+  .phone {
+    position: relative; width: 306px; height: 566px; border-radius: 32px;
+    border: 1px solid var(--hairline-strong); background: #14181a; padding: 11px; overflow: hidden;
+    box-shadow: 0 0 40px -14px var(--glow);
+  }
+  .screen {
+    position: relative; height: 100%; border-radius: 22px; overflow: hidden;
+    background: var(--app-bg); color: var(--app-ink);
+    font-family: var(--sc); font-size: 13.5px;
+  }
+  .screen .appmain { transition: opacity .22s ease; height: 100%; }
+  .screen.reskin .appmain { opacity: 0; }
+  .notch { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 104px; height: 20px; background: #14181a; border-radius: 0 0 13px 13px; z-index: 5; }
+  .statusbar { display: flex; justify-content: space-between; padding: 9px 18px 3px; font-size: 11.5px; color: var(--app-muted); }
+  .appbody { padding: 22px 22px 0; text-align: center; }
+  .applogo {
+    width: 54px; height: 54px; margin: 12px auto 8px; border-radius: 14px;
+    background: var(--app-accent); color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 23px; font-weight: 500;
+  }
+  .appword { font-size: 20px; font-weight: 500; }
+  .appword .latin { font-size: 14px; color: var(--app-muted); display: block; margin-top: 2px; font-weight: 400; }
+  .apphead { margin-top: 18px; font-size: 15px; font-weight: 500; text-align: left; }
+  .fieldrow {
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    background: var(--app-card); border: 1px solid var(--app-hairline); border-radius: 10px;
+    padding: 11px 13px; margin-top: 10px; text-align: left;
+  }
+  .fieldrow .flabel { color: var(--app-muted); font-size: 12.5px; flex-shrink: 0; }
+  .fieldrow .fval { font-size: 13.5px; }
+  .fieldrow .chev { color: var(--app-muted); }
+  .agree { margin-top: 12px; text-align: left; font-size: 11.5px; color: var(--app-muted); line-height: 1.55; }
+  .agree .alink { color: var(--app-accent); }
+  .app-btn {
+    width: 100%; margin-top: 16px; padding: 12px 0; border: none; border-radius: 10px;
+    background: var(--app-accent); color: #fff; font-family: var(--sc); font-size: 15px; cursor: pointer;
+  }
+  .simwater { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 4; }
+  .simwater span {
+    transform: rotate(-32deg); font-size: 23px; letter-spacing: .3em; text-transform: uppercase;
+    color: rgba(34,40,42,.10); font-family: var(--sc); white-space: nowrap;
+  }
+  .simfoot {
+    position: absolute; bottom: 0; left: 0; right: 0; text-align: center; z-index: 4;
+    font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: #8a8f8c;
+    padding: 6px 0 8px; background: rgba(242,243,241,.9); border-top: 1px solid var(--app-hairline);
+  }
+  .rereg {
+    position: absolute; inset: 0; z-index: 7; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 13px; text-align: center;
+    background: #1c2220; color: #cfd6d2; font-family: var(--sc);
+    opacity: 0; pointer-events: none; transition: opacity .22s ease;
+  }
+  .rereg.show { opacity: 1; }
+  .rereg .rline1 { font-size: 14px; }
+  .rereg .rline2 { font-size: 11.5px; color: #8a938e; }
+  .rereg .spin { display: flex; gap: 7px; margin-bottom: 4px; }
+  .rereg .spin i { width: 6px; height: 6px; border-radius: 50%; background: #6f7a74; animation: blink 1s infinite; }
+  .rereg .spin i:nth-child(2) { animation-delay: .18s; }
+  .rereg .spin i:nth-child(3) { animation-delay: .36s; }
+  @keyframes blink { 0%, 70%, 100% { opacity: .25; } 35% { opacity: 1; } }
+  .pin {
+    position: absolute; z-index: 6; width: 36px; height: 36px; border: 1px solid var(--gold);
+    background: rgba(11,15,13,.92); cursor: pointer; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 12px -2px var(--glow);
+    transition: box-shadow .2s, background .2s;
+  }
+  .pin::after { content: ''; width: 12px; height: 12px; background: var(--gold-bright); transform: rotate(45deg); transition: background .2s; }
+  .pin:hover, .pin.on { box-shadow: 0 0 20px var(--glow); background: rgba(194,145,76,.3); }
+  .pin.on::after { background: var(--ink-head); }
+  .togglerow { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .togglebtn {
+    font-family: inherit; font-size: 15px; color: var(--ink-body); background: var(--panel);
+    border: 1px solid var(--hairline-strong); padding: 10px 18px; cursor: pointer;
+    transition: border-color .2s, box-shadow .2s, color .2s;
+  }
+  .togglebtn .pref { color: var(--ink-faint); letter-spacing: .08em; margin-right: 7px; }
+  .togglebtn:hover { border-color: var(--gold); }
+  .togglebtn.on { border-color: var(--gold); color: var(--ink-head); box-shadow: 0 0 22px -6px var(--glow); background: rgba(194,145,76,.08); }
+  .lbl { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 10px; }
+  .noteblock {
+    background: var(--panel); border: 1px solid var(--hairline); border-left: 2px solid var(--gold);
+    padding: 18px 22px;
+  }
+  .noteblock h3 { font-family: var(--display); font-weight: 400; font-size: 18px; color: var(--gold-title); margin-bottom: 9px; }
+  .noteblock p { font-size: 15.5px; line-height: 1.6; color: var(--ink-body); }
+  .noteblock p + p { margin-top: 8px; }
+  .noteblock strong { font-weight: 400; color: var(--ink-head); text-shadow: 0 0 14px rgba(232,220,196,.25); }
+  .permline { margin-top: 10px; font-size: 14px; color: var(--ink-muted); font-style: italic; }
+  #branchState { min-height: 262px; }
+  #branchPin { margin-top: 16px; min-height: 118px; }
+  #branchPin .hint { color: var(--ink-dim); font-style: italic; }
+  .noteblock .inner { animation: rise .35s ease; }
+
+  /* ---------- wallet tabbed swap ---------- */
+  .wg-tabs { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+  .wg-tab {
+    font-family: inherit; font-size: 16px; padding: 10px 20px; cursor: pointer;
+    background: var(--panel); color: var(--ink-muted); border: 1px solid var(--hairline);
+    transition: border-color .2s, color .2s, box-shadow .2s;
+  }
+  .wg-tab:hover { color: var(--ink-head); border-color: var(--gold-dull); }
+  .wg-tab.on { color: var(--gold-bright); border-color: var(--gold); box-shadow: 0 0 16px -6px var(--glow); }
+  .walletgrid { display: grid; grid-template-columns: minmax(420px, 1.25fr) 1fr; gap: 38px; align-items: start; }
+  .wrow {
+    display: grid; grid-template-columns: 190px 1fr; gap: 18px; padding: 12px 0;
+    border-bottom: 1px solid var(--hairline);
+    opacity: 0; transform: translateY(8px); transition: opacity .4s, transform .4s;
+  }
+  .wrow.shown { opacity: 1; transform: none; }
+  .wrow .wfun { font-size: 15px; color: var(--gold-dull); line-height: 1.5; }
+  .wrow .wfun .zh { font-family: var(--sc); font-size: 13px; color: var(--ink-faint); display: block; }
+  .wrow .wval { font-size: 16.5px; line-height: 1.55; color: var(--ink-body); }
+  .wrow .wval.no { color: var(--ink-muted); }
+  .wrow .wval .yes { color: var(--ink-head); }
+  .wrow .wval .blocked { color: var(--gold-bright); }
+  .walletnote { font-size: 16px; line-height: 1.65; color: var(--ink-body); }
+  .walletnote .t { color: var(--gold-bright); }
+
+  /* ---------- moments inspector ---------- */
+  .momentsgrid { display: grid; grid-template-columns: 360px 1fr; gap: 40px; align-items: start; }
+  .feedframe {
+    border: 1px solid var(--hairline-strong); border-radius: 18px; background: #14181a; padding: 9px;
+    position: relative;
+  }
+  .feed { background: var(--app-bg); border-radius: 12px; overflow: hidden; font-family: var(--sc); position: relative; }
+  .feedhead { padding: 12px 16px 10px; font-size: 14px; font-weight: 500; color: var(--app-ink); border-bottom: 1px solid var(--app-hairline); background: var(--app-card); }
+  .feedhead .gloss { font-size: 10.5px; }
+  .postcard {
+    display: block; width: 100%; text-align: left; font-family: var(--sc); cursor: pointer;
+    background: var(--app-card); border: none; border-bottom: 1px solid var(--app-hairline);
+    padding: 13px 16px; color: var(--app-ink); position: relative;
+    transition: background .2s;
+  }
+  .postcard:hover { background: #f7f8f6; }
+  .postcard.on { background: #f0ece2; box-shadow: inset 3px 0 0 var(--gold); }
+  .postcard .pname { display: block; font-size: 13px; font-weight: 500; color: #4a6f8a; margin-bottom: 3px; }
+  .postcard .ptext { display: block; font-size: 13.5px; line-height: 1.55; }
+  .postcard .pmeta { display: block; font-size: 11px; color: var(--app-muted); margin-top: 5px; }
+  .postcard .pimg {
+    display: block; overflow: hidden; margin-top: 7px; height: 54px; border-radius: 6px;
+    background: linear-gradient(120deg, #c9d4cc, #a9bdb2 60%, #8fa89c); position: relative;
+  }
+  .postcard .pimg::after { content: '模拟图片 · simulated image'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; color: rgba(34,40,42,.45); letter-spacing: .08em; }
+  .feedsimfoot { text-align: center; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: #8a8f8c; padding: 6px 0 7px; background: rgba(242,243,241,.95); }
+  .momnote { min-height: 250px; }
+
+  /* ---------- staggered list (Kwangmyong) ---------- */
+  .tl-item {
+    display: grid; grid-template-columns: 210px 1fr; gap: 24px; padding: 13px 0;
+    border-bottom: 1px solid var(--hairline);
+    opacity: 0; transform: translateY(8px); transition: opacity .5s, transform .5s;
+  }
+  .tl-item.shown { opacity: 1; transform: none; }
+  .tl-item .year { font-size: 19px; color: var(--gold-bright); line-height: 1.4; }
+  .tl-item .year .kr { font-family: var(--kr); font-size: 15px; color: var(--ink-faint); display: block; }
+  .tl-item .ttext { font-size: 16.5px; line-height: 1.6; color: var(--ink-body); }
+  .tl-item.last .ttext { color: var(--ink-head); }
+
+  .closer-links { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .beat, .noteblock .inner { animation: none; }
+    .tl-item, .wrow, .screen .appmain, .rereg { transition: none; }
+    .rereg .spin i { animation: none; opacity: .6; }
+  }
+  @media (max-width: 980px) {
+    h1 { font-size: 34px; } h2 { font-size: 25px; }
+    main { padding: 10px 24px; }
+    .branchgrid, .walletgrid, .momentsgrid { grid-template-columns: 1fr; }
+    .tl-item { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <header>
+    <div class="brand">
+      <span class="wordmark"><a href="../index.html">Aksarium</a></span>
+      <span class="crumb">Codex Lexpressia · Walled gardens</span>
+    </div>
+    <div class="hright">
+      <button class="glossbtn" id="glossBtn">English gloss · off</button>
+      <span class="modtag" id="hdrRight">Press M for menu</span>
+    </div>
+  </header>
+  <div class="simbanner">Educational simulation. Not affiliated with, or endorsed by, Tencent or any other platform owner. Nothing here logs in, registers, or sends data anywhere.</div>
+  <main id="main">
+
+    <!-- ============ MENU ============ -->
+    <section class="beat" data-scene="menu">
+      <div class="eyebrow">Codex Lexpressia · An interactive walkthrough</div>
+      <h1>Walled gardens</h1>
+      <p class="lede">Two national networks, walked through from the inside. The first is a single app that quietly runs as <strong>two different systems</strong> depending on one field at registration. The second is a network that was <strong>never connected to the world at all</strong>. About fifteen minutes, and every claim is sourced.</p>
+      <div style="margin-top:36px">
+        <button class="menu-item" onclick="goModule(1)"><span class="num">01</span><span class="name">One app, two countries</span><span class="state">Start</span></button>
+        <button class="menu-item" onclick="goModule(2)"><span class="num">02</span><span class="name">The walled garden made physical</span><span class="state">Start</span></button>
+      </div>
+      <a class="btn ghost" href="index.html" style="margin-top:18px">&larr; Back to Codex Lexpressia</a>
+    </section>
+
+    <!-- ============ MODULE 01 · Weixin / WeChat ============ -->
+
+    <section class="beat" data-scene="m1">
+      <div class="eyebrow">Module 01</div>
+      <h1>One app, two countries</h1>
+      <div class="myth">Myth we'll unpick: "It's the same app with an English button."</div>
+      <p class="lede">Weixin (微信) and WeChat are one product, owned by Tencent, split in 2013 by a single mechanism: the phone number you register with. A mainland Chinese number creates a Weixin account under Chinese data and content law; any other number creates a WeChat account under the international terms. Same login screen, <strong>two sets of rules</strong>.</p>
+    </section>
+
+    <section class="beat" data-scene="m1" data-onenter="resetBranch">
+      <h2>The branch point</h2>
+      <div class="branchgrid">
+        <div class="phonewrap">
+          <div class="phone">
+            <div class="notch"></div>
+            <div class="screen" id="screen">
+              <div class="appmain">
+                <div class="statusbar"><span>9:41</span><span id="sbCarrier">&ndash;</span></div>
+                <div class="appbody">
+                  <div class="applogo" id="appLogo">W</div>
+                  <div class="appword" id="appWord"></div>
+                  <div class="apphead" id="appHead"></div>
+                  <div class="fieldrow">
+                    <span class="flabel" id="regionLabel"></span>
+                    <span class="fval" id="regionVal"></span>
+                    <span class="chev">&rsaquo;</span>
+                  </div>
+                  <div class="fieldrow">
+                    <span class="flabel" id="phoneLabel"></span>
+                    <span class="fval" id="phoneVal"></span>
+                  </div>
+                  <div class="agree" id="agreeLine"></div>
+                  <button class="app-btn" id="signupBtn"></button>
+                </div>
+              </div>
+              <div class="rereg" id="rereg">
+                <div class="spin"><i></i><i></i><i></i></div>
+                <div class="rline1" id="reregL1"></div>
+                <div class="rline2" id="reregL2"></div>
+              </div>
+              <div class="simwater"><span>Simulation · 模拟</span></div>
+              <div class="simfoot">Educational mockup · no real registration</div>
+            </div>
+          </div>
+          <button class="pin" id="pin0" style="top: 100px; left: -18px;" aria-label="Annotation: the wordmark"></button>
+          <button class="pin" id="pin1" style="top: 262px; right: -18px;" aria-label="Annotation: the phone number field"></button>
+          <button class="pin" id="pin2" style="top: 330px; left: -18px;" aria-label="Annotation: the agreement line"></button>
+        </div>
+        <div>
+          <div class="togglerow">
+            <button class="togglebtn on" id="tog0"><span class="pref">+61</span>Australian number</button>
+            <button class="togglebtn" id="tog1"><span class="pref">+86</span>Chinese mainland number</button>
+          </div>
+          <div class="lbl">What just changed</div>
+          <div class="noteblock" id="branchState"><div class="inner"></div></div>
+          <div class="lbl" style="margin-top:16px">Inspect the screen</div>
+          <div class="noteblock" id="branchPin"><div class="inner"><p class="hint">Click a diamond marker on the phone to read the annotation behind that part of the screen.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m1">
+      <h2>Outside the wall is not outside the system</h2>
+      <div class="callout">In 2020, Citizen Lab tested what happens to documents and images shared entirely between international WeChat accounts; no mainland account anywhere in the conversation. The content was still put under surveillance, and the results were used to <strong>train the censorship system applied to China-registered users</strong>. An account outside the wall is not beyond the machine; it is one of the machine's inputs.</div>
+      <p class="caption">Citizen Lab, "We Chat, They Watch", Research Report No. 127, May 2020 (Knockel, Parsons, Ruan, Xiong, Crandall and Deibert). The lab's director, Ron Deibert, described it as "essentially undertaking political surveillance on one segment of users". Their earlier report, "One App, Two Systems" (2016), gave this module its name.</p>
+      <p class="qline">Rules are one thing. Money is another. Next: what each account's wallet is allowed to do.</p>
+    </section>
+
+    <section class="beat" data-scene="m1" data-onenter="resetWallet">
+      <h2>Two wallets</h2>
+      <div class="wg-tabs">
+        <button class="wg-tab on" id="wtab0">Foreign-card wallet</button>
+        <button class="wg-tab" id="wtab1">Domestic wallet</button>
+      </div>
+      <div class="walletgrid">
+        <div id="walletRows"></div>
+        <div>
+          <div class="lbl">What this wallet is for</div>
+          <div class="noteblock"><div class="walletnote" id="walletNote"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m1" data-onenter="resetMoments">
+      <h2>The feed, inspected</h2>
+      <div class="momentsgrid">
+        <div class="feedframe">
+          <div class="feed">
+            <div class="feedhead">朋友圈<span class="gloss">Moments · the social feed</span></div>
+            <button class="postcard" id="post0">
+              <span class="pname">Lin</span>
+              <span class="ptext">今晚的新闻值得一看，链接在这里。<span class="gloss">Tonight's news is worth a look; link here.</span></span>
+              <span class="pmeta">2 小时前 · 转发链接</span>
+            </button>
+            <button class="postcard" id="post1">
+              <span class="pname">城市生活指南</span>
+              <span class="ptext">本周活动汇总已发布，点击查看。<span class="gloss">This week's events round-up is out; tap to view. (An official account post.)</span></span>
+              <span class="pmeta">昨天 · 公众号</span>
+            </button>
+            <button class="postcard" id="post2">
+              <span class="pname">Mei</span>
+              <span class="ptext">周末的山，拍给你们看。<span class="gloss">The mountains this weekend; photos for you all.</span></span>
+              <span class="pimg"></span>
+              <span class="pmeta">3 天前 · 图片</span>
+            </button>
+            <div class="feedsimfoot">Educational mockup · simulated posts</div>
+          </div>
+        </div>
+        <div>
+          <div class="lbl">What the machinery does with each post</div>
+          <div class="noteblock momnote" id="momNote"><div class="inner"><p class="hint" style="color:var(--ink-dim);font-style:italic">Click a post to see the mechanism that runs over it. The posts are fictional; the mechanisms are documented.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m1">
+      <h2>Why this matters</h2>
+      <div class="callout">If you travel, your account type was decided the moment you typed your number; it is <strong>not a setting you can change later</strong>. Your wallet buys but cannot send. Your posts are moderated lightly but read closely. None of this is visible in the interface, which is precisely why it is worth fifteen minutes of your attention now rather than a confusing first week on the ground.</div>
+      <p class="caption">Standard Australian government travel advice for China (Smartraveller) separately recommends assuming no privacy on hotel or public Wi-Fi and taking care with social media in tense periods; ordinary published precautions, worth reading before departure.</p>
+      <p class="cite">Sources used in this module: Citizen Lab, "One App, Two Systems" (2016); Citizen Lab, "We Chat, They Watch", Research Report No. 127 (May 2020); Beijing Municipal Government English portal, foreign bank card guidance (28 May 2025); China Briefing, foreign-wallet transaction limits; Cybersecurity Law of the People's Republic of China, Article 24 (2017); Measures on the Management of the National Network Identity Authentication Public Service, in force 15 July 2025 (via China Law Translate and the Library of Congress); Smartraveller China travel advice. Full detail in the project's verified-sources report.</p>
+      <div class="closer-links">
+        <button class="btn" onclick="goModule(2)">On to Module 02: the walled garden made physical &rarr;</button>
+        <a class="btn ghost" href="index.html">Codex Lexpressia</a>
+        <a class="btn ghost" href="../languages/index.html">The languages hub</a>
+      </div>
+    </section>
+
+    <!-- ============ MODULE 02 · DPRK ============ -->
+
+    <section class="beat" data-scene="m2">
+      <div class="eyebrow">Module 02 · A contrast case, not a travel guide</div>
+      <h1>The walled garden made physical</h1>
+      <div class="myth">Myth we'll unpick: "It's just a stricter version of the same internet."</div>
+      <p class="lede">North Korea's Kwangmyong (광명) is not a filtered internet. It is a <strong>separate network that was never connected to the world to begin with</strong>; the wall is not software, it is the topology itself. Module 01 showed control built into an app; this shows control built into the wires. You cannot visit Kwangmyong from outside the country, which makes how we know anything about it part of the lesson.</p>
+    </section>
+
+    <section class="beat" data-scene="m2">
+      <h2>The operating system that watches its own files</h2>
+      <div class="callout">At the 2015 Chaos Communication Congress, German researchers Florian Grunow and Niklaus Schiess presented the first deep analysis of Red Star OS, North Korea's home-built operating system. It is styled to look like macOS but is a modified Linux underneath; it <strong>stamps an identifying watermark into files</strong>, including those passed hand to hand on USB sticks, so the spread of unauthorised media can be traced; and it protects itself, with an integrity system that can <strong>reboot the machine if its core files are altered</strong>.</div>
+      <p class="caption">Grunow and Schiess, Chaos Communication Congress, Hamburg, 2015. Researcher Will Scott, who taught in Pyongyang and has handled the system in country, offers a counterpoint worth carrying alongside: the watermarking should be read in the context of a strictly internal, offline system, not as outward-facing spyware. The latest confirmed version is Red Star 4.0, which has never publicly leaked.</p>
+      <p class="qline">That is the terminal. Now the network it connects to.</p>
+    </section>
+
+    <section class="beat" data-scene="m2" data-onenter="resetKw">
+      <h2>What grows inside</h2>
+      <p class="caption" style="margin-top:0;margin-bottom:18px">Everything on this list is reconstructed from defector accounts, leaked builds, and the small number of foreigners who have used the network in country. There is no live source a learner could browse; treat the names as documented sightings, not a directory.</p>
+      <div id="kwList">
+        <div class="tl-item"><span class="year">Naenara<span class="kr">내나라 · "my country"</span></span><span class="ttext">The portal and its browser: a modified Firefox built by the state's Korea Computer Center, with forced automatic updates that researchers flag as a plausible monitoring channel.</span></div>
+        <div class="tl-item"><span class="year">Manbang<span class="kr">만방 · IPTV</span></span><span class="ttext">A state streaming service; on-demand television over the intranet, one of the network's most visible consumer faces.</span></div>
+        <div class="tl-item"><span class="year">Domestic e-commerce<span class="kr">상점 · shopping sites</span></span><span class="ttext">Online shopping grew inside the wall too; roughly twenty-two shopping sites were counted by 2021, per specialist reporting.</span></div>
+        <div class="tl-item"><span class="year">E-wallets<span class="kr">삼흥 · 나래</span></span><span class="ttext">Competing payment apps, Samhung and Narae, covering buses, the metro, taxis and shops; balances shown in both won and a virtual "foreign-exchange won".</span></div>
+        <div class="tl-item last"><span class="year">The mandatory app<span class="kr">광명 앱</span></span><span class="ttext">Since 2022, smartphones must carry a state "Kwangmyong app" as a prerequisite for intranet access; it also enables location tracking and device monitoring. The garden's gate is on the phone itself.</span></div>
+      </div>
+      <p class="qline">Not a smaller internet; a different organism, grown for propagation and payment, not connection.</p>
+    </section>
+
+    <section class="beat" data-scene="m2">
+      <h2>How we know any of this</h2>
+      <div class="callout">Nothing in this module came from browsing Kwangmyong, because nobody outside the country can. It came from <strong>leaked operating-system builds, defector interviews, tour-operator photographs and satellite-watching specialists</strong>, cross-checked against each other. That is the real lesson of the contrast case: open-source research about a closed society is an assembled mosaic, and knowing how the tiles were sourced tells you exactly how far to trust the picture.</div>
+      <p class="cite">Sources used in this module: 38 North / NK TechLab (Martyn Williams), including "More Than Smartphones" (July 2026) and the 2025 reporting on Red Star deployments; PSCORE, "Digital Hostages: Internet Freedom in North Korea" (June 2023); Grunow and Schiess, Chaos Communication Congress (2015); Will Scott, "Contextualizing RedStar OS" (2016); Radio Free Asia on the mandatory smartphone app (July 2022). Full detail in the project's verified-sources report.</p>
+      <div class="closer-links">
+        <button class="btn ghost" onclick="goMenu()">Back to menu</button>
+        <a class="btn ghost" href="index.html">Codex Lexpressia</a>
+      </div>
+    </section>
+
+  </main>
+  <footer id="dots"></footer>
+</div>
+<div class="navhint">&larr; &rarr; or space &nbsp;|&nbsp; M menu</div>
+<script>
+'use strict';
+
+/* =================================================================
+   Content data. All widget copy lives here so a future cohort can
+   edit content without touching layout code.
+   Annotation tags: data-sharing | cultural | travel-advice
+   ================================================================= */
+var WG = {
+  branch: {
+    states: [
+      { // 0: non-Chinese number -> WeChat
+        carrier: 'Telstra', logo: 'W', word: 'WeChat', wordSub: '',
+        head: 'Sign up with your mobile number', headGloss: '',
+        regionLabel: 'Country/Region', regionVal: 'Australia (+61)', regionGloss: '',
+        phoneLabel: 'Mobile', phoneVal: '+61 4•• ••• •42',
+        agree: 'I have read and accept the <span class="alink">Terms of Service</span> and <span class="alink">Privacy Policy</span>.',
+        signup: 'Sign up', signupGloss: '',
+        reregL1: 'New number detected · +61',
+        reregL2: 'Registering a new account · 正在注册新账号',
+        note: {
+          title: 'You have been routed to WeChat',
+          body: '<p>A non-Chinese number creates an account on the <strong>international side</strong>: multilingual interface, lighter and globally oriented moderation, and terms governed by Tencent’s international entity.</p><p>Outside the wall is not outside the system; the next beat shows what Citizen Lab found happens to this account’s content anyway.</p>'
+        }
+      },
+      { // 1: Chinese mainland number -> Weixin
+        carrier: '中国移动', logo: '微', word: '微信', wordSub: 'Weixin',
+        head: '用手机号注册', headGloss: 'Sign up with your mobile number',
+        regionLabel: '国家/地区', regionVal: '中国大陆 (+86)', regionGloss: 'Country/Region · Chinese mainland',
+        phoneLabel: '手机号', phoneVal: '+86 138 •••• ••42',
+        agree: '我已阅读并同意 <span class="alink">《软件许可及服务协议》</span> 与 <span class="alink">《隐私保护指引》</span><span class="gloss">I have read and agree to the Software Licence and Service Agreement and the Privacy Protection Guidelines</span>',
+        signup: '注册', signupGloss: 'Sign up',
+        reregL1: '检测到新号码 · +86',
+        reregL2: '正在注册新账号 · Registering a new account',
+        note: {
+          title: '你已进入微信 · You have been routed to Weixin',
+          body: '<p>A mainland number creates a <strong>Weixin</strong> account: Chinese-only interface and content, terms governed by the domestic entity, and registration bound to a real identity under <strong>Article 24 of the 2017 Cybersecurity Law</strong>.</p><p>Citizen Lab’s 2016 finding: keyword censorship is switched on <strong>only for accounts registered with mainland numbers</strong>, the filter list shifting with current events. The rules attached to this account were decided by the number, not by any setting.</p>'
+        }
+      }
+    ],
+    permline: 'This choice is made once, at registration, and cannot be undone inside the app; accounts cannot be freely migrated between the two systems.',
+    pins: [
+      { tag: 'Cultural note',
+        body: '<p>Two wordmarks, one product. Tencent split the app in 2013: <strong>Weixin (微信)</strong> serves the domestic market under Chinese data and content law; <strong>WeChat</strong> serves everyone else. A mainland user cannot even find official accounts registered on the overseas network.</p>' },
+      { tag: 'Data-sharing note',
+        body: '<p>The number is the <strong>legal anchor of identity</strong>. Under China’s real-name regime a verified mobile number stands in for official ID, and since July 2025 a national Network Identity service can bind it tighter still. Whatever this account does is attributable to the person holding this number.</p>' },
+      { tag: 'Travel-advice note',
+        body: '<p>The agreement you tick decides <strong>whose rules and whose jurisdiction</strong> govern the account. Read the agreement line as the door you are walking through, not boilerplate; Smartraveller’s China advice assumes no privacy on hotel or public Wi-Fi and flags social media as a risk in tense periods.</p>' }
+    ],
+    inert: '<div class="inner"><span class="tagchip">Simulation</span><p>That button does nothing, by design. There is <strong>no login or registration flow anywhere in this deck</strong>; a convincing fake sign-up is the one component that would tip a teaching tool into phishing-adjacent territory, so it is deliberately inert.</p></div>'
+  },
+
+  wallet: {
+    tabs: [
+      { rows: [
+          ['Cards you can link', '银行卡', 'Visa, Mastercard, American Express, JCB, Discover, Diners Club, and overseas-issued UnionPay.', ''],
+          ['Scan-to-pay at shops', '扫码支付', '<span class="yes">Yes.</span> This is what the foreign wallet exists for.', ''],
+          ['Send money to a person', '转账', '<span class="blocked">Blocked.</span> Peer-to-peer transfer is walled off for foreign-card wallets.', 'no'],
+          ['Red packets', '红包', '<span class="blocked">Blocked.</span> The gift-money ritual is closed to you; you can receive only a limited balance, and cannot send.', 'no'],
+          ['Spending caps', '限额', '¥6,000 per transaction; ¥50,000 per month; ¥60,000 per year.', ''],
+          ['Fees', '手续费', 'Free under ¥200 per transaction; 3% above that.', '']
+        ],
+        note: '<span class="t">A visitor’s wallet is for buying, not belonging.</span> The caps and blocks are compliance boundaries, not glitches: without a mainland bank account and full real-name verification, the system lets you spend at merchants and nothing more. Sourced to the Beijing Municipal Government’s official guidance (28 May 2025) and China Briefing’s published limits; some 2026 travel guides report slightly higher caps, not yet confirmed against Tencent’s own documentation.' },
+      { rows: [
+          ['Cards you can link', '银行卡', 'Mainland Chinese bank cards, bound to a real-name verified identity.', ''],
+          ['Scan-to-pay at shops', '扫码支付', '<span class="yes">Yes;</span> plus utilities, transport, government services and the mini-program economy.', ''],
+          ['Send money to a person', '转账', '<span class="yes">Yes.</span> Peer-to-peer transfer is a core, everyday function.', ''],
+          ['Red packets', '红包', '<span class="yes">Yes.</span> Red packets are a social institution, from new year gifts to splitting a dinner bill.', ''],
+          ['Spending caps', '限额', 'No visitor-style caps; ordinary account limits only.', ''],
+          ['Fees', '手续费', 'None for ordinary consumer use.', '']
+        ],
+        note: '<span class="t">The domestic wallet is a full financial identity.</span> A mainland bank account unlocks everything, because the account holder is fully identified: payments, transfers, red packets, and the paper trail that goes with them. The price of the full experience is that every transaction is attributable. That trade is the module’s whole argument in miniature.' }
+    ]
+  },
+
+  moments: {
+    posts: [
+      { tag: 'Data-sharing note',
+        body: '<p><strong>The keyword filter.</strong> On the mainland side, posts and messages pass through server-side keyword filtering; Citizen Lab’s 2016 work showed the censorship switched on only for mainland-registered accounts, with a dynamic list that reacts to current events. Group conversations are filtered more heavily than one-to-one chats. The link in a post like this is exactly the kind of object the filter reads.</p>' },
+      { tag: 'Cultural note',
+        body: '<p><strong>The official account.</strong> Publications, businesses and services publish through official accounts inside the app rather than on the open web. The two ecosystems do not share a directory: a mainland Weixin user cannot find or follow an official account registered on the overseas WeChat network, and QR codes from one side sometimes fail to resolve on the other. Citizen Lab’s 2015 study tracked deletion patterns across more than 36,000 public-account posts.</p>' },
+      { tag: 'Data-sharing note',
+        body: '<p><strong>The image.</strong> Citizen Lab’s 2020 finding applies here: images and files shared even entirely between international accounts are analysed, hashed and used to build the blocklists later applied to mainland users. A holiday photo is almost certainly of no interest; the point is that the pipeline runs regardless, and its output flows to the censor’s training set.</p>' }
+    ]
+  }
+};
+
+/* ================= Deck scaffold ================= */
+var beats = Array.prototype.slice.call(document.querySelectorAll('.beat'));
+var idx = 0;
+var sceneTitles = {
+  m1: 'Module 01 · One app, two countries',
+  m2: 'Module 02 · The walled garden made physical'
+};
+
+function show(i) {
+  idx = Math.max(0, Math.min(i, beats.length - 1));
+  beats.forEach(function (b, n) { b.classList.toggle('active', n === idx); });
+  var scene = beats[idx].dataset.scene;
+  document.getElementById('hdrRight').textContent =
+    scene === 'menu' ? 'Press M for menu' : sceneTitles[scene];
+  var dots = document.getElementById('dots');
+  dots.innerHTML = '';
+  if (scene !== 'menu') {
+    var moduleBeats = beats.filter(function (b) { return b.dataset.scene === scene; });
+    var pos = moduleBeats.indexOf(beats[idx]);
+    moduleBeats.forEach(function (_, n) {
+      var d = document.createElement('div');
+      d.className = 'dot' + (n === pos ? ' on' : '');
+      dots.appendChild(d);
+    });
+  }
+  var hook = beats[idx].dataset.onenter;
+  if (hook && onEnterHooks[hook]) onEnterHooks[hook]();
+}
+function goMenu() { show(0); }
+function goModule(n) {
+  var i = -1;
+  beats.some(function (b, k) { if (b.dataset.scene === 'm' + n) { i = k; return true; } return false; });
+  if (i > -1) show(i);
+}
+function next() { if (idx < beats.length - 1) show(idx + 1); }
+function prev() { if (idx > 0) show(idx - 1); }
+
+document.addEventListener('keydown', function (e) {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+  else if (e.key === 'ArrowLeft') prev();
+  else if (e.key === 'm' || e.key === 'M') goMenu();
+  else if (e.key >= '1' && e.key <= '2') goModule(Number(e.key));
+});
+document.getElementById('main').addEventListener('click', function (e) {
+  if (e.target.closest('button, a, input, .pin, .togglebtn, .wg-tab, .postcard, .phone, .noteblock')) return;
+  next();
+});
+
+function staggerShow(els, delay) {
+  els.forEach(function (el, i) {
+    el.classList.remove('shown');
+    setTimeout(function () { el.classList.add('shown'); }, 150 + i * delay);
+  });
+}
+
+var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ================= Branch-point widget ================= */
+var brState = 0, brActivePin = null, brSwitching = false;
+var brScreen = document.getElementById('screen');
+var brRereg = document.getElementById('rereg');
+var brTogs = [document.getElementById('tog0'), document.getElementById('tog1')];
+var brPins = [document.getElementById('pin0'), document.getElementById('pin1'), document.getElementById('pin2')];
+var brHint = '<p class="hint">Click a diamond marker on the phone to read the annotation behind that part of the screen.</p>';
+
+function brPaint(s) {
+  document.getElementById('sbCarrier').textContent = s.carrier;
+  document.getElementById('appLogo').textContent = s.logo;
+  document.getElementById('appWord').innerHTML = s.word + (s.wordSub ? '<span class="latin">' + s.wordSub + '</span>' : '');
+  document.getElementById('appHead').innerHTML = s.head + (s.headGloss ? '<span class="gloss">' + s.headGloss + '</span>' : '');
+  document.getElementById('regionLabel').textContent = s.regionLabel;
+  document.getElementById('regionVal').innerHTML = s.regionVal + (s.regionGloss ? '<span class="gloss">' + s.regionGloss + '</span>' : '');
+  document.getElementById('phoneLabel').textContent = s.phoneLabel;
+  document.getElementById('phoneVal').textContent = s.phoneVal;
+  document.getElementById('agreeLine').innerHTML = s.agree;
+  document.getElementById('signupBtn').innerHTML = s.signup + (s.signupGloss && document.body.classList.contains('glosson') ? ' · ' + s.signupGloss : '');
+}
+function brWriteNote(s) {
+  document.getElementById('branchState').innerHTML =
+    '<div class="inner"><h3>' + s.note.title + '</h3>' + s.note.body +
+    '<p class="permline">' + WG.branch.permline + '</p></div>';
+}
+function brSet(n, instant) {
+  brState = n;
+  brTogs.forEach(function (t, i) { t.classList.toggle('on', i === n); });
+  var s = WG.branch.states[n];
+  if (instant || reducedMotion) { brPaint(s); brWriteNote(s); return; }
+  if (brSwitching) { brPaint(s); brWriteNote(s); return; }
+  brSwitching = true;
+  document.getElementById('reregL1').textContent = s.reregL1;
+  document.getElementById('reregL2').textContent = s.reregL2;
+  brScreen.classList.add('reskin');
+  brRereg.classList.add('show');
+  setTimeout(function () { brPaint(s); }, 320);
+  setTimeout(function () {
+    brRereg.classList.remove('show');
+    brScreen.classList.remove('reskin');
+    brSwitching = false;
+  }, 1150);
+  brWriteNote(s);
+}
+function brPickPin(n) {
+  brActivePin = (n === brActivePin) ? null : n;
+  brPins.forEach(function (p, i) { p.classList.toggle('on', i === brActivePin); });
+  var el = document.getElementById('branchPin');
+  if (brActivePin === null) {
+    el.innerHTML = '<div class="inner">' + brHint + '</div>';
+  } else {
+    var a = WG.branch.pins[brActivePin];
+    el.innerHTML = '<div class="inner"><span class="tagchip">' + a.tag + '</span>' + a.body + '</div>';
+  }
+}
+brTogs[0].addEventListener('click', function () { if (brState !== 0) brSet(0); });
+brTogs[1].addEventListener('click', function () { if (brState !== 1) brSet(1); });
+brPins.forEach(function (p, i) { p.addEventListener('click', function () { brPickPin(i); }); });
+document.getElementById('signupBtn').addEventListener('click', function () {
+  document.getElementById('branchPin').innerHTML = WG.branch.inert;
+  brPins.forEach(function (p) { p.classList.remove('on'); });
+  brActivePin = null;
+});
+function resetBranchState() {
+  brRereg.classList.remove('show');
+  brScreen.classList.remove('reskin');
+  brSwitching = false;
+  brSet(0, true);
+  brActivePin = 0; brPickPin(0); /* toggles back to null, leaving the hint */
+}
+
+/* ================= Wallet tabbed swap ================= */
+var wTab = 0;
+var wTabs = [document.getElementById('wtab0'), document.getElementById('wtab1')];
+function walletRender(n) {
+  wTab = n;
+  wTabs.forEach(function (t, i) { t.classList.toggle('on', i === n); });
+  var data = WG.wallet.tabs[n];
+  var wrap = document.getElementById('walletRows');
+  wrap.innerHTML = '';
+  data.rows.forEach(function (r) {
+    var el = document.createElement('div');
+    el.className = 'wrow';
+    el.innerHTML = '<span class="wfun">' + r[0] + '<span class="zh">' + r[1] + '</span></span>' +
+                   '<span class="wval' + (r[3] ? ' ' + r[3] : '') + '">' + r[2] + '</span>';
+    wrap.appendChild(el);
+  });
+  staggerShow(Array.prototype.slice.call(wrap.children), 110);
+  document.getElementById('walletNote').innerHTML = data.note;
+}
+wTabs[0].addEventListener('click', function () { if (wTab !== 0) walletRender(0); });
+wTabs[1].addEventListener('click', function () { if (wTab !== 1) walletRender(1); });
+function resetWalletState() { walletRender(0); }
+
+/* ================= Moments inspector ================= */
+var momActive = null;
+var momPosts = [document.getElementById('post0'), document.getElementById('post1'), document.getElementById('post2')];
+var momHint = '<p class="hint" style="color:var(--ink-dim);font-style:italic">Click a post to see the mechanism that runs over it. The posts are fictional; the mechanisms are documented.</p>';
+function momPick(n) {
+  momActive = (n === momActive) ? null : n;
+  momPosts.forEach(function (p, i) { p.classList.toggle('on', i === momActive); });
+  var el = document.getElementById('momNote');
+  if (momActive === null) {
+    el.innerHTML = '<div class="inner">' + momHint + '</div>';
+  } else {
+    var a = WG.moments.posts[momActive];
+    el.innerHTML = '<div class="inner"><span class="tagchip">' + a.tag + '</span>' + a.body + '</div>';
+  }
+}
+momPosts.forEach(function (p, i) { p.addEventListener('click', function () { momPick(i); }); });
+function resetMomentsState() { momActive = 0; momPick(0); /* toggles back to null, leaving the hint */ }
+
+/* ================= Kwangmyong staggered list ================= */
+function resetKwState() {
+  staggerShow(Array.prototype.slice.call(document.querySelectorAll('#kwList .tl-item')), 450);
+}
+
+/* ================= English gloss (deck chrome) ================= */
+var glossBtn = document.getElementById('glossBtn');
+glossBtn.addEventListener('click', function () {
+  var on = document.body.classList.toggle('glosson');
+  glossBtn.classList.toggle('on', on);
+  glossBtn.textContent = 'English gloss · ' + (on ? 'on' : 'off');
+  brPaint(WG.branch.states[brState]);
+});
+
+var onEnterHooks = {
+  resetBranch: resetBranchState,
+  resetWallet: resetWalletState,
+  resetMoments: resetMomentsState,
+  resetKw: resetKwState
+};
+
+show(0);
+</script>
+</body>
+</html>
