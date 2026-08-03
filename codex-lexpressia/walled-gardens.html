@@ -284,10 +284,103 @@
 
   .closer-links { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
 
+  /* ---------- Red Star desktop simulator ---------- */
+  .deskgrid { display: grid; grid-template-columns: 600px 1fr; gap: 40px; align-items: start; }
+  .deskwrap { position: relative; width: 564px; margin-left: 18px; }
+  .desk {
+    position: relative; width: 564px; height: 372px; border-radius: 12px;
+    border: 1px solid var(--hairline-strong); background: #14181a; padding: 9px; overflow: hidden;
+    box-shadow: 0 0 40px -14px var(--glow);
+  }
+  .deskscreen {
+    position: relative; height: 100%; border-radius: 6px; overflow: hidden;
+    background: linear-gradient(160deg, #3b5a66, #2c4550 55%, #233941);
+    color: #22282a; font-family: var(--kr); font-size: 12.5px;
+  }
+  .deskbar {
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(236,240,242,.92); padding: 5px 12px; font-size: 12px; color: #3a4348;
+  }
+  .deskbar .dleft { display: flex; gap: 14px; }
+  .deskbar .dright { display: flex; gap: 12px; align-items: center; }
+  .deskbar .tray { font-size: 11px; letter-spacing: .04em; color: #5a6a5e; }
+  .deskwin {
+    position: absolute; left: 26px; top: 46px; width: 300px;
+    background: #f4f6f5; border-radius: 8px; box-shadow: 0 10px 26px rgba(0,0,0,.35); overflow: hidden;
+  }
+  .deskwin .wtitle { background: #e3e8e6; padding: 6px 12px; font-size: 11.5px; color: #4a5450; }
+  .deskwin .frow { display: flex; justify-content: space-between; gap: 10px; padding: 7px 12px; border-top: 1px solid #e7ebe9; font-size: 12px; }
+  .deskwin .frow .fn { color: #2e3835; }
+  .deskwin .frow .fs { color: #8a948f; font-size: 11px; }
+  .deskdlg {
+    position: absolute; right: 22px; bottom: 40px; width: 218px;
+    background: #f4f6f5; border-radius: 8px; box-shadow: 0 10px 26px rgba(0,0,0,.35);
+    padding: 11px 14px; font-size: 12px; color: #2e3835;
+  }
+  .deskdlg .dt { font-weight: 500; margin-bottom: 4px; }
+  .deskdlg .db { color: #6d7873; font-size: 11.5px; line-height: 1.5; }
+  .desksimfoot {
+    position: absolute; bottom: 0; left: 0; right: 0; text-align: center; z-index: 4;
+    font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: #cfd6d2;
+    padding: 5px 0 7px; background: rgba(20,24,26,.55);
+  }
+  .desk .simwater span { color: rgba(240,244,242,.14); transform: rotate(-18deg); }
+
+  /* ---------- clock & Juche widgets ---------- */
+  .numgrid { display: grid; grid-template-columns: minmax(380px, 1fr) 1.1fr; gap: 40px; align-items: start; }
+  .chiprow { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .chipbtn {
+    font-family: inherit; font-size: 17px; padding: 10px 20px; cursor: pointer;
+    background: var(--panel); color: var(--ink-muted); border: 1px solid var(--hairline);
+    transition: border-color .2s, color .2s, box-shadow .2s;
+  }
+  .chipbtn:hover { color: var(--ink-head); border-color: var(--gold-dull); }
+  .chipbtn.on { color: var(--gold-bright); border-color: var(--gold); box-shadow: 0 0 16px -6px var(--glow); }
+  .chipbtn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .clockface {
+    display: inline-block; background: #14181a; border: 1px solid var(--hairline-strong); border-radius: 10px;
+    padding: 16px 30px; font-family: var(--kr); font-size: 44px; color: #cfd6d2; letter-spacing: .04em;
+    box-shadow: 0 0 30px -12px var(--glow);
+  }
+  .clockface .cfdate { display: block; font-size: 14px; color: #7d8a84; letter-spacing: .08em; margin-top: 4px; }
+  .readrow { display: flex; gap: 8px; margin-top: 22px; flex-wrap: wrap; }
+  .rpart {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    border: 1px solid var(--hairline); background: var(--panel); color: var(--ink-body);
+    padding: 10px 14px 8px; min-width: 64px;
+    opacity: 0; transform: translateY(10px); transition: opacity .4s, transform .4s;
+  }
+  .rpart.in { opacity: 1; transform: none; }
+  .rpart .g { font-family: var(--kr); font-size: 26px; color: var(--ink-head); }
+  .rpart .u { font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); }
+  .rpart .tr { font-size: 12px; color: var(--ink-muted); }
+  .rpart.native { border-color: var(--gold); border-style: solid; background: rgba(194,145,76,.10); }
+  .rpart.native .u { color: var(--gold-bright); }
+  .rpart.sino { border-color: var(--ink-dim); border-style: dashed; background: rgba(95,107,100,.10); }
+  .rpart.sino .u { color: #9db3a8; }
+  .numlegend { display: flex; gap: 18px; margin-top: 16px; font-size: 13px; color: var(--ink-muted); flex-wrap: wrap; }
+  .numlegend .key { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: middle; }
+  .numlegend .key.native { border: 1px solid var(--gold); background: rgba(194,145,76,.10); }
+  .numlegend .key.sino { border: 1px dashed var(--ink-dim); background: rgba(95,107,100,.10); }
+  .jucard {
+    background: #14181a; border: 1px solid var(--hairline-strong); border-radius: 10px;
+    padding: 20px 30px; display: inline-block; min-width: 300px;
+  }
+  .jucard .jyear { font-family: var(--kr); font-size: 38px; color: #cfd6d2; }
+  .jucard .jsub { font-size: 13px; color: #7d8a84; letter-spacing: .06em; margin-top: 4px; }
+  .jureveal { margin-top: 18px; font-size: 22px; color: var(--ink-head); display: none; animation: rise .4s ease; }
+  .jureveal .jr-note { display: block; font-size: 14.5px; color: var(--ink-muted); margin-top: 6px; line-height: 1.6; }
+  .juwrap.answered .jureveal { display: block; }
+  .juwrap.answered .jubtn { display: none; }
+
   @media (prefers-reduced-motion: reduce) {
-    .beat, .noteblock .inner { animation: none; }
-    .tl-item, .wrow, .screen .appmain, .rereg { transition: none; }
+    .beat, .noteblock .inner, .jureveal { animation: none; }
+    .tl-item, .wrow, .screen .appmain, .rereg, .rpart { transition: none; }
     .rereg .spin i { animation: none; opacity: .6; }
+  }
+  @media (max-width: 1100px) {
+    .deskgrid { grid-template-columns: 1fr; }
+    .deskwrap, .desk { width: 100%; max-width: 564px; }
   }
   @media (max-width: 980px) {
     h1 { font-size: 34px; } h2 { font-size: 25px; }
@@ -316,10 +409,11 @@
     <section class="beat" data-scene="menu">
       <div class="eyebrow">Codex Lexpressia · An interactive walkthrough</div>
       <h1>Walled gardens</h1>
-      <p class="lede">Two national networks, walked through from the inside. The first is a single app that quietly runs as <strong>two different systems</strong> depending on one field at registration. The second is a network that was <strong>never connected to the world at all</strong>. About fifteen minutes, and every claim is sourced.</p>
+      <p class="lede">Two national networks, walked through from the inside. The first is a single app that quietly runs as <strong>two different systems</strong> depending on one field at registration. The second is a network that was <strong>never connected to the world at all</strong>; its operating system gets a module of its own, down to how you read the clock on its screens. About twenty minutes, and every claim is sourced.</p>
       <div style="margin-top:36px">
         <button class="menu-item" onclick="goModule(1)"><span class="num">01</span><span class="name">One app, two countries</span><span class="state">Start</span></button>
         <button class="menu-item" onclick="goModule(2)"><span class="num">02</span><span class="name">The walled garden made physical</span><span class="state">Start</span></button>
+        <button class="menu-item" onclick="goModule(3)"><span class="num">03</span><span class="name">Red Star, up close</span><span class="state">Start</span></button>
       </div>
       <a class="btn ghost" href="index.html" style="margin-top:18px">&larr; Back to Codex Lexpressia</a>
     </section>
@@ -485,6 +579,108 @@
       <div class="callout">Nothing in this module came from browsing Kwangmyong, because nobody outside the country can. It came from <strong>leaked operating-system builds, defector interviews, tour-operator photographs and satellite-watching specialists</strong>, cross-checked against each other. That is the real lesson of the contrast case: open-source research about a closed society is an assembled mosaic, and knowing how the tiles were sourced tells you exactly how far to trust the picture.</div>
       <p class="cite">Sources used in this module: 38 North / NK TechLab (Martyn Williams), including "More Than Smartphones" (July 2026) and the 2025 reporting on Red Star deployments; PSCORE, "Digital Hostages: Internet Freedom in North Korea" (June 2023); Grunow and Schiess, Chaos Communication Congress (2015); Will Scott, "Contextualizing RedStar OS" (2016); Radio Free Asia on the mandatory smartphone app (July 2022). Full detail in the project's verified-sources report.</p>
       <div class="closer-links">
+        <button class="btn" onclick="goModule(3)">On to Module 03: Red Star, up close &rarr;</button>
+        <button class="btn ghost" onclick="goMenu()">Back to menu</button>
+        <a class="btn ghost" href="index.html">Codex Lexpressia</a>
+      </div>
+    </section>
+
+    <!-- ============ MODULE 03 · Red Star, up close ============ -->
+
+    <section class="beat" data-scene="m3">
+      <div class="eyebrow">Module 03</div>
+      <h1>Red Star, up close</h1>
+      <div class="myth">Myth we'll unpick: "It's just a Linux skin that looks like a Mac."</div>
+      <p class="lede">Module 02 told you what researchers found. Now stand at the machine. This module puts you in front of a <strong>simulated Red Star desktop</strong> to see where each finding lives, then teaches you to read what every DPRK screen assumes you can: <strong>the clock, the date, and the two number systems</strong> Korean runs at once.</p>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetDesk">
+      <h2>The desktop that watches</h2>
+      <div class="deskgrid">
+        <div class="deskwrap">
+          <div class="desk">
+            <div class="deskscreen">
+              <div class="deskbar">
+                <div class="dleft"><span>파일</span><span>편집</span><span>보기</span></div>
+                <div class="dright"><span class="tray">보안 ⛨</span><span class="tray">갱신 ↻</span><span>15:04</span></div>
+              </div>
+              <div class="deskwin">
+                <div class="wtitle">문서 · Documents</div>
+                <div class="frow"><span class="fn">보고서_초안.doc</span><span class="fs">42 KB</span></div>
+                <div class="frow"><span class="fn">사진_모음.zip</span><span class="fs">18 MB</span></div>
+                <div class="frow"><span class="fn">영화_한편.avi (USB)</span><span class="fs">1.2 GB</span></div>
+              </div>
+              <div class="deskdlg">
+                <div class="dt">갱신 준비됨</div>
+                <div class="db">Update ready. The software on this machine reports home; not to a vendor abroad, but to servers inside the country.</div>
+              </div>
+              <div class="simwater"><span>Simulation · 모의</span></div>
+              <div class="desksimfoot">Educational mockup · a generic desktop, not Red Star's actual interface</div>
+            </div>
+          </div>
+          <button class="pin" id="dpin0" style="top: 120px; left: -18px;" aria-label="Annotation: the files window"></button>
+          <button class="pin" id="dpin1" style="top: 24px; right: -18px;" aria-label="Annotation: the system tray"></button>
+          <button class="pin" id="dpin2" style="top: 250px; right: -18px;" aria-label="Annotation: the update dialog"></button>
+        </div>
+        <div>
+          <div class="lbl">Inspect the machine</div>
+          <div class="noteblock momnote" id="deskNote"><div class="inner"><p class="hint" style="color:var(--ink-dim);font-style:italic">Click a diamond marker to see which documented mechanism lives behind that part of the screen. The desktop is a generic mockup; the mechanisms are from the 2015 analysis of leaked builds.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m3">
+      <h2>A decade on, the walls got thicker</h2>
+      <div class="callout">In mid 2025, offices in Pyongsong began replacing their computers with new machines running Red Star: <strong>fingerprint login, no USB or SD support at all</strong>, and a security suite called Shield Program. The researchers' decade-old finding that the system watches removable media has been answered, in the newest builds, by removing the media.</div>
+      <p class="caption">Reported by Daily NK and 38 North / NK TechLab (August 2025). Version history: Red Star 2.0 and 3.0 leaked and were analysed abroad; 4.0 is confirmed to exist but has never publicly leaked; no version 5.0 is confirmed. Windows XP reportedly remains widespread despite the domestic OS push.</p>
+      <p class="qline">So much for the machine. Now the part every learner meets first: reading its screen.</p>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetClock">
+      <h2>Two number systems, one clock</h2>
+      <div class="numgrid">
+        <div>
+          <div class="chiprow" id="clockChips"></div>
+          <div class="clockface"><span id="cfTime">3:30</span><span class="cfdate" id="cfLabel">오후 · afternoon</span></div>
+          <div class="readrow" id="readRow"></div>
+          <div class="numlegend">
+            <span><span class="key native"></span>Native Korean numbers</span>
+            <span><span class="key sino"></span>Sino-Korean numbers</span>
+            <span>Unmarked: the counter word</span>
+          </div>
+        </div>
+        <div>
+          <div class="lbl">How to read it aloud</div>
+          <div class="noteblock"><div class="walletnote" id="clockNote"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetJuche">
+      <h2>The year on the screen</h2>
+      <div class="numgrid">
+        <div class="juwrap" id="juwrap">
+          <div class="chiprow" id="juChips"></div>
+          <div class="jucard">
+            <div class="jyear" id="juYear">주체 103년</div>
+            <div class="jsub" id="juSub">as printed on a document header</div>
+          </div>
+          <div class="jureveal" id="juReveal"></div>
+          <div><button class="btn ghost jubtn" id="juBtn">Reveal the Gregorian year</button></div>
+        </div>
+        <div>
+          <div class="lbl">The system behind it</div>
+          <div class="noteblock"><div class="walletnote"><span class="t">Juche year = Gregorian year minus 1911.</span> The calendar counts from 1912, the birth year of Kim Il Sung, and for decades it dated everything: newspapers, documents, screens. In late 2024 it was quietly retired from official use; the 2025 print calendars were the first in a generation without it. The leaked Red Star builds and archived Naenara pages all predate that change, so the screens open-source researchers actually saw carry Juche dates; a reminder that every OSINT snapshot is a photograph of a moment, not a live feed.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m3">
+      <h2>What you can now read</h2>
+      <div class="callout">Every Korean screen, North or South, runs <strong>two number systems at once</strong>: native Korean for the hours and for counting things, Sino-Korean for minutes, dates, years and money. And every pre-2025 DPRK document adds one more layer: a calendar that starts in 1912. You can now read both; which means you can date a leaked screenshot <strong>at a glance</strong>, the way the researchers do.</div>
+      <p class="cite">Sources used in this module: Grunow and Schiess, Chaos Communication Congress (2015); Will Scott, "Contextualizing RedStar OS" (2016); Daily NK and 38 North / NK TechLab on the 2025 Red Star deployment (August 2025); NK News (October 2024), Radio Free Asia (December 2024) and Korea Times (February 2025) on the retirement of the Juche calendar; the hour-and-minute reading rule is standard Korean grammar, taught in full in this site's "Two ways to count" walkthrough. Full detail in the project's verified-sources report.</p>
+      <div class="closer-links">
+        <a class="btn" href="../morphorian/korean-numbers.html">Two ways to count: the full walkthrough &rarr;</a>
         <button class="btn ghost" onclick="goMenu()">Back to menu</button>
         <a class="btn ghost" href="index.html">Codex Lexpressia</a>
       </div>
@@ -569,6 +765,57 @@ var WG = {
     ]
   },
 
+  desk: {
+    pins: [
+      { tag: 'Data-sharing note',
+        body: '<p><strong>The files window.</strong> Red Star stamps an identifying watermark into documents and media files it touches, including files arriving by USB. A film passed hand to hand accumulates a chain of marks, so the spread of unauthorised media can be traced back through everyone who carried it. Found in the leaked builds by Grunow and Schiess, 2015.</p>' },
+      { tag: 'Data-sharing note',
+        body: '<p><strong>The tray.</strong> The system protects itself: an integrity watchdog can reboot the machine if its core files are altered, and the built-in antivirus and firewall answer to <strong>domestic servers</strong>, not an international vendor. The machine’s defences face inward as much as outward.</p>' },
+      { tag: 'Cultural note',
+        body: '<p><strong>The update dialog.</strong> Updates flow from state channels; researchers flagged the Naenara browser’s forced automatic updates as a plausible monitoring path. Will Scott, who used these systems in Pyongyang, offers the counterpoint worth holding: this is a strictly internal, offline system, and its watermarking reads differently in that context than outward-facing spyware would.</p>' }
+    ]
+  },
+
+  clock: {
+    times: [
+      { chip: '3:30', time: '3:30', label: '오후 · afternoon',
+        parts: [
+          { t: '세', k: 'native', tr: 'three' },
+          { t: '시', k: '', tr: 'hour' },
+          { t: '삼십', k: 'sino', tr: 'thirty' },
+          { t: '분', k: '', tr: 'minute' }
+        ],
+        note: '<span class="t">세 시 삼십 분.</span> The rule every Korean clock runs on: the <span class="t">hour is read in native Korean</span> numbers, the <span class="t">minutes in Sino-Korean</span>. 세 is the combining form native three takes before a counter; 삼십 is Sino thirty. Two systems, one glance, every time anyone tells the time; the same in Pyongyang and Seoul.' },
+      { chip: '7:05', time: '7:05', label: '오전 · morning',
+        parts: [
+          { t: '일곱', k: 'native', tr: 'seven' },
+          { t: '시', k: '', tr: 'hour' },
+          { t: '오', k: 'sino', tr: 'five' },
+          { t: '분', k: '', tr: 'minute' }
+        ],
+        note: '<span class="t">일곱 시 오 분.</span> Here the duality is naked: native 일곱 for the hour, Sino 오 for the minutes. If you were counting seven objects you would also say 일곱; but five minutes is 오 분, never 다섯 분. The number system is chosen by <span class="t">what is being counted</span>, not by the number itself.' },
+      { chip: '12:45', time: '12:45', label: '오후 · afternoon',
+        parts: [
+          { t: '열두', k: 'native', tr: 'twelve' },
+          { t: '시', k: '', tr: 'hour' },
+          { t: '사십오', k: 'sino', tr: 'forty-five' },
+          { t: '분', k: '', tr: 'minute' }
+        ],
+        note: '<span class="t">열두 시 사십오 분.</span> Native twelve is 열둘, dropping to the combining form 열두 before the counter; the minutes stack Sino digits, 사십오. Native numbers thin out past the teens in everyday use, but the clock keeps them alive: <span class="t">every hour of every day is a native number</span>.' }
+    ]
+  },
+
+  juche: {
+    years: [
+      { chip: '주체 89', year: '주체 89년', sub: 'as printed on a newspaper masthead',
+        reveal: '2000 <span class="jr-note">Add 1911. The millennium arrived in Pyongyang print as Juche 89. Read aloud, year numbers are Sino-Korean: 팔십구 년.</span>' },
+      { chip: '주체 103', year: '주체 103년', sub: 'as seen on screens researchers archived',
+        reveal: '2014 <span class="jr-note">Add 1911. The year Red Star 3.0 leaked; the screens and documents open-source researchers analysed carry dates like this one. Read aloud: 백삼 년.</span>' },
+      { chip: '주체 113', year: '주체 113년', sub: 'the calendar’s final year in official use',
+        reveal: '2024 <span class="jr-note">Add 1911. In late 2024 the Juche calendar was retired from official use; the 2025 print calendars were the first in a generation without it. Read aloud: 백십삼 년.</span>' }
+    ]
+  },
+
   moments: {
     posts: [
       { tag: 'Data-sharing note',
@@ -586,7 +833,8 @@ var beats = Array.prototype.slice.call(document.querySelectorAll('.beat'));
 var idx = 0;
 var sceneTitles = {
   m1: 'Module 01 · One app, two countries',
-  m2: 'Module 02 · The walled garden made physical'
+  m2: 'Module 02 · The walled garden made physical',
+  m3: 'Module 03 · Red Star, up close'
 };
 
 function show(i) {
@@ -623,10 +871,10 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
   else if (e.key === 'ArrowLeft') prev();
   else if (e.key === 'm' || e.key === 'M') goMenu();
-  else if (e.key >= '1' && e.key <= '2') goModule(Number(e.key));
+  else if (e.key >= '1' && e.key <= '3') goModule(Number(e.key));
 });
 document.getElementById('main').addEventListener('click', function (e) {
-  if (e.target.closest('button, a, input, .pin, .togglebtn, .wg-tab, .postcard, .phone, .noteblock')) return;
+  if (e.target.closest('button, a, input, .pin, .togglebtn, .wg-tab, .postcard, .phone, .noteblock, .desk, .chipbtn, .clockface, .jucard')) return;
   next();
 });
 
@@ -756,6 +1004,89 @@ function resetKwState() {
   staggerShow(Array.prototype.slice.call(document.querySelectorAll('#kwList .tl-item')), 450);
 }
 
+/* ================= Red Star desktop inspector ================= */
+var deskActive = null;
+var deskPins = [document.getElementById('dpin0'), document.getElementById('dpin1'), document.getElementById('dpin2')];
+var deskHint = '<p class="hint" style="color:var(--ink-dim);font-style:italic">Click a diamond marker to see which documented mechanism lives behind that part of the screen. The desktop is a generic mockup; the mechanisms are from the 2015 analysis of leaked builds.</p>';
+function deskPick(n) {
+  deskActive = (n === deskActive) ? null : n;
+  deskPins.forEach(function (p, i) { p.classList.toggle('on', i === deskActive); });
+  var el = document.getElementById('deskNote');
+  if (deskActive === null) {
+    el.innerHTML = '<div class="inner">' + deskHint + '</div>';
+  } else {
+    var a = WG.desk.pins[deskActive];
+    el.innerHTML = '<div class="inner"><span class="tagchip">' + a.tag + '</span>' + a.body + '</div>';
+  }
+}
+deskPins.forEach(function (p, i) { p.addEventListener('click', function () { deskPick(i); }); });
+function resetDeskState() { deskActive = 0; deskPick(0); /* toggles back to null, leaving the hint */ }
+
+/* ================= Clock duality widget ================= */
+var clockActive = 0, clockChipsBuilt = false;
+function clockRender(n) {
+  clockActive = n;
+  document.querySelectorAll('#clockChips .chipbtn').forEach(function (c, i) { c.classList.toggle('on', i === n); });
+  var d = WG.clock.times[n];
+  document.getElementById('cfTime').textContent = d.time;
+  document.getElementById('cfLabel').textContent = d.label;
+  var row = document.getElementById('readRow');
+  row.innerHTML = '';
+  d.parts.forEach(function (p, i) {
+    var el = document.createElement('div');
+    el.className = 'rpart' + (p.k ? ' ' + p.k : '');
+    el.innerHTML = '<span class="g">' + p.t + '</span>' +
+                   '<span class="u">' + (p.k === 'native' ? 'native' : (p.k === 'sino' ? 'sino' : 'counter')) + '</span>' +
+                   '<span class="tr">' + p.tr + '</span>';
+    row.appendChild(el);
+    setTimeout(function () { el.classList.add('in'); }, 90 + i * 120);
+  });
+  document.getElementById('clockNote').innerHTML = d.note;
+}
+function resetClockState() {
+  var wrap = document.getElementById('clockChips');
+  if (!clockChipsBuilt) {
+    clockChipsBuilt = true;
+    WG.clock.times.forEach(function (t, i) {
+      var btn = document.createElement('button');
+      btn.className = 'chipbtn';
+      btn.textContent = t.chip;
+      btn.addEventListener('click', function () { clockRender(i); });
+      wrap.appendChild(btn);
+    });
+  }
+  clockRender(0);
+}
+
+/* ================= Juche year widget ================= */
+var juActive = 0, juChipsBuilt = false;
+function juRender(n) {
+  juActive = n;
+  document.querySelectorAll('#juChips .chipbtn').forEach(function (c, i) { c.classList.toggle('on', i === n); });
+  var d = WG.juche.years[n];
+  document.getElementById('juwrap').classList.remove('answered');
+  document.getElementById('juYear').textContent = d.year;
+  document.getElementById('juSub').textContent = d.sub;
+  document.getElementById('juReveal').innerHTML = d.reveal;
+}
+function resetJucheState() {
+  var wrap = document.getElementById('juChips');
+  if (!juChipsBuilt) {
+    juChipsBuilt = true;
+    WG.juche.years.forEach(function (y, i) {
+      var btn = document.createElement('button');
+      btn.className = 'chipbtn';
+      btn.textContent = y.chip;
+      btn.addEventListener('click', function () { juRender(i); });
+      wrap.appendChild(btn);
+    });
+    document.getElementById('juBtn').addEventListener('click', function () {
+      document.getElementById('juwrap').classList.add('answered');
+    });
+  }
+  juRender(0);
+}
+
 /* ================= English gloss (deck chrome) ================= */
 var glossBtn = document.getElementById('glossBtn');
 glossBtn.addEventListener('click', function () {
@@ -769,7 +1100,10 @@ var onEnterHooks = {
   resetBranch: resetBranchState,
   resetWallet: resetWalletState,
   resetMoments: resetMomentsState,
-  resetKw: resetKwState
+  resetKw: resetKwState,
+  resetDesk: resetDeskState,
+  resetClock: resetClockState,
+  resetJuche: resetJucheState
 };
 
 show(0);
