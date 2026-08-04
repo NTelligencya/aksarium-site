@@ -138,7 +138,14 @@
   white-space: normal;
 }
 
-.vocab__rom { color: var(--teal-mist); font-style: italic; font-size: 14px; }
+/* Romanisation is read letter by letter, so it stays upright and takes a
+   little tracking rather than the italic the house serif would default to. */
+.vocab__rom {
+  color: #9fada4;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: .015em;
+}
 .vocab__gloss { color: var(--ink-body); }
 .vocab__pivot { color: var(--ink-muted); font-size: 14px; }
 
