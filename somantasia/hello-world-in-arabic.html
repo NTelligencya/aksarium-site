@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hello World in Arabic — Notes from Somantasia — Aksarium</title>
+<meta name="description" content="How English became the language of code: a seven-bit encoding, a self-sustaining cycle of documentation, and the languages built in response.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&family=Eagle+Lake&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/aksarium.css">
+<script src="../assets/js/site.js" defer></script>
+<style>
+  .essay-body h2 {
+    margin: 12px 0 -8px;
+    font-family: 'Eagle Lake', cursive;
+    font-size: 21px;
+    line-height: 1.34;
+    color: #c2914c;
+    font-weight: 400;
+    letter-spacing: .01em;
+  }
+  .essay-body code {
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: .86em;
+    color: #d6a365;
+    background: rgba(194,145,76,.08);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+<div class="frame">
+
+<header class="site-header site-header--solid">
+  <a class="brand" href="../index.html">
+    <span class="brand__name">Aksarium</span>
+    <span class="brand__crumb">Notes from Somantasia</span>
+  </a>
+  <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
+</header>
+
+<div class="essay-grid">
+  <div class="essay-main">
+    <div class="script-reveal">
+      <div class="script-drift">قلب · print "hello" · 吾有一數 · எழில் · GET /index.html · 用户 · 404 Not Found · अक्षर · RETR · すべての · مرحبا · while · اطبع · 名之曰「甲」 · POST · 0x41 · courriel · finestra</div>
+    </div>
+    <div class="essay-body">
+      <div class="essay-meta eyebrow"><span>The language of code</span><span>9 min</span></div>
+      <h1 style="margin:0;font-family:'Eagle Lake',cursive;font-size:38px;line-height:1.26;color:#d9a95e;font-weight:400;text-wrap:pretty">Hello World in Arabic</h1>
+      <div class="gold-rule" style="width:64px"></div>
+      <p class="lede"><span class="dropcap">T</span>he word <em>algorithm</em> derives from the name of the ninth-century Persian mathematician al-Khwarizmi, who wrote in Arabic and whose work formalised algebra and transmitted Hindu-Arabic numerals to the Latin West. The first systematic treatment of binary arithmetic, the representational bedrock of all digital logic, was published by Gottfried Wilhelm Leibniz in 1703, in a treatise written partly in French and partly in Latin, because French was the prestige language of European scientific discourse at the time. The earliest mechanical calculators capable of carrying tens were built by Blaise Pascal, a Frenchman. The conceptual roots of computing are polyglot, or at least they are centred on whatever language the scientific elite of a given era happened to agree upon. English was not yet in the conversation.</p>
+      <p>How, then, did we arrive at a world in which virtually every programming language, every network protocol, and every error message assumes an English-speaking user? The answer is not a single decision but a sequence of contingencies, each locally rational, that compounded into a structural lock-in no one would have designed from scratch.</p>
+
+      <h2>The lock-in</h2>
+      <p>The shift begins in earnest during the nineteenth century. Britain's period of near-complete geopolitical hegemony and the simultaneous economic and demographic explosion of the United States concentrated the demand for large-scale data processing in the English-speaking world. Charles Babbage drafted the Analytical Engine in London. Herman Hollerith built the electromechanical tabulating machine to process the 1890 US Census. The gravity of hardware innovation followed the gravity of industrial data needs, and both sat in English-speaking countries.</p>
+      <p>But hardware location alone does not explain a permanent linguistic lock-in. The true point of no return was a technical standard: the American Standard Code for Information Interchange, ASCII, formalised in the 1960s. Early computers were severely memory-constrained; every bit was expensive. ASCII used a seven-bit encoding, which gave it exactly 128 possible characters, enough for the uppercase and lowercase English alphabet, the digits 0 through 9, a handful of punctuation marks, and a set of control codes. It was an elegant, efficient solution if your only goal was to represent English text. It was a catastrophe if you needed to represent Chinese, Japanese, Arabic, or any script whose character inventory exceeded 128 by orders of magnitude. That decision baked the Latin alphabet into the physical memory architecture of early computing, and the effects propagated forward through every layer of the stack.</p>
+      <p>The internet's foundational protocols inherited the same assumption. HTTP uses English verbs: <code>GET</code>, <code>PUT</code>, <code>POST</code>. FTP uses English commands: <code>USER</code>, <code>PASS</code>, <code>RETR</code>. Engineers could have designed these protocols around purely numerical binary codes; they chose human-readable English mnemonics because the systems were fragile and needed to be tested manually by the people building them. The classic 404 error pairs a machine-readable numeric code with the English phrase "Not Found" because the technicians reading the server logs needed to understand what had gone wrong. A highly localised group of American engineers built tools to solve their immediate problems using their native language for convenience. Those tools were then scaled to become the foundational infrastructure for the entire planet.</p>
+
+      <h2>The tax</h2>
+      <p>The result is a persistent cognitive tax on the majority of the world's developers. Python, arguably the most popular introductory programming language on earth, was created in the Netherlands by Guido van Rossum. Ruby was created in Japan by Yukihiro Matsumoto. Neither creator is a native English speaker. Neither language was born in an English-speaking country. Both use English keywords, because their creators made a pragmatic calculation: to maximise adoption in the global open-source community, they had to use the established lingua franca.</p>
+      <p>The friction this creates is not abstract. A Stack Overflow thread on how Chinese developers actually code in practice drew responses describing a constant triple context-switch: standard English-based syntax for the language itself; Pinyin, the romanisation of Chinese characters, for locally meaningful variable names; and native Chinese characters for explanatory comments. Line by line, the developer is moving between three linguistic registers. The overhead is real and cumulative.</p>
+      <p>The barrier extends beyond writing code to fixing it. Somewhere between 50 and 80 percent of all content on the web is in English, and that includes virtually all of the infrastructure a developer depends on: API documentation, open-source library READMEs on GitHub, troubleshooting forums, technical tutorials. If you hit a bizarre bug in a complex application, the solution is almost certainly documented somewhere in English. Learning English is not a stylistic choice for a non-Anglophone developer. It is a professional mandate, a prerequisite for accessing the collective knowledge base. And each generation that learns English to read the documentation writes its own tools in English to share them back to the community, which forces the next generation to do the same. The cycle is self-sustaining.</p>
+      <p>Different cultures negotiate the dominance differently. The Académie française actively coins new French-language computing terms, pushing <em>courriel</em> to replace <em>email</em> and <em>télécharger</em> for <em>download</em>. Bulgarian computing vocabulary tends toward hyperliteral translation, rendering <em>motherboard</em> as something that translates back to English as "bottom board." Italian takes a semantic approach: <em>mouse</em> stays as <em>mouse</em> because translating it literally sounds absurd in an office setting, but <em>window</em> becomes <em>finestra</em> because the metaphor of looking through a frame transfers cleanly. Each strategy is a negotiation between identity and utility, and none of them changes the underlying infrastructure.</p>
+
+      <h2>The resistance</h2>
+      <p>Recognising this friction has produced a distinct movement: programming languages designed to let people learn and use computational logic in their own languages rather than through an English intermediary.</p>
+      <p>Ezhil, created in 2007 by Muthiah Annamalai, is a Tamil-language programming environment aimed at K-12 students. What makes it more than a vocabulary swap is that it restructures the syntax to match Tamil's natural word order. English is a subject-verb-object language; the command structure of English-based programming languages reflects this, with the verb (the command) preceding its target: <em>print "hello"</em>. Tamil is a head-final, subject-object-verb language. A naive translation that simply replaced English keywords with Tamil words would leave the code feeling grammatically backward to a native speaker. Ezhil's syntax allows students to construct commands that align with how a Tamil speaker naturally forms logical sentences, removing the linguistic friction and leaving the student free to focus on the algorithmic logic itself.</p>
+      <p>Citrine, built by a multinational team of Dutch, Indian, and Russian developers, approaches the problem through automated translation, supporting over 100 human languages. A Dutch developer can write a function using Dutch keywords, push it to a shared repository, and a colleague in Mumbai can open the same file rendered in Hindi. The concept is powerful for international collaboration, though its adoption remains limited.</p>
+      <p>Phoenix, described in a 2019 paper by Youssef Bassil, pushes non-English programming into professional territory. Where many localised languages are designed as educational stepping stones, Phoenix is a general-purpose, object-oriented, compiled Arabic programming language. The distinction matters: a compiled language requires a compiler, a complex software engine that translates human-readable source code into machine code the processor can execute.</p>
+      <div class="callout">
+        <span class="eyebrow" style="letter-spacing:.3em">Six stages, right to left</span>
+        <p style="margin:0">Bassil's compiler processes Arabic script right-to-left through a six-stage pipeline: a preprocessor, a scanner using deterministic finite automata to tokenise the input, a parser enforcing context-free grammar rules, a semantic analyser, a code generator, and a linker. The output is a standalone native executable for Windows. Phoenix can handle while loops, mathematical arrays, graphical user interfaces, and automated memory management, all formulated entirely in Arabic script. It is a proof of concept that enterprise-grade software does not require English.</p>
+      </div>
+      <p>At the other end of the spectrum sit languages built not to solve engineering problems but to explore computing as an art form and a vehicle for cultural preservation. Qalb (قلب), which translates to "heart" in Arabic, was created by Ramsey Nasser. Technically, it is a functional language in the Lisp family. Aesthetically, it is a piece of Arabic calligraphy. When you look at Qalb code on a screen, it is visually beautiful in a way that challenges the assumption, so deeply ingrained as to be invisible, that real source code must look like a dense block of Western alphanumeric characters.</p>
+      <p>Wenyan (文言), created by Lingdong Huang, operates entirely within the grammar and vocabulary of classical Chinese literature and ancient mathematical texts. Classical Chinese does not use spaces to separate words, which presents a specific parsing nightmare: the interpreter must continuously scan an unbroken string of characters, searching for the longest possible sequence that matches a valid command, shrinking its focus recursively if the match fails, then starting over for the next block. Nobody speaks classical Chinese as a daily language; the choice of dialect is deliberate. By using an ancient language that no living population speaks natively, Huang levels the playing field globally. A software engineer in Silicon Valley and a modern Mandarin speaker in Beijing are equally disoriented when they first encounter it. The cultural privilege of native language is stripped away entirely. Someone has programmed the Sieve of Eratosthenes, an ancient Greek algorithm for computing prime numbers, in Wenyan: an ancient mathematical concept rendered in ancient Chinese script running on modern silicon. It is programming elevated to something closer to poetry.</p>
+
+      <h2>The invisible infrastructure</h2>
+      <p>The adoption of Unicode, which can represent virtually every script in human history, has begun to dismantle the physical constraints of the original ASCII container. But the softer constraints, the weight of documentation, the self-reinforcing cycle of English-language tooling, the network effects of a global developer community that defaults to English, are harder to shift than a character-encoding standard.</p>
+      <p>And then there is the question of whether the entire framing is about to become obsolete. We are entering a period in which AI models can translate natural human language into functioning executable code. You can prompt a model in Spanish, Swahili, or Japanese and it will generate the required Python or C++ silently on the back end. If a machine handles the grammar of the code, then the barrier to programming ceases to be linguistic proficiency in English and becomes the ability to articulate a precise, complex idea in whatever language you happen to think in. The translation layer between human intent and machine execution is becoming invisible.</p>
+      <p>Whether that amounts to the democratisation of programming or merely the relocation of the dependency, from English-language syntax to English-language training data, is a question the current moment cannot yet answer. The DNA of the digital world has been written in English for sixty years. What it will be written in next depends on whether the tools that promise to make language irrelevant are themselves free of the linguistic assumptions they inherited.</p>
+    </div>
+  </div>
+
+  <aside class="essay-aside">
+    <div class="aside-figure">
+      <div style="background-image:url('../assets/images/collage-scripts.jpeg')"></div>
+      <div class="aside-figure__shade"></div>
+    </div>
+    <div class="aside-block">
+      <div class="eyebrow">Sources</div>
+      <div class="source-list">
+        <span>Wikipedia, <em>Non-English-based programming languages,</em> accessed July 2026.</span>
+        <span>Wikipedia, <em>Ezhil (programming language),</em> accessed July 2026.</span>
+        <span>Annamalai, M. (2013). <em>Invitation to Ezhil: A Tamil Programming Language for Early Computer-Science Education.</em> arXiv:1308.1733.</span>
+        <span>Bassil, Y. (2019). <em>Phoenix: The Arabic Object-Oriented Programming Language.</em> International Journal of Computer Trends and Technology 67(2).</span>
+        <span>Nasser, R. <em>Qalb</em> (قلب). <a href="https://github.com/nasser/---" style="color:#a9b3ab">github.com/nasser/---</a></span>
+        <span>Huang, L. <em>Wenyan</em> (文言). <a href="https://wy-lang.org/" style="color:#a9b3ab">wy-lang.org</a></span>
+        <span>Warschauer, M. (2003). <em>Technology and Social Inclusion: Rethinking the Digital Divide.</em> MIT Press.</span>
+      </div>
+    </div>
+    <div class="aside-block" style="margin-top:auto">
+      <div class="eyebrow">Reads on from here</div>
+      <div style="display:flex;flex-direction:column;gap:11px;font-size:18px;color:#c8bda2">
+        <a href="../codex-lexpressia/programming-non-latin-scripts.html" style="color:#c8bda2">Programming in non-Latin scripts</a>
+        <a href="sapir-whorf.html" style="color:#c8bda2">Sapir-Whorf, carefully</a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <span class="eyebrow">Aksarium · Notes from Somantasia</span>
+  <nav aria-label="Footer">
+    <a href="index.html">Notes from Somantasia</a>
+    <a href="../codex-lexpressia/programming-non-latin-scripts.html">Programming in non-Latin scripts</a>
+    <a href="../index.html">Home</a>
+  </nav>
+</footer>
+
+</div>
+</body>
+</html>

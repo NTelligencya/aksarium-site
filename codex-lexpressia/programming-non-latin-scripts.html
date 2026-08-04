@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Programming in non-Latin scripts · Codex Lexpressia · Aksarium</title>
+<meta name="description" content="An interactive walkthrough of what it takes to write code outside the Latin alphabet; the 128-slot encoding, bidirectional text, word order, and a parser with no spaces to work from.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&family=Eagle+Lake&family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<style>
+  :root {
+    --ground: #0b0f0d; --panel: #080c0a; --page: #070d0b;
+    --gold: #c2914c; --gold-bright: #d6a365; --gold-title: #d9a95e;
+    --gold-dull: #a89364; --gold-deep: #6e5227;
+    --ink-head: #e8dcc4; --ink-body: #b3bdb5; --ink-muted: #8b968e;
+    --ink-faint: #8a7a58; --ink-dim: #5f6b64;
+    --hairline: rgba(194,145,76,.16); --hairline-strong: rgba(194,145,76,.3);
+    --glow: rgba(214,163,101,.35);
+    --serif: 'IM Fell DW Pica', serif;
+    --display: 'Eagle Lake', cursive;
+    --arabic: 'Amiri', 'Scheherazade New', serif;
+    --tamil: 'Noto Sans Tamil', sans-serif;
+    --han: 'Noto Serif TC', serif;
+    --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--page); color: var(--ink-head);
+    font-family: var(--serif); overflow: hidden;
+  }
+  #stage { height: 100vh; display: flex; flex-direction: column; }
+
+  /* Chrome */
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 28px; flex-wrap: wrap; flex-shrink: 0;
+    padding: 20px 36px; border-bottom: 1px solid var(--hairline);
+  }
+  header .brand { display: flex; align-items: baseline; gap: 18px; }
+  header .wordmark { font-size: 15px; letter-spacing: .4em; text-transform: uppercase; color: var(--ink-head); }
+  header .crumb { font-family: var(--display); font-size: 13px; color: var(--gold-dull); }
+  header .modtag { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-faint); }
+  footer {
+    flex-shrink: 0; display: flex; justify-content: center; align-items: center;
+    gap: 10px; padding: 20px; border-top: 1px solid var(--hairline);
+  }
+  .dot { width: 8px; height: 8px; transform: rotate(45deg); background: rgba(194,145,76,.18); transition: background .3s, box-shadow .3s; }
+  .dot.on { background: var(--gold); box-shadow: 0 0 10px var(--glow); }
+  main { flex: 1; display: flex; padding: 14px 60px; overflow: auto; }
+  .beat { display: none; max-width: 1100px; width: 100%; margin: auto; animation: rise .45s ease; }
+  .beat.active { display: block; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .navhint { position: fixed; right: 30px; bottom: 18px; color: var(--ink-dim); font-size: 12px; letter-spacing: 1px; }
+
+  /* Shared */
+  .eyebrow { color: var(--ink-faint); font-size: 12px; letter-spacing: .32em; text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-family: var(--display); font-weight: 400; font-size: 46px; line-height: 1.15; color: var(--gold-title); }
+  h2 { font-family: var(--display); font-weight: 400; font-size: 32px; line-height: 1.2; margin-bottom: 26px; color: var(--gold-title); }
+  .lede { font-size: 21px; line-height: 1.6; color: var(--ink-body); margin-top: 18px; max-width: 820px; }
+  .myth {
+    display: inline-block; margin-top: 26px; padding: 9px 20px;
+    border: 1px solid var(--gold); color: var(--gold-bright); font-size: 17px;
+    box-shadow: 0 0 16px -6px var(--glow);
+  }
+  .callout {
+    border-left: 2px solid var(--gold); background: rgba(10,16,13,.6);
+    padding: 26px 32px; font-size: 22px; line-height: 1.55; max-width: 900px; color: var(--ink-body);
+  }
+  .callout strong { font-weight: 400; color: var(--ink-head); text-shadow: 0 0 14px rgba(232,220,196,.3); }
+  .caption { color: var(--ink-muted); font-size: 15px; margin-top: 22px; max-width: 920px; line-height: 1.6; }
+  .cite { color: var(--ink-dim); font-size: 13px; margin-top: 14px; line-height: 1.7; max-width: 920px; }
+  .qline { margin-top: 32px; font-size: 21px; color: var(--ink-muted); }
+  .btn {
+    display: inline-block; margin-top: 20px; padding: 11px 26px;
+    background: var(--gold); color: #14100a; border: 1px solid var(--gold);
+    font-size: 15px; letter-spacing: .1em; font-family: inherit; cursor: pointer;
+    transition: box-shadow .2s;
+  }
+  .btn:hover { box-shadow: 0 0 20px -2px var(--glow); }
+  .btn.ghost { background: transparent; color: var(--gold); border: 1px solid var(--hairline-strong); }
+  .btn.ghost:hover { color: var(--gold-bright); border-color: var(--gold); }
+  .btn:disabled { opacity: .4; cursor: default; box-shadow: none; }
+  .btn:focus-visible, .menu-item:focus-visible, .chipbtn:focus-visible, .tabbtn:focus-visible, input:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .ar { font-family: var(--arabic); }
+  .ta { font-family: var(--tamil); }
+  .zh { font-family: var(--han); }
+  .mono { font-family: var(--mono); }
+
+  /* Menu */
+  .menu-item {
+    display: flex; align-items: baseline; gap: 24px; width: 100%;
+    background: var(--panel); border: 1px solid var(--hairline);
+    padding: 20px 28px; margin-bottom: 12px; cursor: pointer; text-align: left;
+    color: var(--ink-head); font-family: inherit;
+    transition: border-color .2s, box-shadow .25s;
+  }
+  .menu-item:hover { border-color: var(--gold); box-shadow: 0 0 26px -8px var(--glow); }
+  .menu-item .num { color: var(--ink-faint); font-size: 14px; letter-spacing: .26em; }
+  .menu-item .name { font-size: 23px; flex: 1; }
+  .menu-item .state { color: var(--ink-faint); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 10px; }
+  .card, .hcard { background: var(--panel); border: 1px solid var(--hairline); padding: 24px 28px; }
+  .card { font-size: 22px; line-height: 1.5; color: var(--ink-body); }
+  .card em, .hcard em { font-style: normal; color: var(--ink-head); text-shadow: 0 0 14px rgba(232,220,196,.3); }
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 6px; }
+  .hcard h3 { font-weight: 400; font-size: 21px; color: var(--gold-title); margin-bottom: 10px; }
+  .hcard p { font-size: 16px; line-height: 1.6; color: var(--ink-muted); }
+  .lbl { font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 12px; }
+
+  /* Shared controls */
+  .chiprow2 { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 4px; }
+  .chipbtn {
+    font-family: inherit; font-size: 15px; padding: 9px 16px; cursor: pointer;
+    background: var(--panel); color: var(--ink-muted); border: 1px solid var(--hairline);
+    display: flex; align-items: baseline; gap: 9px; transition: border-color .2s, color .2s;
+  }
+  .chipbtn:hover { color: var(--ink-head); border-color: var(--gold-dull); }
+  .chipbtn.on { color: var(--gold-bright); border-color: var(--gold); box-shadow: 0 0 16px -6px var(--glow); }
+  .chipbtn .big { font-size: 21px; }
+  .field {
+    font-family: var(--mono); font-size: 22px; padding: 13px 16px; width: 100%;
+    background: rgba(20,28,25,.85); border: 1px solid var(--hairline-strong);
+    color: var(--ink-head); outline: none;
+  }
+  .field:focus { border-color: var(--gold); }
+  .fieldlbl { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 8px; }
+
+  /* M1 slot grid */
+  .slotwrap { display: flex; gap: 34px; margin-top: 22px; flex-wrap: wrap; align-items: flex-start; }
+  .slotgrid { display: grid; grid-template-columns: repeat(16, 1fr); gap: 2px; width: 470px; flex: none; }
+  .slot {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 11px; line-height: 1;
+    background: rgba(20,28,25,.7); border: 1px solid rgba(194,145,76,.09);
+    color: var(--ink-dim); transition: background .25s, color .25s, box-shadow .25s;
+  }
+  .slot.ctrl { color: rgba(95,107,100,.45); background: rgba(14,20,17,.7); }
+  .slot.hit {
+    background: rgba(194,145,76,.3); color: #14100a; border-color: var(--gold);
+    box-shadow: 0 0 16px -3px var(--glow);
+  }
+  .slotside { flex: 1; min-width: 320px; }
+  .verdict { font-size: 25px; line-height: 1.4; margin-bottom: 14px; min-height: 68px; }
+  .verdict .yes { color: var(--gold-bright); }
+  .verdict .no { color: #c98b6b; }
+  .bytes { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+  .byte {
+    padding: 8px 11px; border: 1px solid var(--hairline-strong); background: rgba(20,28,25,.85);
+    font-family: var(--mono); font-size: 14px; color: var(--gold-bright);
+    display: flex; flex-direction: column; gap: 3px; align-items: center;
+  }
+  .byte .bnum { font-size: 10px; color: var(--ink-dim); letter-spacing: .1em; }
+  .kv { display: grid; grid-template-columns: 150px 1fr; gap: 8px 18px; margin-top: 16px; font-size: 16px; }
+  .kv .k { color: var(--ink-faint); font-size: 13px; letter-spacing: .18em; text-transform: uppercase; }
+  .kv .v { color: var(--ink-body); font-family: var(--mono); font-size: 15px; word-break: break-all; }
+
+  /* M2 bidi */
+  .bidibox { margin-top: 20px; }
+  .rendered {
+    padding: 18px 20px; background: rgba(20,28,25,.85); border: 1px solid var(--hairline-strong);
+    font-family: var(--arabic); font-size: 34px; line-height: 1.5; color: var(--ink-head); min-height: 78px;
+  }
+  .memrow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; direction: ltr; }
+  .memcell {
+    min-width: 42px; padding: 7px 6px 6px; border: 1px solid var(--hairline);
+    background: rgba(20,28,25,.85); display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .memcell .mc { font-family: var(--arabic); font-size: 22px; line-height: 1.1; color: var(--ink-head); }
+  .memcell .mi { font-size: 9px; color: var(--ink-dim); letter-spacing: .08em; }
+  .memcell.num { border-color: var(--gold); background: rgba(194,145,76,.12); }
+  .memcell.num .mc { font-family: var(--mono); font-size: 19px; color: var(--gold-bright); }
+  .memcell.op { border-color: var(--hairline-strong); }
+  .memcell.op .mc { font-family: var(--mono); font-size: 19px; color: var(--ink-muted); }
+  .memcell.sp .mc { color: var(--ink-dim); font-family: var(--mono); font-size: 13px; }
+  .legend { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 14px; font-size: 14px; color: var(--ink-dim); }
+  .legend span i { display: inline-block; width: 11px; height: 11px; margin-right: 7px; vertical-align: baseline; font-style: normal; }
+  .legend .l1 i { border: 1px solid var(--gold); background: rgba(194,145,76,.12); }
+  .legend .l2 i { border: 1px solid var(--hairline); background: rgba(20,28,25,.85); }
+
+  /* M3 word order */
+  .orderstack { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+  .orderrow {
+    display: grid; grid-template-columns: 190px 1fr; gap: 22px; align-items: center;
+    padding: 18px 22px; background: var(--panel); border: 1px solid var(--hairline);
+  }
+  .orderrow .who { font-size: 14px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); }
+  .orderrow.claim { border-color: var(--hairline-strong); }
+  .orderrow.actual { border-color: var(--gold); box-shadow: 0 0 22px -10px var(--glow); }
+  .tok { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+  .tok span {
+    padding: 6px 12px; border: 1px solid var(--hairline); font-size: 20px; color: var(--ink-body);
+    background: rgba(20,28,25,.7);
+  }
+  .tok span.verb { border-color: var(--gold); color: var(--gold-bright); background: rgba(194,145,76,.1); }
+  .tok span.obj { color: var(--ink-head); }
+  .tok .arrow { border: none; background: none; color: var(--ink-dim); padding: 0 2px; font-size: 15px; }
+  .flag {
+    margin-top: 22px; padding: 16px 22px; border: 1px dashed var(--hairline-strong);
+    color: var(--ink-muted); font-size: 16px; line-height: 1.65; max-width: 900px;
+  }
+  .flag b { font-weight: 400; color: var(--gold-bright); }
+
+  /* M4 parser */
+  .tape { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 18px; }
+  .glyph {
+    width: 52px; height: 62px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--han); font-size: 28px;
+    background: rgba(20,28,25,.8); border: 1px solid rgba(194,145,76,.1); color: var(--ink-body);
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .glyph.win { border-color: var(--gold-dull); background: rgba(194,145,76,.1); color: var(--ink-head); }
+  .glyph.fail { border-color: rgba(201,139,107,.5); background: rgba(201,139,107,.09); }
+  .glyph.done { color: var(--ink-dim); background: rgba(14,20,17,.6); border-color: rgba(194,145,76,.06); }
+  .glyph.tokend { border-right: 2px solid var(--gold); }
+  .parsecols { display: grid; grid-template-columns: 1fr 340px; gap: 30px; margin-top: 22px; align-items: start; }
+  .attempt { font-size: 18px; line-height: 1.7; color: var(--ink-body); min-height: 92px; }
+  .attempt .try { font-family: var(--han); color: var(--ink-head); font-size: 22px; }
+  .attempt .ok { color: var(--gold-bright); }
+  .attempt .nope { color: #c98b6b; }
+  .toklist { display: flex; flex-direction: column; gap: 8px; }
+  .toklist .t {
+    display: grid; grid-template-columns: 90px 1fr; gap: 14px; align-items: baseline;
+    padding: 9px 13px; border: 1px solid var(--hairline); background: rgba(20,28,25,.75);
+    animation: rise .35s ease;
+  }
+  .toklist .t .g { font-family: var(--han); font-size: 20px; color: var(--gold-bright); }
+  .toklist .t .m { font-size: 14px; color: var(--ink-muted); line-height: 1.45; }
+  .ctrlrow { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .ctrlrow .btn { margin-top: 0; }
+
+  /* M5 table */
+  .ctable { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 16px; }
+  .ctable th {
+    text-align: left; padding: 12px 14px; font-weight: 400; font-size: 12px;
+    letter-spacing: .22em; text-transform: uppercase; color: var(--ink-faint);
+    border-bottom: 1px solid var(--hairline-strong);
+  }
+  .ctable td { padding: 15px 14px; border-bottom: 1px solid rgba(194,145,76,.1); color: var(--ink-muted); line-height: 1.55; vertical-align: top; }
+  .ctable td.name { color: var(--gold-bright); font-size: 19px; white-space: nowrap; }
+  .ctable td.name small { display: block; font-size: 13px; color: var(--ink-dim); letter-spacing: .1em; margin-top: 3px; }
+  .ctable tr:last-child td { border-bottom: none; }
+
+  .linkrow { display: flex; gap: 16px; margin-top: 30px; flex-wrap: wrap; }
+  .linkrow a {
+    flex: 1; min-width: 220px; padding: 18px 20px; border: 1px solid var(--hairline);
+    display: flex; flex-direction: column; gap: 7px; color: inherit; text-decoration: none;
+    transition: border-color .2s;
+  }
+  .linkrow a:hover { border-color: var(--gold); }
+  .linkrow .sect { font-family: var(--display); font-size: 13px; color: var(--ink-faint); }
+  .linkrow .ttl { font-size: 20px; color: var(--gold-title); }
+  .srclist { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; font-size: 15px; color: var(--ink-muted); line-height: 1.6; max-width: 920px; }
+  .srclist a { color: var(--gold-dull); }
+  .srclist em { color: #a9b3ab; font-style: italic; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .beat, .toklist .t { animation: none; }
+    .slot, .glyph { transition: none; }
+  }
+  @media (max-width: 900px) {
+    h1 { font-size: 34px; } h2 { font-size: 26px; }
+    main { padding: 0 24px; }
+    .pair, .trio, .parsecols { grid-template-columns: 1fr; }
+    .slotgrid { width: 100%; }
+    .orderrow { grid-template-columns: 1fr; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <header>
+    <span class="brand"><span class="wordmark">Aksarium</span><span class="crumb">Codex Lexpressia</span></span>
+    <span class="modtag" id="hdrRight">Press M for menu</span>
+  </header>
+  <main id="main">
+
+    <!-- ============ MENU ============ -->
+    <section class="beat" data-scene="menu">
+      <div class="eyebrow">An interactive walkthrough</div>
+      <h1>Programming in non-Latin scripts</h1>
+      <p class="lede">Translating the keywords is the easy part. Underneath sit an encoding built for 128 characters, a text engine that stores one order and draws another, a grammar that runs the wrong way, and a script with no spaces to break on. Five modules; each one is a thing you can push on.</p>
+      <div style="margin-top:36px">
+        <button class="menu-item" onclick="goModule(1)">
+          <span class="num">01</span><span class="name">The 128-slot container</span><span class="state">Start</span>
+        </button>
+        <button class="menu-item" onclick="goModule(2)">
+          <span class="num">02</span><span class="name">Right to left, and what breaks</span><span class="state">Start</span>
+        </button>
+        <button class="menu-item" onclick="goModule(3)">
+          <span class="num">03</span><span class="name">Word order, claimed and actual</span><span class="state">Start</span>
+        </button>
+        <button class="menu-item" onclick="goModule(4)">
+          <span class="num">04</span><span class="name">Where the spaces aren't</span><span class="state">Start</span>
+        </button>
+        <button class="menu-item" onclick="goModule(5)">
+          <span class="num">05</span><span class="name">Five languages, five arguments</span><span class="state">Start</span>
+        </button>
+      </div>
+      <a class="btn ghost" href="index.html" style="margin-top:22px; text-decoration:none">&larr; Back to Codex Lexpressia</a>
+    </section>
+
+    <!-- ============ MODULE 1 ============ -->
+
+    <section class="beat" data-scene="m1">
+      <div class="eyebrow">Module 01</div>
+      <h1>The 128-slot container</h1>
+      <div class="myth">Myth we'll unpick: "Unicode fixed this, so the encoding no longer matters"</div>
+      <p class="lede">ASCII was formalised in the 1960s under a hard constraint: seven bits per character, and therefore exactly 128 slots for everything a computer might need to write down. Sixty of those went to the English alphabet in two cases. The rest went to digits, punctuation and control codes. There was nothing left, and nothing was meant to be.</p>
+    </section>
+
+    <section class="beat" data-scene="m1" data-onenter="resetSlots">
+      <h2>Find your character a slot</h2>
+      <p style="font-size:18px;color:var(--ink-muted);max-width:820px;line-height:1.6">Type anything into the field, or take one of the presets. If it has a home in the original 128, the grid will light up. If it does not, you will see what it costs instead.</p>
+      <div class="chiprow2" style="margin-top:18px" id="slotPresets"></div>
+      <div style="margin-top:16px;max-width:340px">
+        <div class="fieldlbl">Or type a character</div>
+        <input class="field" id="slotInput" maxlength="8" autocomplete="off" spellcheck="false" aria-label="Type a character to test against ASCII">
+      </div>
+      <div class="slotwrap">
+        <div>
+          <div class="lbl">The 128 slots</div>
+          <div class="slotgrid" id="slotGrid" aria-hidden="true"></div>
+        </div>
+        <div class="slotside">
+          <div class="verdict" id="slotVerdict">Waiting for a character.</div>
+          <div id="slotBytesWrap" style="display:none">
+            <div class="lbl" style="margin-bottom:9px">What it takes in UTF-8</div>
+            <div class="bytes" id="slotBytes"></div>
+          </div>
+          <div class="kv" id="slotKV"></div>
+        </div>
+      </div>
+      <p class="caption">The grid is the whole of ASCII. Greyed cells are control codes, which were never printable; they held things like carriage return and the bell. Unicode did not enlarge this grid, it built a much larger one and kept these 128 at the front, which is why an ASCII file is still a valid UTF-8 file and why the Latin alphabet is still the only script that costs one byte per character.</p>
+    </section>
+
+    <section class="beat" data-scene="m1">
+      <h2>What the constraint actually bought</h2>
+      <div class="pair">
+        <div class="card"><em>The saving was real.</em> In an era when memory was measured in kilobytes and priced accordingly, one bit per character across a whole system was not a rounding error. Seven bits rather than eight was a defensible engineering decision made by engineers solving the problem in front of them.</div>
+        <div class="card"><em>The cost was deferred.</em> It landed decades later, on people who had no part in the decision, in the form of mojibake, broken sorting, truncated names in government databases, and a generation of tooling that assumed one byte meant one character.</div>
+      </div>
+      <p class="caption">Unicode, and UTF-8 as its dominant encoding, removed the hard ceiling. What it could not remove was everything built on top of the assumption while the ceiling was in place: the protocols, the keyword sets, the documentation, and the habit of testing only against Latin input.</p>
+    </section>
+
+    <!-- ============ MODULE 2 ============ -->
+
+    <section class="beat" data-scene="m2">
+      <div class="eyebrow">Module 02</div>
+      <h1>Right to left, and what breaks</h1>
+      <div class="myth">Myth we'll unpick: "Right-to-left text is left-to-right text, mirrored"</div>
+      <p class="lede">A computer stores text in logical order: the order you would read it aloud, first word first. It draws text in visual order: the order the glyphs sit on the line. For English these are the same sequence, which is why the distinction is invisible to most developers for their entire careers. For Arabic they are not, and a line of code holding Arabic words, Western digits and mathematical operators has to be stored one way and drawn another.</p>
+    </section>
+
+    <section class="beat" data-scene="m2" data-onenter="resetBidi">
+      <h2>One line, two orders</h2>
+      <p style="font-size:18px;color:var(--ink-muted);max-width:840px;line-height:1.6">Pick a line, or edit the field directly. The top box is what a reader sees. The row underneath is the same characters in the order they sit in memory, first to last, running left to right.</p>
+      <div class="chiprow2" style="margin-top:18px" id="bidiPresets"></div>
+      <div class="bidibox">
+        <div class="fieldlbl">The line, as edited</div>
+        <input class="field ar" id="bidiInput" dir="rtl" style="font-size:26px" autocomplete="off" spellcheck="false" aria-label="Edit the right-to-left line">
+        <div class="fieldlbl" style="margin-top:20px">As drawn on screen</div>
+        <div class="rendered" id="bidiRendered" dir="rtl"></div>
+        <div class="fieldlbl" style="margin-top:20px">As stored in memory, character 1 first</div>
+        <div class="memrow" id="bidiMem"></div>
+        <div class="legend">
+          <span class="l1"><i></i>digits and their runs</span>
+          <span class="l2"><i></i>everything else</span>
+        </div>
+      </div>
+      <p class="caption">Watch the digits. Inside a right-to-left line, a number still runs left to right, because the Unicode bidirectional algorithm treats a run of digits as its own left-to-right island inside the surrounding right-to-left text. The number twelve is stored as "1" then "2" and drawn as "12", in that order, in the middle of a line moving the other way. An editor, a compiler error message, and a diff tool each have to agree about which order they are reporting, and they do not always agree.</p>
+    </section>
+
+    <section class="beat" data-scene="m2">
+      <h2>Why a compiler has to care</h2>
+      <div class="trio">
+        <div class="hcard"><h3>Column numbers lie</h3><p>"Error at character 14" is unambiguous in memory and ambiguous on screen. The fourteenth character stored may be nowhere near the fourteenth position a reader counts to.</p></div>
+        <div class="hcard"><h3>Selection splits</h3><p>Dragging across a visually contiguous stretch of a mixed line can select a logically non-contiguous range, so a copy-paste can quietly reorder an expression.</p></div>
+        <div class="hcard"><h3>The direction is invisible</h3><p>Explicit direction marks are zero-width. Two lines that look identical can be different byte sequences, which is a legibility problem and, in other contexts, a security one.</p></div>
+      </div>
+      <p class="caption">None of this makes right-to-left programming impossible; it makes it work that somebody has to do. Bassil's Phoenix compiler is one demonstration that the work is finite: a general-purpose, object-oriented, compiled language whose source is written entirely in Arabic script, running through a six-stage pipeline of preprocessor, scanner, parser, semantic analyser, code generator and linker, and emitting a standalone native Windows executable.</p>
+      <p class="cite">Bassil, Y. (2019). Phoenix: The Arabic Object-Oriented Programming Language. <em>International Journal of Computer Trends and Technology</em> 67(2). Pipeline stages as described in the paper (high).</p>
+    </section>
+
+    <!-- ============ MODULE 3 ============ -->
+
+    <section class="beat" data-scene="m3">
+      <div class="eyebrow">Module 03</div>
+      <h1>Word order, claimed and actual</h1>
+      <div class="myth">Claim we'll test: "Ezhil lets a Tamil student write the verb last, the way Tamil does"</div>
+      <p class="lede">English puts the verb before its object: <em>print "hello"</em>. Tamil is head-final and normally puts the verb last. If the argument for native-language programming is that it removes grammatical friction, then word order is where the argument has to be made; swapping the keyword for a Tamil word while keeping English clause order would only move the friction, not remove it. So it is worth checking what Ezhil actually does.</p>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetOrder">
+      <h2>The same instruction, three ways</h2>
+      <div class="chiprow2" style="margin-top:6px" id="orderPresets"></div>
+      <div class="orderstack" id="orderStack"></div>
+      <div class="flag">
+        <b>What the check turned up.</b> Ezhil's print statement is predicate-first: <span class="ta">பதிப்பி</span> comes before its string, the same shape as English. The project's own 2009 paper describes the design as "the predicate followed by the expression like in LISP, which is a natural way of reasoning by the Tamil language grammar", which is an argument for verb-first, not verb-last. The head-final claim appears in the encyclopaedia description of the language's syntactic sugar rather than in this basic statement form. Treat "Hello Print" as a description of the ambition, not of the code.
+      </div>
+      <p class="cite">Annamalai, M. (2009). <em>Ezhil: A Tamil Programming Language.</em> arXiv:0907.4960, quoted passage (high). Print keyword and example programs from the Ezhil-Lang repository and the Wikipedia article on Ezhil, both read 4 August 2026 (high). Whether any Ezhil construct is genuinely verb-final is not resolved here (low); the control-flow forms would be the place to look.</p>
+    </section>
+
+    <section class="beat" data-scene="m3">
+      <h2>Why the gap is the interesting part</h2>
+      <div class="callout">The strongest version of the linguistic argument is not that a language <strong>has</strong> achieved grammatical alignment. It is that alignment is a design axis at all; that word order is something a language designer can choose, rather than something inherited from whoever wrote the first compiler.</div>
+      <p class="caption">Ezhil's stated aim, removing the impedance between a Tamil-speaking child's sentence and the line they have to type, stands whether or not the current syntax reaches it. The gap between the two is normal for a small volunteer project, and noting it is not a criticism of the work; it is the difference between a claim you can repeat and a claim you have checked.</p>
+    </section>
+
+    <!-- ============ MODULE 4 ============ -->
+
+    <section class="beat" data-scene="m4">
+      <div class="eyebrow">Module 04</div>
+      <h1>Where the spaces aren't</h1>
+      <div class="myth">Myth we'll unpick: "A tokeniser splits on whitespace"</div>
+      <p class="lede">Wenyan is written in classical Chinese, which does not put spaces between words. A tokeniser cannot split on whitespace because there is none; it has to work out where each token ends by trying the longest candidate it knows and shrinking until something matches. That single constraint is the whole parsing strategy, and you can watch it run.</p>
+    </section>
+
+    <section class="beat" data-scene="m4" data-onenter="resetParse">
+      <h2>Longest match, shrinking</h2>
+      <p style="font-size:18px;color:var(--ink-muted);max-width:860px;line-height:1.6">The tape below is one unbroken line of Wenyan: declare a number, give it the value three, name it, print it. The scanner starts at the left with a five-character window and shrinks until the window is a token it recognises.</p>
+      <div class="tape" id="parseTape"></div>
+      <div class="ctrlrow" style="margin-top:20px">
+        <button class="btn" id="parseStep" onclick="parseStep()">Step</button>
+        <button class="btn ghost" id="parseAuto" onclick="parseAuto()">Run</button>
+        <button class="btn ghost" onclick="resetParse()">Reset</button>
+      </div>
+      <div class="parsecols">
+        <div>
+          <div class="lbl">Current attempt</div>
+          <div class="attempt" id="parseAttempt">Press Step to begin at character 1.</div>
+        </div>
+        <div>
+          <div class="lbl">Tokens found</div>
+          <div class="toklist" id="parseTokens"></div>
+        </div>
+      </div>
+      <p class="caption">Every failed attempt is a real cost. The scanner does not know where the token boundary is until it has tried and failed at every longer candidate, and a wrong early match would silently mis-parse everything after it. English-based tokenisers get this boundary handed to them for free by the space bar, which is why almost no one who writes one has to think about it.</p>
+    </section>
+
+    <section class="beat" data-scene="m4">
+      <h2>Choosing a language nobody speaks</h2>
+      <div class="pair">
+        <div class="card"><em>A deliberate leveller.</em> Nobody speaks classical Chinese as a daily language. A software engineer in Silicon Valley and a Mandarin speaker in Beijing meet Wenyan on close to equal terms, which strips out the native-speaker advantage that every other language in this walkthrough grants to somebody.</div>
+        <div class="card"><em>A working compiler underneath.</em> Wenyan is not only a joke about form. It compiles, it has a published syntax reference, and people have written real algorithms in it, including the Sieve of Eratosthenes; an ancient Greek method, in ancient Chinese script, on modern silicon.</div>
+      </div>
+      <p class="cite">Syntax and example forms from the wenyan-lang syntax cheatsheet and project site, read 4 August 2026 (high). Token glosses below the tape are plain-language readings, not the project's own wording (medium).</p>
+    </section>
+
+    <!-- ============ MODULE 5 ============ -->
+
+    <section class="beat" data-scene="m5">
+      <div class="eyebrow">Module 05</div>
+      <h1>Five languages, five arguments</h1>
+      <p class="lede">None of these projects is trying to replace Python. Each is making a different argument about what a programming language is allowed to be, and they disagree with each other as much as they disagree with the default.</p>
+      <table class="ctable">
+        <thead>
+          <tr><th>Language</th><th>Script</th><th>The argument it makes</th><th>What it demonstrates</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">Ezhil<small>2007 &middot; Annamalai</small></td>
+            <td>Tamil</td>
+            <td>A child should not have to learn a second natural language before learning a first computational one.</td>
+            <td>That native-script teaching languages are buildable and maintainable by a small volunteer effort.</td>
+          </tr>
+          <tr>
+            <td class="name">Phoenix<small>2019 &middot; Bassil</small></td>
+            <td>Arabic</td>
+            <td>Localised languages should not be confined to teaching; professional work should be possible too.</td>
+            <td>That a right-to-left script can drive a full compiler pipeline to a native executable.</td>
+          </tr>
+          <tr>
+            <td class="name">Citrine<small>de Mooij, Jilani, Litwinow</small></td>
+            <td>Over 100 languages</td>
+            <td>The keyword layer is a display setting, not part of the program; each collaborator should see their own.</td>
+            <td>That the same source can be read in a different natural language by each member of a team.</td>
+          </tr>
+          <tr>
+            <td class="name">Qalb<small>Nasser</small></td>
+            <td>Arabic calligraphy</td>
+            <td>Source code is a visual form, and the assumption that it must look like dense Latin type is an aesthetic inheritance, not a technical requirement.</td>
+            <td>That a functional language in the Lisp family can be read as calligraphy without ceasing to be code.</td>
+          </tr>
+          <tr>
+            <td class="name">Wenyan<small>Huang</small></td>
+            <td>Classical Chinese</td>
+            <td>If the language nobody speaks natively, nobody has the home advantage.</td>
+            <td>That a script without word spacing forces a different tokenising strategy, and that it works.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="cite">Citrine's self-description, including the language count and its transpiler and DSL capabilities, is drawn from the project's own promotional material and has not been independently assessed (medium). Developer surnames as given in the source notes; full names not confirmed (low).</p>
+    </section>
+
+    <section class="beat" data-scene="m5">
+      <h2>The dependency may just be moving</h2>
+      <div class="callout">A model prompted in Swahili or Bengali will now write the Python for you, and the keyword layer stops mattering. Whether that is the democratisation of programming or the <strong>relocation of the dependency</strong>, from English-language syntax to English-language training data, is the open question; and it is a question about the tools, not about the scripts.</div>
+      <div class="linkrow">
+        <a href="../somantasia/hello-world-in-arabic.html">
+          <span class="sect">Notes from Somantasia</span>
+          <span class="ttl">Hello World in Arabic</span>
+          <span style="font-size:15px;color:var(--ink-muted);line-height:1.5">How English became the language of code, and what it costs the majority of developers who do not speak it.</span>
+        </a>
+        <a href="keyboard-gallery.html">
+          <span class="sect">Codex Lexpressia</span>
+          <span class="ttl">Keyboard gallery</span>
+          <span style="font-size:15px;color:var(--ink-muted);line-height:1.5">Before any of this compiles, somebody has to type it. Every layout, every overlay.</span>
+        </a>
+        <a href="index.html">
+          <span class="sect">Codex Lexpressia</span>
+          <span class="ttl">Back to the section</span>
+          <span style="font-size:15px;color:var(--ink-muted);line-height:1.5">Script politics and reform, typing systems, OCR and NLP tooling, and the IPA.</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m5">
+      <h2>Sources</h2>
+      <div class="srclist">
+        <span>Bassil, Y. (2019). <em>Phoenix: The Arabic Object-Oriented Programming Language.</em> International Journal of Computer Trends and Technology 67(2). Preprint: <a href="https://arxiv.org/abs/1907.05871">arxiv.org/abs/1907.05871</a></span>
+        <span>Annamalai, M. (2009). <em>Ezhil: A Tamil Programming Language.</em> <a href="https://arxiv.org/abs/0907.4960">arXiv:0907.4960</a></span>
+        <span>Annamalai, M. (2013). <em>Invitation to Ezhil: A Tamil Programming Language for Early Computer-Science Education.</em> <a href="https://arxiv.org/abs/1308.1733">arXiv:1308.1733</a></span>
+        <span>Ezhil Language Foundation. <em>Ezhil-Lang</em> repository. <a href="https://github.com/Ezhil-Language-Foundation/Ezhil-Lang">github.com/Ezhil-Language-Foundation/Ezhil-Lang</a>. Read 4 August 2026.</span>
+        <span>Wikipedia, <em>Ezhil (programming language).</em> <a href="https://en.wikipedia.org/wiki/Ezhil_(programming_language)">en.wikipedia.org</a>. Read 4 August 2026.</span>
+        <span>Huang, L. <em>Wenyan</em> (文言), syntax cheatsheet and project site. <a href="https://github.com/wenyan-lang/wenyan/wiki/Syntax-Cheatsheet">Cheatsheet</a> &middot; <a href="https://wy-lang.org/">wy-lang.org</a>. Read 4 August 2026.</span>
+        <span>Nasser, R. <em>Qalb</em> (قلب). <a href="https://github.com/nasser/---">github.com/nasser/---</a></span>
+        <span>The Unicode Consortium. <em>Unicode Bidirectional Algorithm,</em> UAX #9, for the treatment of digit runs inside right-to-left text.</span>
+      </div>
+      <p class="cite" style="margin-top:24px">Confidence: the ASCII slot arithmetic and the UTF-8 byte counts in Module 01 are computed live in the browser from the character you enter, so they are exact. The Ezhil finding in Module 03 rests on the sources named there. Citrine's description is the project's own and is unverified.</p>
+    </section>
+
+  </main>
+  <footer id="dots"></footer>
+</div>
+<div class="navhint">&larr; &rarr; to move &middot; M for menu</div>
+
+<script>
+  'use strict';
+
+  /* ================= Deck scaffold ================= */
+  const beats = Array.from(document.querySelectorAll('.beat'));
+  let idx = 0;
+
+  const sceneTitles = {
+    m1: 'Module 01 · The 128-slot container',
+    m2: 'Module 02 · Right to left, and what breaks',
+    m3: 'Module 03 · Word order, claimed and actual',
+    m4: "Module 04 · Where the spaces aren't",
+    m5: 'Module 05 · Five languages, five arguments'
+  };
+
+  function show(i) {
+    idx = Math.max(0, Math.min(i, beats.length - 1));
+    beats.forEach((b, n) => b.classList.toggle('active', n === idx));
+    const scene = beats[idx].dataset.scene;
+    document.getElementById('hdrRight').textContent =
+      scene === 'menu' ? 'Press M for menu' : sceneTitles[scene];
+    const dots = document.getElementById('dots');
+    dots.innerHTML = '';
+    if (scene !== 'menu') {
+      const moduleBeats = beats.filter(b => b.dataset.scene === scene);
+      const pos = moduleBeats.indexOf(beats[idx]);
+      moduleBeats.forEach((_, n) => {
+        const d = document.createElement('div');
+        d.className = 'dot' + (n === pos ? ' on' : '');
+        dots.appendChild(d);
+      });
+    }
+    const hook = beats[idx].dataset.onenter;
+    if (hook && onEnterHooks[hook]) onEnterHooks[hook]();
+  }
+  function goMenu() { show(0); }
+  function goModule(n) {
+    const i = beats.findIndex(b => b.dataset.scene === 'm' + n);
+    if (i > -1) show(i);
+  }
+  function next() { if (idx < beats.length - 1) show(idx + 1); }
+  function prev() { if (idx > 0) show(idx - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft') prev();
+    else if (e.key === 'm' || e.key === 'M') goMenu();
+    else if (e.key >= '1' && e.key <= '5') goModule(Number(e.key));
+  });
+  document.getElementById('main').addEventListener('click', e => {
+    if (e.target.closest('button, a, input, table, .flag, .srclist')) return;
+    next();
+  });
+
+  /* ================= Module 1: the 128 slots ================= */
+  const CTRL_NAMES = {
+    0: 'NUL', 7: 'BEL', 8: 'BS', 9: 'TAB', 10: 'LF', 13: 'CR', 27: 'ESC', 127: 'DEL'
+  };
+  const SLOT_PRESETS = [
+    { ch: 'A', lbl: 'Latin A' },
+    { ch: 'é', lbl: 'French é' },
+    { ch: 'ب', lbl: 'Arabic bā' },
+    { ch: 'ழ', lbl: 'Tamil zha' },
+    { ch: '文', lbl: 'Han wén' },
+    { ch: 'অ', lbl: 'Bengali a' }
+  ];
+
+  function buildSlotGrid() {
+    const g = document.getElementById('slotGrid');
+    if (g.childElementCount) return;
+    for (let i = 0; i < 128; i++) {
+      const d = document.createElement('div');
+      d.className = 'slot' + (i < 32 || i === 127 ? ' ctrl' : '');
+      d.id = 'slot' + i;
+      d.textContent = (i < 32 || i === 127) ? (CTRL_NAMES[i] ? CTRL_NAMES[i].slice(0, 2) : '·') : String.fromCharCode(i);
+      if (i === 32) d.textContent = '␣';
+      g.appendChild(d);
+    }
+  }
+
+  function slotShow(str) {
+    buildSlotGrid();
+    for (let i = 0; i < 128; i++) document.getElementById('slot' + i).classList.remove('hit');
+    const chars = Array.from(str || '');
+    const ch = chars.length ? chars[chars.length - 1] : '';
+    const verdict = document.getElementById('slotVerdict');
+    const bytesWrap = document.getElementById('slotBytesWrap');
+    const kv = document.getElementById('slotKV');
+    if (!ch) {
+      verdict.textContent = 'Waiting for a character.';
+      bytesWrap.style.display = 'none';
+      kv.innerHTML = '';
+      return;
+    }
+    const cp = ch.codePointAt(0);
+    const utf8 = Array.from(new TextEncoder().encode(ch));
+    const inAscii = cp < 128;
+    if (inAscii) {
+      document.getElementById('slot' + cp).classList.add('hit');
+      verdict.innerHTML = '<span class="yes">Slot ' + cp + ' of 128.</span> It fits, and it costs one byte.';
+    } else {
+      verdict.innerHTML = '<span class="no">No slot.</span> Outside the original 128 entirely; in an ASCII-only system this character cannot be represented at all.';
+    }
+    bytesWrap.style.display = 'block';
+    document.getElementById('slotBytes').innerHTML = utf8.map((b, i) =>
+      '<div class="byte"><span class="bnum">byte ' + (i + 1) + '</span><span>' +
+      b.toString(2).padStart(8, '0') + '</span></div>').join('');
+    const rows = [
+      ['Character', ch],
+      ['Code point', 'U+' + cp.toString(16).toUpperCase().padStart(4, '0')],
+      ['Decimal', String(cp)],
+      ['UTF-8 size', utf8.length + (utf8.length === 1 ? ' byte' : ' bytes')],
+      ['In ASCII', inAscii ? 'yes' : 'no']
+    ];
+    kv.innerHTML = rows.map(r => '<div class="k">' + r[0] + '</div><div class="v">' + escapeHTML(r[1]) + '</div>').join('');
+  }
+
+  function resetSlots() {
+    buildSlotGrid();
+    const p = document.getElementById('slotPresets');
+    if (!p.childElementCount) {
+      p.innerHTML = SLOT_PRESETS.map((s, i) =>
+        '<button class="chipbtn" data-i="' + i + '"><span class="big">' + s.ch + '</span><span>' + s.lbl + '</span></button>').join('');
+      Array.from(p.children).forEach(btn => {
+        btn.addEventListener('click', () => {
+          Array.from(p.children).forEach(b => b.classList.remove('on'));
+          btn.classList.add('on');
+          const s = SLOT_PRESETS[Number(btn.dataset.i)];
+          document.getElementById('slotInput').value = s.ch;
+          slotShow(s.ch);
+        });
+      });
+      document.getElementById('slotInput').addEventListener('input', e => {
+        Array.from(p.children).forEach(b => b.classList.remove('on'));
+        slotShow(e.target.value);
+      });
+    }
+    Array.from(p.children).forEach(b => b.classList.remove('on'));
+    p.children[0].classList.add('on');
+    document.getElementById('slotInput').value = 'A';
+    slotShow('A');
+  }
+
+  /* ================= Module 2: bidi ================= */
+  const BIDI_PRESETS = [
+    { s: 'المجموع = 12 + 7', lbl: 'an assignment' },
+    { s: 'إذا (س > 5)', lbl: 'a condition' },
+    { s: 'الصفحة 404 غير موجودة', lbl: 'an error line' }
+  ];
+
+  function bidiRender(str) {
+    document.getElementById('bidiRendered').textContent = str;
+    const mem = document.getElementById('bidiMem');
+    const chars = Array.from(str);
+    mem.innerHTML = chars.map((c, i) => {
+      let cls = '';
+      let disp = c;
+      if (/[0-9٠-٩]/.test(c)) cls = ' num';
+      else if (c === ' ') { cls = ' sp'; disp = '␣'; }
+      else if (/[=+\-*/<>()]/.test(c)) cls = ' op';
+      return '<div class="memcell' + cls + '"><span class="mc">' + escapeHTML(disp) +
+        '</span><span class="mi">' + (i + 1) + '</span></div>';
+    }).join('');
+  }
+
+  function resetBidi() {
+    const p = document.getElementById('bidiPresets');
+    if (!p.childElementCount) {
+      p.innerHTML = BIDI_PRESETS.map((s, i) =>
+        '<button class="chipbtn" data-i="' + i + '"><span class="big ar">' + s.s + '</span><span>' + s.lbl + '</span></button>').join('');
+      Array.from(p.children).forEach(btn => {
+        btn.addEventListener('click', () => {
+          Array.from(p.children).forEach(b => b.classList.remove('on'));
+          btn.classList.add('on');
+          const s = BIDI_PRESETS[Number(btn.dataset.i)].s;
+          document.getElementById('bidiInput').value = s;
+          bidiRender(s);
+        });
+      });
+      document.getElementById('bidiInput').addEventListener('input', e => bidiRender(e.target.value));
+    }
+    Array.from(p.children).forEach(b => b.classList.remove('on'));
+    p.children[0].classList.add('on');
+    document.getElementById('bidiInput').value = BIDI_PRESETS[0].s;
+    bidiRender(BIDI_PRESETS[0].s);
+  }
+
+  /* ================= Module 3: word order ================= */
+  const ORDER_CASES = [
+    {
+      key: 'print', lbl: 'Print a greeting',
+      rows: [
+        { who: 'English, SVO', cls: '', toks: [['print', 'verb'], ['"hello"', 'obj']] },
+        { who: 'Tamil order, glossed', cls: 'claim', toks: [['"vaṇakkam"', 'obj'], ['print', 'verb']] },
+        { who: 'Ezhil, as written', cls: 'actual', toks: [['பதிப்பி', 'verb'], ['"வணக்கம்"', 'obj']] }
+      ]
+    },
+    {
+      key: 'assign', lbl: 'Assign a value',
+      rows: [
+        { who: 'English, SVO', cls: '', toks: [['x', 'obj'], ['=', 'verb'], ['5', 'obj']] },
+        { who: 'Tamil order, glossed', cls: 'claim', toks: [['x', 'obj'], ['5', 'obj'], ['becomes', 'verb']] },
+        { who: 'Ezhil, as written', cls: 'actual', toks: [['அ', 'obj'], ['=', 'verb'], ['5', 'obj']] }
+      ]
+    }
+  ];
+
+  function orderRender(n) {
+    const c = ORDER_CASES[n];
+    document.getElementById('orderStack').innerHTML = c.rows.map(r =>
+      '<div class="orderrow ' + r.cls + '"><span class="who">' + r.who + '</span><span class="tok">' +
+      r.toks.map(t => '<span class="' + t[1] + '">' + escapeHTML(t[0]) + '</span>').join('<span class="arrow">then</span>') +
+      '</span></div>').join('');
+  }
+
+  function resetOrder() {
+    const p = document.getElementById('orderPresets');
+    if (!p.childElementCount) {
+      p.innerHTML = ORDER_CASES.map((c, i) => '<button class="chipbtn" data-i="' + i + '"><span>' + c.lbl + '</span></button>').join('');
+      Array.from(p.children).forEach(btn => {
+        btn.addEventListener('click', () => {
+          Array.from(p.children).forEach(b => b.classList.remove('on'));
+          btn.classList.add('on');
+          orderRender(Number(btn.dataset.i));
+        });
+      });
+    }
+    Array.from(p.children).forEach(b => b.classList.remove('on'));
+    p.children[0].classList.add('on');
+    orderRender(0);
+  }
+
+  /* ================= Module 4: longest-match parser ================= */
+  const TAPE = '吾有一數曰三名之曰「甲」書之';
+  const LEXICON = {
+    '吾有一數': 'I have a number; declare one numeric variable',
+    '曰': 'namely; introduces the value that follows',
+    '三': 'three',
+    '名之曰': 'name it; binds the value to an identifier',
+    '「甲」': 'jiǎ; the identifier, in corner brackets',
+    '書之': 'write it; output the value'
+  };
+  const MAXWIN = 5;
+  let pPos = 0, pLen = MAXWIN, pTokens = [], pTimer = null;
+
+  function parseTapeRender(winStart, winEnd, failed) {
+    const chars = Array.from(TAPE);
+    document.getElementById('parseTape').innerHTML = chars.map((c, i) => {
+      let cls = 'glyph';
+      if (i < pPos) cls += ' done';
+      if (i >= winStart && i < winEnd) cls += failed ? ' fail' : ' win';
+      if (pTokens.some(t => t.end - 1 === i)) cls += ' tokend';
+      return '<div class="' + cls + '">' + c + '</div>';
+    }).join('');
+  }
+
+  function parseTokensRender() {
+    document.getElementById('parseTokens').innerHTML = pTokens.map(t =>
+      '<div class="t"><span class="g">' + t.text + '</span><span class="m">' + t.gloss + '</span></div>').join('')
+      || '<div style="font-size:15px;color:var(--ink-dim)">None yet.</div>';
+  }
+
+  function parseStep() {
+    const chars = Array.from(TAPE);
+    if (pPos >= chars.length) return;
+    const remaining = chars.length - pPos;
+    if (pLen > remaining) pLen = remaining;
+    const candidate = chars.slice(pPos, pPos + pLen).join('');
+    const hit = Object.prototype.hasOwnProperty.call(LEXICON, candidate);
+    parseTapeRender(pPos, pPos + pLen, !hit);
+    const a = document.getElementById('parseAttempt');
+    if (hit) {
+      a.innerHTML = 'Window of ' + pLen + ': <span class="try">' + candidate + '</span> &mdash; <span class="ok">match.</span> ' +
+        'Emit the token and jump the read head to character ' + (pPos + pLen + 1) + '.';
+      pTokens.push({ text: candidate, gloss: LEXICON[candidate], end: pPos + pLen });
+      pPos += pLen;
+      pLen = MAXWIN;
+      parseTokensRender();
+      if (pPos >= chars.length) {
+        a.innerHTML += '<br><span class="ok">Tape consumed. Six tokens, no spaces used.</span>';
+        stopAuto();
+      }
+    } else {
+      a.innerHTML = 'Window of ' + pLen + ': <span class="try">' + candidate + '</span> &mdash; <span class="nope">no such token.</span> ' +
+        'Shrink the window by one and try again from the same character.';
+      pLen -= 1;
+      if (pLen < 1) {
+        a.innerHTML = '<span class="nope">No token starts at character ' + (pPos + 1) + '.</span> A real scanner raises an error here.';
+        stopAuto();
+      }
+    }
+  }
+
+  function parseAuto() {
+    if (pTimer) { stopAuto(); return; }
+    document.getElementById('parseAuto').textContent = 'Pause';
+    pTimer = setInterval(() => {
+      const chars = Array.from(TAPE);
+      if (pPos >= chars.length) { stopAuto(); return; }
+      parseStep();
+    }, 850);
+  }
+
+  function stopAuto() {
+    if (pTimer) clearInterval(pTimer);
+    pTimer = null;
+    const b = document.getElementById('parseAuto');
+    if (b) b.textContent = 'Run';
+  }
+
+  function resetParse() {
+    stopAuto();
+    pPos = 0; pLen = MAXWIN; pTokens = [];
+    parseTapeRender(0, 0, false);
+    parseTokensRender();
+    const a = document.getElementById('parseAttempt');
+    if (a) a.textContent = 'Press Step to begin at character 1.';
+  }
+
+  /* ================= helpers ================= */
+  function escapeHTML(s) {
+    return String(s).replace(/[&<>"']/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  const onEnterHooks = {
+    resetSlots, resetBidi, resetOrder, resetParse
+  };
+
+  show(0);
+</script>
+</body>
+</html>
