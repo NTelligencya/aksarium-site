@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>The phone that corrects you · Codex Lexpressia · Aksarium</title>
+<meta name="description" content="An interactive walkthrough of a North Korean smartphone: the interface vocabulary, the controls built into the device, and the input method that rewrites Southern Korean as you type.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&family=Eagle+Lake&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<style>
+  :root {
+    --ground: #0b0f0d; --panel: #080c0a; --page: #070d0b;
+    --gold: #c2914c; --gold-bright: #d6a365; --gold-title: #d9a95e;
+    --gold-dull: #a89364; --gold-deep: #6e5227;
+    --ink-head: #e8dcc4; --ink-body: #b3bdb5; --ink-muted: #8b968e;
+    --ink-faint: #8a7a58; --ink-dim: #5f6b64;
+    --hairline: rgba(194,145,76,.16); --hairline-strong: rgba(194,145,76,.3);
+    --glow: rgba(214,163,101,.35);
+    --serif: 'IM Fell DW Pica', serif;
+    --display: 'Eagle Lake', cursive;
+    --kr: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    /* simulated device interior; deliberately not Aksarium's palette */
+    --app-bg: #eef0f4; --app-card: #ffffff; --app-ink: #1f2429;
+    --app-muted: #79818a; --app-accent: #3a6ea5; --app-hairline: #dde1e6;
+    --app-warn: #b0303a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { background: var(--page); color: var(--ink-head); font-family: var(--serif); overflow: hidden; }
+  #stage { height: 100vh; display: flex; flex-direction: column; }
+
+  /* Chrome */
+  header {
+    display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
+    flex-shrink: 0; padding: 16px 36px; border-bottom: 1px solid var(--hairline);
+  }
+  header .brand { display: flex; align-items: baseline; gap: 18px; }
+  header .wordmark { font-size: 15px; letter-spacing: .4em; text-transform: uppercase; color: var(--ink-head); }
+  header .wordmark a { color: inherit; text-decoration: none; }
+  header .crumb { font-family: var(--display); font-size: 13px; color: var(--gold-dull); }
+  header .hright { display: flex; align-items: center; gap: 18px; }
+  header .modtag { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-faint); }
+  .simbanner {
+    flex-shrink: 0; text-align: center; font-size: 12px; letter-spacing: .1em; color: var(--gold-dull);
+    border-bottom: 1px solid var(--hairline); padding: 6px 16px; background: rgba(194,145,76,.05);
+  }
+  footer {
+    flex-shrink: 0; display: flex; justify-content: center; align-items: center;
+    gap: 10px; padding: 16px; border-top: 1px solid var(--hairline);
+  }
+  .dot { width: 8px; height: 8px; transform: rotate(45deg); background: rgba(194,145,76,.18); transition: background .3s, box-shadow .3s; }
+  .dot.on { background: var(--gold); box-shadow: 0 0 10px var(--glow); }
+  main { flex: 1; display: flex; padding: 12px 56px; overflow: auto; }
+  .beat { display: none; max-width: 1120px; width: 100%; margin: auto; animation: rise .45s ease; }
+  .beat.active { display: block; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .navhint { position: fixed; right: 30px; bottom: 14px; color: var(--ink-dim); font-size: 12px; letter-spacing: 1px; }
+
+  /* Shared type */
+  .eyebrow { color: var(--ink-faint); font-size: 12px; letter-spacing: .32em; text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-family: var(--display); font-weight: 400; font-size: 44px; line-height: 1.15; color: var(--gold-title); }
+  h2 { font-family: var(--display); font-weight: 400; font-size: 30px; line-height: 1.2; margin-bottom: 22px; color: var(--gold-title); }
+  .lede { font-size: 20px; line-height: 1.6; color: var(--ink-body); margin-top: 16px; max-width: 820px; }
+  .lede strong, .callout strong { font-weight: 400; color: var(--ink-head); text-shadow: 0 0 14px rgba(232,220,196,.3); }
+  .callout {
+    border-left: 2px solid var(--gold); background: rgba(10,16,13,.6);
+    padding: 24px 30px; font-size: 22.5px; line-height: 1.55; max-width: 900px; color: var(--ink-body);
+  }
+  .caption { color: var(--ink-muted); font-size: 15px; margin-top: 20px; max-width: 900px; line-height: 1.6; }
+  .cite { color: var(--ink-dim); font-size: 13px; margin-top: 14px; line-height: 1.7; max-width: 940px; }
+  .qline { margin-top: 26px; font-size: 20px; color: var(--ink-muted); }
+  .hedge { color: var(--gold-dull); font-style: italic; }
+  .btn {
+    display: inline-block; margin-top: 24px; padding: 12px 30px;
+    background: var(--gold); color: #14100a; border: 1px solid var(--gold);
+    font-size: 15px; letter-spacing: .1em; font-family: inherit; cursor: pointer;
+    transition: box-shadow .2s; text-decoration: none;
+  }
+  .btn:hover { box-shadow: 0 0 20px -2px var(--glow); }
+  .btn.ghost { background: transparent; color: var(--gold); border: 1px solid var(--hairline-strong); }
+  .btn.ghost:hover { color: var(--gold-bright); border-color: var(--gold); }
+  .btn:focus-visible, .menu-item:focus-visible, .glossbtn:focus-visible, .chipbtn:focus-visible,
+  .appicon:focus-visible, .wg-tab:focus-visible, .filecard:focus-visible, .wordchip:focus-visible,
+  .albumrow:focus-visible, .app-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .lbl { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 10px; }
+  .noteblock {
+    background: var(--panel); border: 1px solid var(--hairline); border-left: 2px solid var(--gold);
+    padding: 18px 22px;
+  }
+  .noteblock h3 { font-family: var(--display); font-weight: 400; font-size: 18px; color: var(--gold-title); margin-bottom: 9px; }
+  .noteblock p { font-size: 15.5px; line-height: 1.62; color: var(--ink-body); }
+  .noteblock p + p { margin-top: 9px; }
+  .noteblock strong { font-weight: 400; color: var(--ink-head); text-shadow: 0 0 14px rgba(232,220,196,.25); }
+  .noteblock .inner { animation: rise .35s ease; }
+  .noteblock .hint { color: var(--ink-dim); font-style: italic; }
+  .noteblock .ko { font-family: var(--kr); font-size: 25px; line-height: 1.4; color: var(--ink-head); display: block; margin-bottom: 4px; }
+  .noteblock .rom { color: var(--gold-dull); font-size: 14.5px; display: block; margin-bottom: 2px; }
+  .noteblock .en { color: var(--gold-bright); font-size: 17px; display: block; margin-bottom: 12px; }
+  .ruletag {
+    display: inline-block; font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase;
+    border: 1px solid var(--hairline-strong); color: var(--gold-dull); padding: 3px 9px; margin-bottom: 11px;
+  }
+  .closer-links { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+  /* Menu */
+  .menu-item {
+    display: flex; align-items: baseline; gap: 24px; width: 100%;
+    background: var(--panel); border: 1px solid var(--hairline);
+    padding: 15px 28px; margin-bottom: 11px; cursor: pointer; text-align: left;
+    color: var(--ink-head); font-family: inherit;
+    transition: border-color .2s, box-shadow .25s;
+  }
+  .menu-item:hover { border-color: var(--gold); box-shadow: 0 0 26px -8px var(--glow); }
+  .menu-item .num { color: var(--ink-faint); font-size: 14px; letter-spacing: .26em; }
+  .menu-item .name { font-size: 23px; flex: 1; }
+  .menu-item .state { color: var(--ink-faint); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+  .whyblock { margin-top: 20px; border-top: 1px solid var(--hairline); padding-top: 16px; }
+  .whyblock .whycols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .whyblock p { font-size: 14.5px; line-height: 1.62; color: var(--ink-muted); }
+  .whyblock strong { font-weight: 400; color: var(--ink-body); }
+
+  /* Gloss toggle */
+  .glossbtn {
+    font-family: var(--serif); font-size: 13px; color: var(--gold); background: transparent;
+    border: 1px solid var(--hairline-strong); padding: 6px 14px; cursor: pointer; letter-spacing: .06em;
+    transition: border-color .2s, color .2s;
+  }
+  .glossbtn:hover { border-color: var(--gold); color: var(--gold-bright); }
+  .glossbtn.on { border-color: var(--gold); color: var(--gold-bright); background: rgba(194,145,76,.08); }
+  .gloss { display: none; }
+  body.glosson .gloss { display: block; }
+  .gloss-i { display: none; }
+  body.glosson .gloss-i { display: inline; }
+
+  /* Chips */
+  .chiprow { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .chipbtn {
+    font-family: var(--kr); font-size: 17px; padding: 9px 18px; cursor: pointer;
+    background: var(--panel); color: var(--ink-muted); border: 1px solid var(--hairline);
+    transition: border-color .2s, color .2s, box-shadow .2s;
+  }
+  .chipbtn:hover { color: var(--ink-head); border-color: var(--gold-dull); }
+  .chipbtn.on { color: var(--gold-bright); border-color: var(--gold); box-shadow: 0 0 16px -6px var(--glow); }
+
+  /* ---------- shared device shell ---------- */
+  .devgrid { display: grid; grid-template-columns: 328px 1fr; gap: 44px; align-items: start; }
+  .phone {
+    position: relative; width: 320px; height: 590px; border-radius: 34px;
+    border: 1px solid var(--hairline-strong); background: #14181a; padding: 10px; overflow: hidden;
+    box-shadow: 0 0 40px -14px var(--glow);
+  }
+  .screen {
+    position: relative; height: 100%; border-radius: 25px; overflow: hidden;
+    background: var(--app-bg); color: var(--app-ink);
+    font-family: var(--kr); font-size: 13px; display: flex; flex-direction: column;
+  }
+  .notch { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 96px; height: 19px; background: #14181a; border-radius: 0 0 12px 12px; z-index: 6; }
+  .statusbar { display: flex; justify-content: space-between; padding: 8px 16px 2px; font-size: 11px; color: var(--app-muted); flex-shrink: 0; }
+  .simwater { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 4; }
+  .simwater span {
+    transform: rotate(-32deg); font-size: 22px; letter-spacing: .3em; text-transform: uppercase;
+    color: rgba(31,36,41,.10); font-family: var(--kr); white-space: nowrap;
+  }
+  .simfoot {
+    flex-shrink: 0; text-align: center; z-index: 5;
+    font-size: 9.5px; letter-spacing: .13em; text-transform: uppercase; color: #868c92;
+    padding: 6px 0 7px; background: rgba(238,240,244,.95); border-top: 1px solid var(--app-hairline);
+  }
+
+  /* ---------- app drawer ---------- */
+  .searchbar {
+    flex-shrink: 0; margin: 6px 14px 10px; padding: 8px 12px; border-radius: 16px;
+    background: rgba(31,36,41,.07); color: var(--app-muted); font-size: 12px; text-align: center;
+  }
+  .drawer { flex: 1; overflow: auto; padding: 2px 10px 8px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px 4px; align-content: start; z-index: 5; }
+  .drawer::-webkit-scrollbar { width: 5px; }
+  .drawer::-webkit-scrollbar-thumb { background: rgba(31,36,41,.2); border-radius: 3px; }
+  .appicon {
+    display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 4px 1px;
+    background: none; border: none; font-family: var(--kr); cursor: default; color: var(--app-ink);
+  }
+  .appicon .tile {
+    width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: #fff; font-weight: 500;
+  }
+  .appicon .cap { font-size: 9.5px; line-height: 1.2; text-align: center; letter-spacing: -.02em; }
+  .appicon.marked { cursor: pointer; }
+  .appicon.marked .tile { box-shadow: 0 0 0 2px var(--gold), 0 0 12px -1px var(--glow); }
+  .appicon.marked:hover .tile { box-shadow: 0 0 0 2px var(--gold-bright), 0 0 18px 0 var(--glow); }
+  .appicon.on .tile { box-shadow: 0 0 0 3px var(--ink-head), 0 0 18px 0 var(--glow); }
+  .drawernote { min-height: 330px; }
+  .markkey { margin-top: 14px; font-size: 13px; color: var(--ink-muted); line-height: 1.6; }
+
+  /* ---------- vocabulary drill ---------- */
+  .drillgrid { display: grid; grid-template-columns: minmax(400px, 1fr) 1.05fr; gap: 40px; align-items: start; }
+  .drillcard {
+    background: #14181a; border: 1px solid var(--hairline-strong); border-radius: 10px;
+    padding: 26px 32px; min-height: 210px;
+  }
+  .drillcard .dn { font-family: var(--kr); font-size: 40px; color: #cfd6d2; line-height: 1.2; }
+  .drillcard .dsub { font-size: 13px; color: #7d8a84; letter-spacing: .06em; margin-top: 6px; }
+  .drillreveal { display: none; margin-top: 20px; animation: rise .4s ease; }
+  .drillwrap.answered .drillreveal { display: block; }
+  .drillwrap.answered .drillbtn { display: none; }
+  .drillreveal .arrow { color: var(--gold); font-size: 20px; }
+  .drillreveal .ds { font-family: var(--kr); font-size: 32px; color: var(--gold-bright); display: block; margin-top: 6px; }
+  .drillreveal .dgloss { font-size: 15px; color: var(--ink-muted); margin-top: 8px; }
+  .drillprog { margin-top: 16px; font-size: 12.5px; letter-spacing: .1em; color: var(--ink-faint); text-transform: uppercase; }
+
+  /* ---------- signature check ---------- */
+  .filegrid { display: grid; grid-template-columns: minmax(400px, 1fr) 1fr; gap: 40px; align-items: start; }
+  .filecard {
+    display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; width: 100%;
+    background: var(--panel); border: 1px solid var(--hairline); border-left: 2px solid var(--hairline-strong);
+    padding: 15px 20px; margin-bottom: 11px; cursor: pointer; text-align: left; font-family: inherit;
+    color: var(--ink-body); transition: border-color .2s, box-shadow .2s, opacity .5s, transform .5s;
+  }
+  .filecard:hover { border-color: var(--gold-dull); }
+  .filecard.on { border-left-color: var(--gold); box-shadow: 0 0 24px -10px var(--glow); }
+  .filecard .fname { display: block; font-family: var(--kr); font-size: 17px; color: var(--ink-head); }
+  .filecard .fmeta { display: block; font-size: 12.5px; color: var(--ink-dim); margin-top: 3px; letter-spacing: .04em; }
+  .filecard .fstamp { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--hairline-strong); color: var(--ink-faint); white-space: nowrap; }
+  .filecard.pass .fstamp { color: var(--gold-bright); border-color: var(--gold); }
+  .filecard.fail { opacity: .34; }
+  .filecard.fail .fname { text-decoration: line-through; }
+  .filecard.fail .fstamp { color: var(--app-warn); border-color: rgba(176,48,58,.5); }
+  .checkline { margin-top: 10px; font-size: 14px; color: var(--ink-muted); font-style: italic; min-height: 22px; }
+
+  /* ---------- trace viewer ---------- */
+  .tracegrid { display: grid; grid-template-columns: 328px 1fr; gap: 44px; align-items: start; }
+  .tracehead { flex-shrink: 0; padding: 10px 14px; background: var(--app-card); border-bottom: 1px solid var(--app-hairline); font-size: 13px; font-weight: 500; }
+  .tracehead .th-sub { display: block; font-size: 10px; color: var(--app-muted); font-weight: 400; margin-top: 2px; }
+  .tracelist { flex: 1; overflow: auto; z-index: 5; }
+  .tracelist::-webkit-scrollbar { width: 5px; }
+  .tracelist::-webkit-scrollbar-thumb { background: rgba(31,36,41,.2); border-radius: 3px; }
+  .tracerow {
+    display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center;
+    padding: 9px 14px; border-bottom: 1px solid var(--app-hairline); background: var(--app-card);
+    opacity: 0; transform: translateY(6px); transition: opacity .4s, transform .4s;
+  }
+  .tracerow.shown { opacity: 1; transform: none; }
+  .tracerow .thumb { width: 34px; height: 44px; border-radius: 4px; background: repeating-linear-gradient(45deg, #d4d8de, #d4d8de 4px, #c6cbd2 4px, #c6cbd2 8px); position: relative; }
+  .tracerow .thumb::after { content: '\1F512'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; opacity: .55; }
+  .tracerow .tapp { display: block; font-size: 12.5px; }
+  .tracerow .ttime { display: block; font-size: 11px; color: var(--app-muted); margin-top: 2px; }
+  .tracerow .tstate { font-size: 10px; color: var(--app-muted); }
+  .tracebar { flex-shrink: 0; display: flex; gap: 8px; padding: 9px 12px; background: var(--app-card); border-top: 1px solid var(--app-hairline); z-index: 5; }
+  .app-btn {
+    flex: 1; padding: 9px 0; border: 1px solid var(--app-hairline); border-radius: 8px;
+    background: #f6f7f9; color: var(--app-ink); font-family: var(--kr); font-size: 12.5px; cursor: pointer;
+  }
+  .app-btn.warn { color: var(--app-warn); }
+  .app-toast {
+    position: absolute; left: 18px; right: 18px; bottom: 80px; z-index: 8;
+    background: rgba(31,36,41,.93); color: #eef0f4; border-radius: 9px; padding: 11px 14px;
+    font-family: var(--kr); font-size: 12px; line-height: 1.5; text-align: center;
+    opacity: 0; pointer-events: none; transition: opacity .25s;
+  }
+  .app-toast.show { opacity: 1; }
+
+  /* ---------- tariff table ---------- */
+  .wg-tabs { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+  .wg-tab {
+    font-family: inherit; font-size: 16px; padding: 10px 20px; cursor: pointer;
+    background: var(--panel); color: var(--ink-muted); border: 1px solid var(--hairline);
+    transition: border-color .2s, color .2s, box-shadow .2s;
+  }
+  .wg-tab:hover { color: var(--ink-head); border-color: var(--gold-dull); }
+  .wg-tab.on { color: var(--gold-bright); border-color: var(--gold); box-shadow: 0 0 16px -6px var(--glow); }
+  .tariffgrid { display: grid; grid-template-columns: minmax(420px, 1.2fr) 1fr; gap: 38px; align-items: start; }
+  .trow {
+    display: grid; grid-template-columns: 150px 1fr 1fr; gap: 18px; padding: 12px 0;
+    border-bottom: 1px solid var(--hairline);
+    opacity: 0; transform: translateY(8px); transition: opacity .4s, transform .4s;
+  }
+  .trow.shown { opacity: 1; transform: none; }
+  .trow .tcat { font-size: 15px; color: var(--gold-dull); }
+  .trow .tv { font-size: 16px; color: var(--ink-body); }
+  .trow .tv .em { color: var(--ink-head); }
+  .trow.head { border-bottom-color: var(--hairline-strong); }
+  .trow.head span { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-faint); }
+  .tariffnote { font-size: 16px; line-height: 1.65; color: var(--ink-body); }
+  .tariffnote .t { color: var(--gold-bright); }
+
+  /* ---------- substitution composer ---------- */
+  .subgrid { display: grid; grid-template-columns: 328px 1fr; gap: 44px; align-items: start; }
+  .msghead { flex-shrink: 0; padding: 10px 14px; background: var(--app-card); border-bottom: 1px solid var(--app-hairline); font-size: 13px; font-weight: 500; }
+  .msghead .th-sub { display: block; font-size: 10px; color: var(--app-muted); font-weight: 400; margin-top: 2px; }
+  .thread { flex: 1; overflow: auto; padding: 12px 12px 6px; display: flex; flex-direction: column; gap: 8px; z-index: 5; }
+  .thread::-webkit-scrollbar { width: 5px; }
+  .thread::-webkit-scrollbar-thumb { background: rgba(31,36,41,.2); border-radius: 3px; }
+  .bubble {
+    align-self: flex-end; max-width: 82%; background: #cfe0f2; color: var(--app-ink);
+    border-radius: 13px 13px 3px 13px; padding: 8px 12px; font-size: 13px; line-height: 1.5;
+    animation: rise .3s ease;
+  }
+  .bubble .was { display: block; font-size: 10.5px; color: #6d7a86; margin-top: 4px; }
+  .bubble .was s { color: var(--app-warn); }
+  .composer { flex-shrink: 0; display: flex; gap: 8px; padding: 9px 10px; background: var(--app-card); border-top: 1px solid var(--app-hairline); z-index: 5; }
+  .composer input {
+    flex: 1; border: 1px solid var(--app-hairline); border-radius: 16px; padding: 8px 13px;
+    font-family: var(--kr); font-size: 13.5px; color: var(--app-ink); background: #f6f7f9;
+  }
+  .composer input:focus { outline: 2px solid var(--app-accent); outline-offset: -1px; }
+  .composer .send {
+    border: none; border-radius: 16px; padding: 8px 15px; background: var(--app-accent); color: #fff;
+    font-family: var(--kr); font-size: 12.5px; cursor: pointer; flex-shrink: 0;
+  }
+  .app-dialog {
+    position: absolute; inset: 0; z-index: 9; display: flex; align-items: center; justify-content: center;
+    background: rgba(20,24,26,.5); opacity: 0; pointer-events: none; transition: opacity .22s;
+  }
+  .app-dialog.show { opacity: 1; pointer-events: auto; }
+  .app-dialog .dlg {
+    width: 78%; background: #f7f8fa; border-radius: 12px; text-align: center; overflow: hidden;
+    box-shadow: 0 10px 30px -8px rgba(0,0,0,.5); font-family: var(--kr);
+  }
+  .app-dialog .dlg .dtitle { font-size: 14px; padding: 20px 18px 6px; color: var(--app-warn); }
+  .app-dialog .dlg .dbody { font-size: 12px; line-height: 1.55; color: var(--app-ink); padding: 0 18px 18px; }
+  .app-dialog .dlg .dok { display: block; width: 100%; padding: 11px 0; border: none; border-top: 1px solid var(--app-hairline); background: none; color: var(--app-accent); font-family: var(--kr); font-size: 13.5px; cursor: pointer; }
+  .wordrow { display: flex; gap: 9px; flex-wrap: wrap; margin-bottom: 16px; }
+  .wordchip {
+    font-family: var(--kr); font-size: 16px; padding: 8px 15px; cursor: pointer;
+    background: var(--panel); color: var(--ink-body); border: 1px solid var(--hairline);
+    transition: border-color .2s, color .2s, box-shadow .2s;
+  }
+  .wordchip:hover { color: var(--ink-head); border-color: var(--gold); box-shadow: 0 0 14px -6px var(--glow); }
+  .subnote { min-height: 300px; }
+
+  /* ---------- gallery / locked album ---------- */
+  .albumtabs { flex-shrink: 0; display: flex; border-bottom: 1px solid var(--app-hairline); background: var(--app-card); }
+  .albumtabs span { flex: 1; text-align: center; padding: 10px 0; font-size: 12.5px; color: var(--app-muted); }
+  .albumtabs span.on { color: var(--app-ink); box-shadow: inset 0 -2px 0 var(--app-accent); }
+  .albumlist { flex: 1; overflow: auto; z-index: 5; }
+  .albumrow {
+    display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; width: 100%;
+    padding: 10px 14px; border-bottom: 1px solid var(--app-hairline); background: var(--app-card);
+    font-family: var(--kr); text-align: left; border-left: none; border-right: none; border-top: none;
+    color: var(--app-ink); cursor: default;
+  }
+  .albumrow .cover { width: 44px; height: 44px; border-radius: 6px; background: linear-gradient(135deg, #b9c4d0, #8f9daa); }
+  .albumrow .an { display: block; font-size: 13px; }
+  .albumrow .ac { display: block; font-size: 11px; color: var(--app-muted); margin-top: 2px; }
+  .albumrow.locked { cursor: pointer; }
+  .albumrow.locked .cover { background: repeating-linear-gradient(45deg, #cfd5dc, #cfd5dc 5px, #bfc6ce 5px, #bfc6ce 10px); position: relative; }
+  .albumrow.locked .cover::after { content: '\1F512'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; opacity: .6; }
+  .albumrow.locked:hover { background: #eef1f5; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .beat, .noteblock .inner, .drillreveal, .bubble { animation: none; }
+    .trow, .tracerow, .filecard, .app-toast, .app-dialog { transition: none; }
+  }
+  @media (max-width: 1100px) {
+    .devgrid, .tracegrid, .subgrid, .drillgrid, .filegrid, .tariffgrid { grid-template-columns: 1fr; }
+    .whyblock .whycols { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    main { padding: 10px 24px; }
+    h1 { font-size: 34px; }
+    h2 { font-size: 25px; }
+    .callout { font-size: 19px; padding: 18px 22px; }
+    .trow { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <header>
+    <div class="brand">
+      <span class="wordmark"><a href="../index.html">Aksarium</a></span>
+      <span class="crumb">Codex Lexpressia · The phone that corrects you</span>
+    </div>
+    <div class="hright">
+      <button class="glossbtn" id="glossBtn">English gloss · off</button>
+      <span class="modtag" id="hdrRight">Press M for menu</span>
+    </div>
+  </header>
+  <div class="simbanner">Educational simulation. Not affiliated with, or endorsed by, any manufacturer, carrier or state body. Nothing here logs in, registers, or sends data anywhere; everything stays in your browser.</div>
+  <main id="main">
+
+    <!-- ============ MENU ============ -->
+    <section class="beat" data-scene="menu">
+      <div class="eyebrow">Codex Lexpressia · An interactive walkthrough</div>
+      <h1>The phone that corrects you</h1>
+      <p class="lede">Nearly every adult in North Korea now carries a smartphone. It is a Chinese handset running a modified Android, and it has been rebuilt so thoroughly that the interface itself is an argument: <strong>every label on it is a Northern word, chosen against a Southern one</strong>. Then, in the messaging app, the argument stops being passive. Type a Southern word and the phone <strong>rewrites it while you watch</strong>. About fifteen minutes, and every claim is sourced.</p>
+      <div style="margin-top:26px">
+        <button class="menu-item" onclick="goModule(1)"><span class="num">01</span><span class="name">The screen you are handed</span><span class="state">Start</span></button>
+        <button class="menu-item" onclick="goModule(2)"><span class="num">02</span><span class="name">What the phone requires of you</span><span class="state">Start</span></button>
+        <button class="menu-item" onclick="goModule(3)"><span class="num">03</span><span class="name">The word the phone will not let you type</span><span class="state">Start</span></button>
+      </div>
+      <div class="closer-links">
+        <a class="btn ghost" href="walled-gardens.html">&larr; Walled gardens: the earlier deck</a>
+        <a class="btn ghost" href="index.html">Codex Lexpressia</a>
+      </div>
+      <div class="whyblock">
+        <div class="eyebrow">Why a phone is the right object</div>
+        <div class="whycols">
+          <p>The two Korean standards have been drifting apart since 1945, and the usual way to teach that is a table of word pairs. The trouble with a table is that it presents the divergence as something that happened, quietly, over decades. It did not only happen. Since 2023 it has been <strong>manufactured, enforced and prosecuted</strong>, and the enforcement now runs inside consumer software. A phone shows you the finished state and the machinery in the same object.</p>
+          <p>So this deck teaches the linguistics through the device rather than alongside it. You will read an application drawer in Munhwaeo and work out the Southern equivalents yourself; you will meet the file-signature system that decides which media may open at all; and you will type into a message box that will not accept what you typed. The vocabulary you leave with is real vocabulary. The architecture around it is the reason that vocabulary looks the way it does.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MODULE 01 ============ -->
+
+    <section class="beat" data-scene="m1">
+      <div class="eyebrow">Module 01</div>
+      <h1>The screen you are handed</h1>
+      <p class="lede">In June 2025 the BBC filmed a handset that had been smuggled out of North Korea, a <strong>Samtaesong</strong> model, and held the application drawer to camera long enough to read every label on it. That single frame is the most useful Korean-language teaching object this project has found, because almost every icon on it carries a word that the South does not use.</p>
+      <p class="qline">Start by reading the drawer. Marked icons open an annotation.</p>
+    </section>
+
+    <section class="beat" data-scene="m1" data-onenter="resetDrawer">
+      <h2>The drawer, read closely</h2>
+      <div class="devgrid">
+        <div>
+          <div class="phone">
+            <div class="notch"></div>
+            <div class="screen">
+              <div class="statusbar"><span>5:40</span><span>강성 &nbsp; ▮▮▮</span></div>
+              <div class="searchbar">응용프로그람검색<span class="gloss" style="font-size:9.5px;color:#9aa1a8">application search</span></div>
+              <div class="drawer" id="drawer"></div>
+              <div class="simwater"><span>Simulation · 모의</span></div>
+              <div class="simfoot">Educational reconstruction · not a real device image</div>
+            </div>
+          </div>
+          <p class="markkey">Reconstructed from a photograph. Labels are as read from the footage; anything that could not be read cleanly has been left out rather than guessed.</p>
+        </div>
+        <div>
+          <div class="lbl">Read the label</div>
+          <div class="noteblock drawernote" id="drawerNote"><div class="inner"><p class="hint">Select any icon with a gold ring. Each one carries a word that differs from the Southern form, and the annotation names the rule behind the difference.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m1" data-onenter="resetDrill">
+      <h2>Now do it without the answers</h2>
+      <div class="drillgrid">
+        <div>
+          <div class="chiprow" id="drillChips"></div>
+          <div class="drillwrap" id="drillWrap">
+            <div class="drillcard">
+              <span class="dn" id="drillN">라침반</span>
+              <span class="dsub" id="drillSub">as it appears on the drawer</span>
+              <div class="drillreveal" id="drillReveal"></div>
+            </div>
+            <button class="btn ghost drillbtn" id="drillBtn">Reveal the Southern form</button>
+            <div class="drillprog" id="drillProg"></div>
+          </div>
+        </div>
+        <div>
+          <div class="lbl">The rule behind it</div>
+          <div class="noteblock" id="drillNote"><div class="inner"><p class="hint">Pick a word, decide what a Seoul phone would call it, then reveal. Nine of these follow rules you can state; the tenth is just a different choice of word, which is its own lesson.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m1">
+      <h2>What a drawer of words is evidence of</h2>
+      <div class="callout">None of these are dialect survivals. They are the output of <strong>말다듬기</strong>, the language-refinement campaign that ran from 1964 under Kim Il-sung's directives, which set out to replace difficult Sino-Korean and foreign words with native Korean ones. The South ran its own purification campaign at the same time and largely failed at it, because it was advisory and the market ignored it. The North's succeeded because it was not advisory. A phone built in 2024 is where you can see the difference: the South says 브라우저, and the North says 열람기, and both of those are the result of a decision taken sixty years ago.</div>
+      <p class="caption">The clearest measure of relative success is the mobile phone itself. The North's native coinage 손전화, "hand phone", displaced the loanword; the South still says 휴대폰 and 핸드폰. In the other direction, the North's 1980s coinage 얼음보숭이 for ice cream never displaced 아이스크림 in ordinary speech, so the campaign's own record is uneven and the deck should not overstate it.</p>
+      <p class="cite">Sources used in this module: BBC footage of a smuggled Samtaesong handset, 3 June 2025, read from still frames, syndicated by Fortune (4 June 2025) and Asia Economy (3 June 2025); 최재필, "[이슈분석] 北 스마트폰, 통보문·화상서고를 아십네까?", ETNews, 9 October 2018, for the North-South interface vocabulary table; 노정민, RFA Korean, 30 October 2015, for the earlier Pyongyang-handset home screen; the rules themselves from this project's Korean language variation taxonomy and its sources.</p>
+      <div class="closer-links">
+        <button class="btn" onclick="goModule(2)">On to Module 02: what the phone requires of you &rarr;</button>
+        <button class="btn ghost" onclick="goMenu()">Back to menu</button>
+      </div>
+    </section>
+
+    <!-- ============ MODULE 02 ============ -->
+
+    <section class="beat" data-scene="m2">
+      <div class="eyebrow">Module 02</div>
+      <h1>What the phone requires of you</h1>
+      <p class="lede">Module 01 read the surface. Underneath it sits an architecture that security researchers have taken apart twice: once on a tablet in 2016, and again on handsets in 2022 and 2024. Three mechanisms do most of the work. <strong>Every file must prove where it came from</strong>; <strong>the phone photographs its own screen</strong> and shows you that it has; and <strong>the price of being connected is paid in foreign currency</strong>.</p>
+    </section>
+
+    <section class="beat" data-scene="m2" data-onenter="resetSign">
+      <h2>Every file has to prove itself</h2>
+      <div class="filegrid">
+        <div>
+          <div id="fileList"></div>
+          <p class="checkline" id="checkLine">Select a file to run the check.</p>
+        </div>
+        <div>
+          <div class="lbl">What the check is doing</div>
+          <div class="noteblock" id="signNote"><div class="inner"><p class="hint">Three files arrive on the phone: one from a state source, one the phone made itself, one from a stranger's memory card. Only two of them will open.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m2" data-onenter="resetTrace">
+      <h2>열람리력 · the log you cannot clear</h2>
+      <div class="tracegrid">
+        <div>
+          <div class="phone">
+            <div class="notch"></div>
+            <div class="screen">
+              <div class="statusbar"><span>5:41</span><span>강성 &nbsp; ▮▮▮</span></div>
+              <div class="tracehead">열람리력<span class="th-sub gloss">Trace Viewer · viewing history</span></div>
+              <div class="tracelist" id="traceList"></div>
+              <div class="tracebar">
+                <button class="app-btn" id="traceExport">내보내기<span class="gloss-i" style="font-size:9px"> · export</span></button>
+                <button class="app-btn warn" id="traceClear">지우기<span class="gloss-i" style="font-size:9px"> · clear</span></button>
+              </div>
+              <div class="app-toast" id="traceToast"></div>
+              <div class="simwater"><span>Simulation · 모의</span></div>
+              <div class="simfoot">Educational reconstruction · not a real device image</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="lbl">Read the mechanism</div>
+          <div class="noteblock" id="traceNote"><div class="inner">
+            <p><strong>The phone screenshots itself, and tells you so.</strong> Researchers who examined North Korean devices found a standard feature that captures the screen during use and records which application was open at the time. The user can see the timestamp and the application name for every capture. The user cannot view the images, and cannot delete them. They can be exported for an official to inspect.</p>
+            <p>The design intent is worth naming precisely, because "spyware" is the wrong word. Covert collection hides itself. This is <strong>deterrence by visibility</strong>: the log is shown to you on purpose, so that you moderate your own behaviour. Try the two buttons.</p>
+            <p class="hint">Note the app name itself: 열람리력, where Southern orthography would give 열람 이력. The initial sound rule is doing work in the name of the surveillance feature.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m2">
+      <h2>Three different phones, three different triggers</h2>
+      <div class="callout">The capture behaviour is not one fact, and merging it into one would be a fabrication. On the <strong>Woolim tablet</strong> analysed in 2016, the capture fired <strong>when an application was opened</strong>. On the handsets examined for Project Reveal in 2022, the capture was described as <strong>random during use</strong>. On one Samtaesong handset smuggled out and examined in 2025, it ran on a <strong>fixed five-minute interval</strong>. Different devices, different software generations, five years apart.</div>
+      <p class="caption">This is a general lesson about open-source research on closed systems, and the same one Module 03 of the earlier deck makes about dated screenshots. Every finding is a photograph of one device at one moment. The honest sentence names the device and the year; the dishonest one says "North Korean phones do X".</p>
+      <p class="qline">Some unverified sources also report that the leaders' names are automatically emboldened wherever they appear in text. It is a widely repeated observation, and a plausible one given the same behaviour in Red Star OS, but it has not been confirmed in a published teardown, so it sits here as a claim rather than a finding.</p>
+    </section>
+
+    <section class="beat" data-scene="m2" data-onenter="resetTariff">
+      <h2>What connection costs</h2>
+      <div class="wg-tabs">
+        <button class="wg-tab on" id="ttab0">3G, foreign-currency won</button>
+        <button class="wg-tab" id="ttab1">4G, domestic won</button>
+        <button class="wg-tab" id="ttab2">4G, foreign-currency won</button>
+      </div>
+      <div class="tariffgrid">
+        <div id="tariffRows"></div>
+        <div>
+          <div class="lbl">What the table is telling you</div>
+          <div class="noteblock"><div class="tariffnote" id="tariffNote"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m2">
+      <h2>Why this matters</h2>
+      <div class="callout">A North Korean phone is not a cheap phone. Advertised handset prices in 2024 put two models at roughly <strong>US$395 and US$198</strong>, and every data plan carries a monthly charge payable in <strong>foreign-currency won</strong>, which ordinary wages are not paid in. The device is simultaneously a consumer object, a surveillance terminal and a mechanism for drawing hard currency out of households. All three at once, which is the part a single-sentence description always loses.</div>
+      <p class="cite">Sources used in this module: Martyn Williams and Niklaus Schiess, Project Reveal, Lumen with ERNW, 2022, for NATISIGN and SELFSIGN and the Trace Viewer behaviour; Florian Grunow, Niklaus Schiess and Manuel Lubetzki, "Woolim: Lifting the Fog on DPRK's Latest Tablet PC", 33C3, 27 December 2016, and Martyn Williams, 38 North, 3 March 2017, for the tablet mechanisms; Martyn Williams, Smartphones of North Korea, Lumen and NK TechLab, 2024 and 2026 editions, for confirmation on later handsets; Martyn Williams, "A Look at North Korean Cellular Charges", NK TechLab, 25 February 2026, for the Kangsong tariff grid and the Myohyang and Madusan handset prices; BBC and Daily NK on the 2025 Samtaesong handset. The five-minute interval is specific to that 2025 device.</p>
+      <div class="closer-links">
+        <button class="btn" onclick="goModule(3)">On to Module 03: the word the phone will not let you type &rarr;</button>
+        <button class="btn ghost" onclick="goMenu()">Back to menu</button>
+      </div>
+    </section>
+
+    <!-- ============ MODULE 03 ============ -->
+
+    <section class="beat" data-scene="m3">
+      <div class="eyebrow">Module 03</div>
+      <h1>The word the phone will not let you type</h1>
+      <p class="lede">On 18 January 2023 North Korea passed the <strong>Pyongyang Cultural Language Protection Act</strong>: five chapters, sixty-five articles, criminalising South Korean vocabulary, grammar, writing style and intonation. Article 19 bans "puppet-style" address terms and requires 동지 or 동무 instead. Article 22 bans the rising phrase-final intonation. Two years later, a handset examined in Pyongyang carried the Act as a piece of software: a <strong>괴뢰말 제거 프로그람</strong>, a puppet-speech removal program, running inside the messaging app.</p>
+      <p class="qline">The next screen is that program. Type into it.</p>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetSub">
+      <h2>괴뢰말 제거 프로그람</h2>
+      <div class="subgrid">
+        <div>
+          <div class="phone">
+            <div class="notch"></div>
+            <div class="screen">
+              <div class="statusbar"><span>5:44</span><span>강성 &nbsp; ▮▮▮</span></div>
+              <div class="msghead">통보문<span class="th-sub gloss">Messages</span></div>
+              <div class="thread" id="thread"></div>
+              <div class="composer">
+                <input id="subInput" type="text" lang="ko" placeholder="통보문을 입력하십시오" aria-label="Simulated message field">
+                <button class="send" id="subSend">보내기</button>
+              </div>
+              <div class="app-dialog" id="subDialog">
+                <div class="dlg">
+                  <div class="dtitle" id="dlgTitle"></div>
+                  <div class="dbody" id="dlgBody"></div>
+                  <button class="dok" id="dlgOk">확인</button>
+                </div>
+              </div>
+              <div class="simwater"><span>Simulation · 모의</span></div>
+              <div class="simfoot">Educational reconstruction · nothing is sent anywhere</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="lbl">Try one of these, or type your own</div>
+          <div class="wordrow" id="wordRow"></div>
+          <div class="lbl">What the substitution is enforcing</div>
+          <div class="noteblock subnote" id="subNote"><div class="inner"><p class="hint">Tap a word to drop it into the message box, then press 보내기. The phone will decide whether to let it through. Everything happens in your browser; nothing is transmitted.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m3" data-onenter="resetAlbum">
+      <h2>Two syllables in a system dialog</h2>
+      <div class="subgrid">
+        <div>
+          <div class="phone">
+            <div class="notch"></div>
+            <div class="screen">
+              <div class="statusbar"><span>5:47</span><span>강성 &nbsp; ▮▮▮</span></div>
+              <div class="albumtabs"><span>사진</span><span class="on">앨범</span><span>도구</span></div>
+              <div class="albumlist" id="albumList"></div>
+              <div class="app-dialog" id="albDialog">
+                <div class="dlg">
+                  <div class="dtitle">접근이 금지되였습니다</div>
+                  <div class="dbody">이 앨범은 열람할 수 없습니다<span class="gloss" style="color:#79818a;margin-top:5px">"Access has been forbidden. This album cannot be viewed."</span></div>
+                  <button class="dok" id="albOk">확인</button>
+                </div>
+              </div>
+              <div class="simwater"><span>Simulation · 모의</span></div>
+              <div class="simfoot">Educational reconstruction · not a real device image</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="lbl">Read the error message</div>
+          <div class="noteblock"><div class="inner">
+            <p>Open the locked album. The dialog that appears is the one photographed on the smuggled handset, and it contains a grammar lesson in its second syllable pair.</p>
+            <p><span class="ko">금지되였습니다</span><span class="rom">kŭmjidoeyŏssŭmnida</span><span class="en">"has been forbidden"</span></p>
+            <p>A Seoul phone would print <strong>금지되었습니다</strong>. For verb stems ending in ㅣ, ㅐ, ㅔ, ㅚ, ㅟ or ㅢ, the South takes the ending <strong>-어</strong> and the North takes <strong>-여</strong>. It is one of the oldest divergences in the taxonomy, settled in the 1966 norms, and it is sitting in a system error message about a locked screenshot folder.</p>
+            <p class="hint">The folder is locked because it holds the Trace Viewer captures from Module 02. The grammar rule and the surveillance mechanism are in the same dialog box.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat" data-scene="m3">
+      <h2>What you can now read</h2>
+      <div class="callout">You have read an application drawer in Munhwaeo and worked out the Southern equivalents; you have watched the file-signature system refuse a stranger's media; you have met a surveillance log whose own name carries the initial sound rule; and you have typed a Southern word into a phone that rewrote it in front of you. The point is not that North Korean is a different language. It is that <strong>the difference is now being manufactured on purpose</strong>, in software, at the moment of typing, and you have just watched it happen.</div>
+      <p class="caption">One honest counterweight to carry away. The reason the Act exists at all is that the divergence was closing, not widening: an estimated 70 to 80 per cent of the jangmadang generation has watched South Korean media, and Southern slang and address terms have travelled north with it. A law that has to ban 오빠 is evidence that people were saying 오빠.</p>
+      <p class="cite">Sources used in this module: 문동희, "북한 스마트폰 메시지 앱에 한국식 표현 '오빠' 입력해보니…", Daily NK, 22 January 2025, for the 괴뢰말 제거 프로그람 and the verbatim warning string; Daily NK's published text of the Pyongyang Cultural Language Protection Act, passed 18 January 2023, for Articles 19 and 22; Asia Economy, 3 June 2025, and BBC footage of the same handset for the further substitutions and the locked-album dialog, the latter read from a lower-quality repost and therefore carried at medium-high confidence; The Korea Times, 2 July 2021, for the jangmadang generation estimate and the Thae Yong-ho figure; the grammar rules from this project's Korean language variation taxonomy.</p>
+      <div class="closer-links">
+        <a class="btn" href="../languages/korean.html">The full Korean language desk &rarr;</a>
+        <a class="btn ghost" href="walled-gardens.html">Walled gardens: Weixin, Kwangmyong, Red Star</a>
+        <button class="btn ghost" onclick="goMenu()">Back to menu</button>
+      </div>
+    </section>
+
+  </main>
+  <footer id="dots"></footer>
+</div>
+<div class="navhint">&larr; &rarr; or space &nbsp;|&nbsp; M menu</div>
+<script>
+'use strict';
+
+/* =================================================================
+   Content data. All widget copy lives here so content can be edited
+   without touching layout code, per the walled-gardens convention.
+   ================================================================= */
+var NK = {
+
+  /* ---- Module 01: application drawer ---- */
+  drawer: [
+    { ko: '번호판', c: '#3ba55c', g: 'dialler', note: {
+      rom: 'ponhopan', en: 'Dialler', rule: 'Native coinage versus loanword',
+      body: '<p>Literally <strong>"number plate"</strong>. A Seoul phone labels this app 전화, and the keypad inside it is a 키패드. The North built the word out of native and Sino-Korean material rather than importing one.</p><p>This label is confirmed twice over: it appears in a documented North-South interface vocabulary table from 2018, and it is legible on two separate handset photographs taken seven years apart.</p>' } },
+    { ko: '통보문', c: '#2fb6c4', g: 'messages', note: {
+      rom: 'tongbomun', en: 'Messages', rule: 'Native coinage versus loanword',
+      body: '<p>Literally <strong>"notification text"</strong>. The South says 문자메시지, which is a Sino-Korean word bolted to an English loanword. The North says 통보문, which is neither.</p><p>This is the app Module 03 opens. The puppet-speech removal program lives inside it.</p>' } },
+    { ko: '설정', c: '#6c7480', g: 'settings' },
+    { ko: '기록장', c: '#e8b33a', g: 'notepad' },
+    { ko: '화상서고', c: '#c9483f', g: 'gallery', note: {
+      rom: 'hwasangsŏgo', en: 'Gallery', rule: 'Native coinage versus loanword',
+      body: '<p>Literally <strong>"image book-stacks"</strong>, borrowing the word for the closed stacks of a library. The South says 갤러리, straight from English.</p><p>The metaphor is worth pausing on: the South’s word imagines a gallery you walk through, the North’s imagines an archive you request things from. Module 03 opens this app and finds one shelf locked.</p>' } },
+    { ko: '기능설명서', c: '#4f7ac7', g: 'user guide' },
+    { ko: '달력', c: '#d9433f', g: 'calendar' },
+    { ko: '동영상', c: '#e8862c', g: 'video' },
+    { ko: '동영상재생', c: '#3a7bd5', g: 'video player' },
+    { ko: '라침반', c: '#2b3a4a', g: 'compass', note: {
+      rom: 'rachimban', en: 'Compass', rule: 'Initial sound rule · 두음법칙',
+      body: '<p>The South writes <strong>나침반</strong>. The North writes <strong>라침반</strong>, keeping the original word-initial ㄹ that Southern orthography converts to ㄴ.</p><p>This is the most systematic single difference between the two standards and it runs through thousands of Sino-Korean words: 로동 against 노동 for labour, 력사 against 역사 for history, and the surname Ri against Lee. On this drawer alone it accounts for three labels.</p>' } },
+    { ko: '록음기', c: '#22262b', g: 'voice recorder', note: {
+      rom: 'rogŭmgi', en: 'Voice recorder', rule: 'Initial sound rule · 두음법칙',
+      body: '<p>Southern <strong>녹음기</strong>, Northern <strong>록음기</strong>. The same rule as 라침반, on a different initial consonant.</p><p>Note that both Koreas use the same Sino-Korean root here. The word is not different; only the spelling rule applied to its first syllable is. This is exactly the kind of difference that inflates the often-quoted "38 per cent of everyday vocabulary differs" figure, which was calculated by comparing dictionary headwords rather than by testing whether anyone was actually confused.</p>' } },
+    { ko: '사진기', c: '#7a5ec9', g: 'camera' },
+    { ko: '손전지', c: '#e0453c', g: 'torch', note: {
+      rom: 'sonjŏnji', en: 'Torch', rule: 'Native coinage',
+      body: '<p>Literally <strong>"hand electric"</strong>. The South says 손전등 or, increasingly, 플래시.</p><p>Compare the flagship case of the same pattern: the North’s <strong>손전화</strong>, "hand phone", displaced the loanword entirely, while the South still says 휴대폰 and 핸드폰. Where the North’s purism succeeded, it succeeded on exactly this kind of transparent compound.</p>' } },
+    { ko: '수산기', c: '#f0a92c', g: 'calculator', note: {
+      rom: 'susan’gi', en: 'Calculator', rule: 'Different Sino-Korean coinage',
+      body: '<p>The South says <strong>계산기</strong>, "reckoning machine". The North says <strong>수산기</strong>, "number-calculating machine". Both are Sino-Korean; they simply picked different characters.</p><p>This category matters because it is invisible to a rule. You cannot derive 수산기 from 계산기 by applying an orthographic transformation, which is why technical vocabulary diverges further than everyday vocabulary and why the same dictionary comparison put the specialist gap at 66 per cent.</p>' } },
+    { ko: '시계', c: '#1f2429', g: 'clock' },
+    { ko: '주소록', c: '#e8a33a', g: 'contacts' },
+    { ko: '체계정리', c: '#4a9d7e', g: 'system cleanup' },
+    { ko: '화일관리', c: '#e8862c', g: 'file management', note: {
+      rom: 'hwail kwalli', en: 'File management', rule: 'Loanword transliteration',
+      body: '<p>Both Koreas borrowed the English word "file". They transliterated it differently: the South as <strong>파일</strong>, the North as <strong>화일</strong>.</p><p>The same split runs through the whole computing vocabulary: 프로그람 against 프로그램 for programme, 알고리듬 against 알고리즘 for algorithm, 텔레비죤 against 텔레비전 for television, 콤퓨터 against 컴퓨터 for computer. Look at the search field at the top of this drawer: 응용프로그람검색.</p>' } },
+    { ko: '어린이방식', c: '#e86ca8', g: "children's mode" },
+    { ko: '열람기', c: '#3a7bd5', g: 'browser', note: {
+      rom: 'yŏllamgi', en: 'Browser', rule: 'Native coinage versus loanword',
+      body: '<p>Literally <strong>"perusal device"</strong>. The South says 브라우저.</p><p>This one carries an extra weight, because of what it browses. The device has no route to the open internet; 열람기 reaches Kwangmyong, the domestic network, and nothing beyond it. A word meaning "the thing you read with" is doing accurate work here in a way that "browser" would not.</p>' } },
+    { ko: '열람리력', c: '#22262b', g: 'Trace Viewer', note: {
+      rom: 'yŏllam ryŏkryŏk', en: 'Trace Viewer · viewing history', rule: 'Initial sound rule, and solid compounding',
+      body: '<p>Two divergences in one label. Southern orthography would give <strong>열람 이력</strong>: the initial ㄹ of 력 becomes ㅇ, and the two words take a space between them. The North writes <strong>열람리력</strong>, keeping the ㄹ and closing the space.</p><p>The spacing point is the syntactic rule from the taxonomy: the North writes compound concepts solid where the South spaces them. 할 수 있다 against 할수 있다; 국어 사전 against 국어사전.</p><p>And then there is what the app does. Module 02 opens it.</p>' } },
+    { ko: '음성지령', c: '#2b3a4a', g: 'voice command' },
+    { ko: '음악', c: '#4f7ac7', g: 'music' }
+  ],
+  drawerHint: '<div class="inner"><p class="hint">Select any icon with a gold ring. Each one carries a word that differs from the Southern form, and the annotation names the rule behind the difference.</p></div>',
+
+  /* ---- Module 01: drill ---- */
+  drill: [
+    { n: '라침반', s: '나침반', en: 'compass', rule: 'Initial sound rule · 두음법칙',
+      note: '<p>Word-initial ㄹ is retained in the North and converted to ㄴ in the South. If you learn one rule from this deck, learn this one; it is the most productive of all the differences and it lets you read a great many Northern words on sight.</p>' },
+    { n: '록음기', s: '녹음기', en: 'voice recorder', rule: 'Initial sound rule · 두음법칙',
+      note: '<p>The same rule again, and worth doing twice so the pattern sets. Northern ㄹ, Southern ㄴ, identical root.</p>' },
+    { n: '계렬번호', s: '일련번호', en: 'serial number', rule: 'Initial sound rule, plus a different compound',
+      note: '<p>Here the rule shows up mid-word rather than at the start: Northern 계렬, Southern 계열, from the same root meaning "series". The South then prefers a different compound again for this particular meaning, 일련번호, so you get both kinds of divergence stacked in one label.</p>' },
+    { n: '화일관리', s: '파일 관리', en: 'file management', rule: 'Loanword transliteration, plus spacing',
+      note: '<p>Two differences. The English "file" is transliterated 화일 in the North and 파일 in the South; and the North closes the space between the two words where the South keeps it.</p>' },
+    { n: '응용프로그람', s: '응용 프로그램', en: 'application', rule: 'Loanword transliteration, plus spacing',
+      note: '<p>프로그람 against 프로그램. The Northern transliteration of "programme" is one of the most reliable tells in any North Korean technical text, and it appears in the search field at the top of the drawer you just read.</p>' },
+    { n: '수산기', s: '계산기', en: 'calculator', rule: 'Different Sino-Korean coinage',
+      note: '<p>No rule will get you from one to the other. Both standards built a Sino-Korean word and chose different characters. This is the category that makes technical vocabulary harder than everyday vocabulary across the divide.</p>' },
+    { n: '열람기', s: '브라우저', en: 'browser', rule: 'Native coinage versus English loanword',
+      note: '<p>The archetype of the divergence. Faced with a new object, the South imports the English word and the North builds a native one. Multiply this decision across seventy years of new objects and you have most of the gap.</p>' },
+    { n: '화상서고', s: '갤러리', en: 'gallery', rule: 'Native coinage versus English loanword',
+      note: '<p>"Image book-stacks" against a transliterated "gallery". Both are perfectly comprehensible to a speaker from the other side once seen; neither would be produced spontaneously.</p>' },
+    { n: '통보문', s: '문자메시지', en: 'messages', rule: 'Native coinage versus hybrid loanword',
+      note: '<p>The Southern form is itself a hybrid: Sino-Korean 문자, "characters", plus the English "message". The Northern form avoids the loanword entirely. This is the app Module 03 opens.</p>' },
+    { n: '종차단', s: '벨소리 차단', en: 'silent mode', rule: 'Native word versus loanword, plus spacing',
+      note: '<p>Northern 종, "bell", against Southern 벨, the English word. Same meaning, same structure, one imported syllable. And the North closes the space again.</p>' }
+  ],
+  drillHint: '<div class="inner"><p class="hint">Pick a word, decide what a Seoul phone would call it, then reveal. Nine of these follow rules you can state; the tenth is just a different choice of word, which is its own lesson.</p></div>',
+
+  /* ---- Module 02: signature check ---- */
+  files: [
+    { ko: '로동신문_2025.pdf', meta: 'received from a state distribution channel', sig: 'NATISIGN', pass: true,
+      steps: ['Checking file type…', 'Reading signature block…', 'NATISIGN verified · state signature present'],
+      note: '<p><strong>NATISIGN.</strong> A 2048-bit RSA signature applied by the state to official content and to approved applications. A file carrying it opens normally.</p><p>The system was first documented on the Woolim tablet in 2016 and confirmed on handsets in 2022 and again on a Pyongyang 2407 in 2024. It covers applications, images, video, audio and text, so it is a general media gate rather than an app-install gate.</p>' },
+    { ko: '사진_2025_05.jpg', meta: 'taken with this phone’s camera', sig: 'SELFSIGN', pass: true,
+      steps: ['Checking file type…', 'Reading signature block…', 'SELFSIGN verified · created on this device'],
+      note: '<p><strong>SELFSIGN.</strong> The signature the handset appends to media it creates itself. Your own photographs open, because the phone can prove it made them.</p><p>The consequence is the point of the design: a photograph is fine on the device that took it, and becomes a problem the moment it travels. Sharing is where the system bites, not creation.</p>' },
+    { ko: '영화_한편.avi', meta: 'copied from a memory card', sig: 'no signature', pass: false,
+      steps: ['Checking file type…', 'Reading signature block…', 'No valid signature · file removed'],
+      note: '<p><strong>Nothing.</strong> A file that arrives from outside carrying neither signature fails the check and is deleted or refuses to open.</p><p>This is the mechanism aimed squarely at smuggled South Korean drama on USB sticks and SD cards, the exact material that carried Southern slang north in the first place. Module 03 is the other end of the same policy.</p><p class="hint">It is not absolute. Security researchers demonstrated a patch around the signature check to play an outside film, so the control is a strong default rather than a wall.</p>' }
+  ],
+  filesHint: '<div class="inner"><p class="hint">Three files arrive on the phone: one from a state source, one the phone made itself, one from a stranger’s memory card. Only two of them will open.</p></div>',
+
+  /* ---- Module 02: trace log ---- */
+  trace: [
+    { app: '열람기', t: '5:39' }, { app: '통보문', t: '5:34' }, { app: '화상서고', t: '5:29' },
+    { app: '열람기', t: '5:24' }, { app: '음악', t: '5:19' }, { app: '통보문', t: '5:14' },
+    { app: '주소록', t: '5:09' }, { app: '열람기', t: '5:04' }
+  ],
+  traceMsgs: {
+    clear: '이 기록은 삭제할 수 없습니다 · This record cannot be deleted.',
+    exportOn: '기록을 내보냈습니다 · Record exported for inspection.'
+  },
+
+  /* ---- Module 02: tariffs ---- */
+  tariff: [
+    { rows: [['Category 1', '110 forex won / month', '132 forex won / 100MB'],
+             ['Category 2', '440 forex won / month', '220 forex won / 500MB'],
+             ['Category 3', '286 forex won / month', '330 forex won / 1GB']],
+      note: '<span class="t">Kangsong 3G, billed in foreign-currency won.</span> Note what is odd about this grid: the monthly charge does not rise with the data allowance, and category 2 costs more per month than category 3 while giving less data. The pricing is not a simple ladder, which is a reminder that a state carrier is not necessarily optimising for the customer.' },
+    { rows: [['Category 1', '550 forex won / month', '1,500 won / 70MB'],
+             ['Category 2', '550 forex won / month', '3,000 won / 150MB']],
+      note: '<span class="t">Kangsong 4G, data billed in domestic won.</span> Only two plans exist in the domestic currency, and even these carry the monthly charge in foreign-currency won. A subscriber paid in domestic won cannot pay for the service entirely in the currency they are paid in.' },
+    { rows: [['Category 1', '550 forex won / month', '110 forex won / 700MB'],
+             ['Category 2', '550 forex won / month', '220 forex won / 2GB'],
+             ['Category 3', '550 forex won / month', '440 forex won / 4GB'],
+             ['Category 4', '550 forex won / month', '660 forex won / 8GB'],
+             ['Category 5', '550 forex won / month', '1,100 forex won / 15GB'],
+             ['Category 6', '550 forex won / month', '5,500 forex won / unlimited']],
+      note: '<span class="t">Kangsong 4G, billed in foreign-currency won.</span> Six plans here against two in domestic won, and the per-gigabyte rate is far better. Forex won is acquired in exchange for foreign currency at roughly 100 to the US dollar. The structure is one of the ways the state draws hard currency out of the domestic economy, and it is the closest North Korean analogue to the two-wallet split in the Weixin module of the earlier deck.' }
+  ],
+
+  /* ---- Module 03: substitutions ---- */
+  subs: [
+    { in: '오빠', out: '동지',
+      title: '경고!', body: '친형제나 친척 간인 경우에만 쓸 수 있습니다',
+      bodyEn: '"Warning: may only be used between blood siblings or relatives."',
+      note: '<span class="ko">오빠 &rarr; 동지</span><span class="rom">oppa &rarr; tongji</span><span class="en">"older brother" replaced with "comrade"</span><p>This is the substitution reported verbatim from a handset examined in January 2025, and the warning string on the phone is quoted exactly.</p><p>오빠 is a pseudo-kinship term: literally a woman’s older brother, but used across South Korean speech for boyfriends, older male friends and celebrities. It travelled north on smuggled drama, and <strong>Article 19 of the 2023 Act bans it by name</strong>, requiring 동지 or 동무 instead.</p><p>The replacement is not neutral. 동지 encodes reverence toward a superior and is the form always used for Kim Il-sung. A word for intimacy has been swapped for a word for hierarchy.</p>' },
+    { in: '자기야', out: null, blocked: true,
+      title: '금지어', body: '이 표현은 사용할 수 없습니다',
+      bodyEn: '"Forbidden word. This expression cannot be used."',
+      note: '<span class="ko">자기야 <span style="color:#b0303a">금지어</span></span><span class="rom">jagiya · forbidden word</span><span class="en">"darling", blocked outright</span><p>No substitution is offered, because there is no approved Northern equivalent for a Southern term of endearment between partners. The phone simply refuses.</p><p>This is where the policy shows its real target. The Act is not defending vocabulary in the abstract; it is legislating against a register of intimacy that arrived with South Korean television, and for which Munhwaeo deliberately never built a word.</p>' },
+    { in: '남친', out: '남자친구',
+      title: '자동교정', body: '줄임말은 사용할 수 없습니다',
+      bodyEn: '"Automatic correction. Abbreviations cannot be used."',
+      note: '<span class="ko">남친 &rarr; 남자친구</span><span class="rom">namchin &rarr; namjachingu</span><span class="en">"boyfriend", expanded from the clipped form</span><p>The word itself is permitted; the <strong>clipping</strong> is not. Two-syllable abbreviation of longer compounds is a marker of contemporary South Korean youth speech, and it is the style rather than the meaning being suppressed here.</p><p>Note that the Act covers "vocabulary, grammar, writing style and intonation". Style is an explicit category, which is what makes an abbreviation prosecutable.</p>' },
+    { in: '핸드폰', out: '손전화기',
+      title: '자동교정', body: '고유어 표현으로 바꾸었습니다',
+      bodyEn: '"Automatic correction. Replaced with the native-Korean expression."',
+      note: '<span class="ko">핸드폰 &rarr; 손전화기</span><span class="rom">haendŭpon &rarr; sonjŏnhwagi</span><span class="en">"hand phone" replacing the English loanword</span><p>This is the purification campaign of 1964 still running, sixty years on, as an autocorrect rule.</p><p>It is also the campaign’s most successful case. 손전화 genuinely displaced the loanword in the North, while the South never adopted its own equivalents and still says 휴대폰 and 핸드폰. The phone is enforcing a victory it had already won.</p>' },
+    { in: '남한', out: '괴뢰 지역',
+      title: '자동교정', body: '정확한 표현으로 바꾸었습니다',
+      bodyEn: '"Automatic correction. Replaced with the correct expression."',
+      note: '<span class="ko">남한 &rarr; 괴뢰 지역</span><span class="rom">namhan &rarr; koeroe chiyŏk</span><span class="en">"South Korea" replaced with "the puppet region"</span><p>Here the software is tracking a live policy change rather than an old rule, and the picture is genuinely confusing.</p><p>For decades the North called the South 남조선. Since 2023 and 2024, under the "two hostile states" line, state media has switched to 한국 and 대한민국, the South’s own names for itself, precisely in order to treat it as a separate foreign country rather than as part of one nation. Meanwhile the input method rewrites 남한 to a hostile epithet. Both moves are current, and they pull in different directions.</p><p class="hint">This substitution is reported at medium confidence, from a June 2025 secondary account rather than from the January 2025 first-hand examination.</p>' },
+    { in: '누나', out: '동무',
+      title: '경고!', body: '친형제나 친척 간인 경우에만 쓸 수 있습니다',
+      bodyEn: '"Warning: may only be used between blood siblings or relatives."',
+      note: '<span class="ko">누나 &rarr; 동무</span><span class="rom">nuna &rarr; tongmu</span><span class="en">"older sister" replaced with "comrade"</span><p>The same rule as 오빠, applied to the other direction of the pseudo-kinship pair, and resolving to 동무 rather than 동지 because the addressee is an equal rather than a superior.</p><p>동무 is worth a note of its own. It meant simply "friend" across the whole peninsula before division. The North adopted it for "comrade", and the South abandoned it for 친구 because of the association. One word, pushed apart by politics into a political term in the North and a period piece in the South.</p>' }
+  ],
+  subClean: {
+    title: '통보문 전송', body: '검사를 통과하였습니다',
+    bodyEn: '"Message sent. Passed inspection."',
+    note: '<span class="en">Nothing was rewritten</span><p>The text you sent contained none of the flagged forms, so it went through untouched.</p><p>That is worth sitting with for a moment. The program is not reading for meaning or for dissent; it is matching a list of Southern words and styles. Everything else passes. The censorship here is lexical, which makes it narrower than it first appears and also far cheaper to run at scale.</p>'
+  },
+  subHint: '<div class="inner"><p class="hint">Tap a word to drop it into the message box, then press 보내기. The phone will decide whether to let it through. Everything happens in your browser; nothing is transmitted.</p></div>',
+
+  /* ---- Module 03: albums ---- */
+  albums: [
+    { ko: '카메라', n: '143', locked: false },
+    { ko: '동영상', n: '20', locked: false },
+    { ko: '즐겨찾기', n: '6', locked: false },
+    { ko: '스크린샷', n: '40', locked: true }
+  ]
+};
+
+/* ================= Deck scaffold ================= */
+var beats = Array.prototype.slice.call(document.querySelectorAll('.beat'));
+var idx = 0;
+var sceneTitles = {
+  m1: 'Module 01 · The screen you are handed',
+  m2: 'Module 02 · What the phone requires of you',
+  m3: 'Module 03 · The word the phone will not let you type'
+};
+
+function show(i) {
+  idx = Math.max(0, Math.min(i, beats.length - 1));
+  beats.forEach(function (b, n) { b.classList.toggle('active', n === idx); });
+  var scene = beats[idx].dataset.scene;
+  document.getElementById('hdrRight').textContent =
+    scene === 'menu' ? 'Press M for menu' : sceneTitles[scene];
+  var dots = document.getElementById('dots');
+  dots.innerHTML = '';
+  if (scene !== 'menu') {
+    var moduleBeats = beats.filter(function (b) { return b.dataset.scene === scene; });
+    var pos = moduleBeats.indexOf(beats[idx]);
+    moduleBeats.forEach(function (_, n) {
+      var d = document.createElement('div');
+      d.className = 'dot' + (n === pos ? ' on' : '');
+      dots.appendChild(d);
+    });
+  }
+  var hook = beats[idx].dataset.onenter;
+  if (hook && onEnterHooks[hook]) onEnterHooks[hook]();
+}
+function goMenu() { show(0); }
+function goModule(n) {
+  var i = -1;
+  beats.some(function (b, k) { if (b.dataset.scene === 'm' + n) { i = k; return true; } return false; });
+  if (i > -1) show(i);
+}
+function next() { if (idx < beats.length - 1) show(idx + 1); }
+function prev() { if (idx > 0) show(idx - 1); }
+
+document.addEventListener('keydown', function (e) {
+  if (e.target.tagName === 'INPUT') { if (e.key === 'Enter') subSend(); return; }
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+  else if (e.key === 'ArrowLeft') prev();
+  else if (e.key === 'm' || e.key === 'M') goMenu();
+  else if (e.key >= '1' && e.key <= '3') goModule(Number(e.key));
+});
+document.getElementById('main').addEventListener('click', function (e) {
+  if (e.target.closest('button, a, input, .phone, .noteblock, .drillcard, .chipbtn, .filecard, .wordchip')) return;
+  next();
+});
+
+function staggerShow(els, delay) {
+  els.forEach(function (el, i) {
+    el.classList.remove('shown');
+    setTimeout(function () { el.classList.add('shown'); }, 140 + i * delay);
+  });
+}
+
+/* ================= Module 01 · drawer ================= */
+var drawerBuilt = false;
+function drawerPick(n, btn) {
+  document.querySelectorAll('.appicon').forEach(function (a) { a.classList.remove('on'); });
+  btn.classList.add('on');
+  var d = NK.drawer[n];
+  document.getElementById('drawerNote').innerHTML =
+    '<div class="inner"><span class="ruletag">' + d.note.rule + '</span>' +
+    '<span class="ko">' + d.ko + '</span><span class="rom">' + d.note.rom + '</span>' +
+    '<span class="en">' + d.note.en + '</span>' + d.note.body + '</div>';
+}
+function resetDrawer() {
+  var wrap = document.getElementById('drawer');
+  if (!drawerBuilt) {
+    drawerBuilt = true;
+    NK.drawer.forEach(function (d, i) {
+      var b = document.createElement('button');
+      b.className = 'appicon' + (d.note ? ' marked' : '');
+      b.innerHTML = '<span class="tile" style="background:' + d.c + '">' + d.ko.charAt(0) + '</span>' +
+                    '<span class="cap">' + d.ko + '</span>';
+      if (d.note) {
+        b.setAttribute('aria-label', 'Annotation: ' + d.ko + ', ' + d.g);
+        b.addEventListener('click', function () { drawerPick(i, b); });
+      } else {
+        b.setAttribute('aria-hidden', 'true');
+        b.tabIndex = -1;
+      }
+      wrap.appendChild(b);
+    });
+  }
+  document.querySelectorAll('.appicon').forEach(function (a) { a.classList.remove('on'); });
+  document.getElementById('drawerNote').innerHTML = NK.drawerHint;
+}
+
+/* ================= Module 01 · drill ================= */
+var drillActive = 0, drillBuilt = false;
+function drillRender(n) {
+  drillActive = n;
+  document.querySelectorAll('#drillChips .chipbtn').forEach(function (c, i) { c.classList.toggle('on', i === n); });
+  var d = NK.drill[n];
+  document.getElementById('drillWrap').classList.remove('answered');
+  document.getElementById('drillN').textContent = d.n;
+  document.getElementById('drillReveal').innerHTML =
+    '<span class="arrow">&darr;</span><span class="ds">' + d.s + '</span>' +
+    '<span class="dgloss">' + d.en + '</span>';
+  document.getElementById('drillNote').innerHTML = NK.drillHint;
+  document.getElementById('drillProg').textContent = 'Word ' + (n + 1) + ' of ' + NK.drill.length;
+}
+function drillReveal() {
+  document.getElementById('drillWrap').classList.add('answered');
+  var d = NK.drill[drillActive];
+  document.getElementById('drillNote').innerHTML =
+    '<div class="inner"><span class="ruletag">' + d.rule + '</span>' + d.note + '</div>';
+}
+function resetDrill() {
+  if (!drillBuilt) {
+    drillBuilt = true;
+    var wrap = document.getElementById('drillChips');
+    NK.drill.forEach(function (d, i) {
+      var b = document.createElement('button');
+      b.className = 'chipbtn';
+      b.textContent = d.n;
+      b.addEventListener('click', function () { drillRender(i); });
+      wrap.appendChild(b);
+    });
+    document.getElementById('drillBtn').addEventListener('click', drillReveal);
+  }
+  drillRender(0);
+}
+
+/* ================= Module 02 · signature check ================= */
+var signBuilt = false, signTimers = [];
+function signPick(n, card) {
+  signTimers.forEach(clearTimeout); signTimers = [];
+  document.querySelectorAll('.filecard').forEach(function (c) { c.classList.remove('on', 'pass', 'fail'); });
+  card.classList.add('on');
+  var d = NK.files[n];
+  var line = document.getElementById('checkLine');
+  d.steps.forEach(function (s, i) {
+    signTimers.push(setTimeout(function () { line.textContent = s; }, i * 620));
+  });
+  signTimers.push(setTimeout(function () {
+    card.classList.add(d.pass ? 'pass' : 'fail');
+    document.getElementById('signNote').innerHTML = '<div class="inner">' + d.note + '</div>';
+  }, d.steps.length * 620));
+}
+function resetSign() {
+  var wrap = document.getElementById('fileList');
+  if (!signBuilt) {
+    signBuilt = true;
+    NK.files.forEach(function (d, i) {
+      var b = document.createElement('button');
+      b.className = 'filecard';
+      b.innerHTML = '<span><span class="fname">' + d.ko + '</span><span class="fmeta">' + d.meta + '</span></span>' +
+                    '<span class="fstamp">' + d.sig + '</span>';
+      b.addEventListener('click', function () { signPick(i, b); });
+      wrap.appendChild(b);
+    });
+  }
+  signTimers.forEach(clearTimeout); signTimers = [];
+  document.querySelectorAll('.filecard').forEach(function (c) { c.classList.remove('on', 'pass', 'fail'); });
+  document.getElementById('checkLine').textContent = 'Select a file to run the check.';
+  document.getElementById('signNote').innerHTML = NK.filesHint;
+}
+
+/* ================= Module 02 · trace viewer ================= */
+var traceBuilt = false, toastTimer = null;
+function traceToast(msg) {
+  var t = document.getElementById('traceToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2600);
+}
+function resetTrace() {
+  var wrap = document.getElementById('traceList');
+  if (!traceBuilt) {
+    traceBuilt = true;
+    NK.trace.forEach(function (r) {
+      var el = document.createElement('div');
+      el.className = 'tracerow';
+      el.innerHTML = '<span class="thumb"></span>' +
+                     '<span><span class="tapp">' + r.app + '</span><span class="ttime">오늘 ' + r.t + '</span></span>' +
+                     '<span class="tstate">열람불가</span>';
+      wrap.appendChild(el);
+    });
+    document.getElementById('traceClear').addEventListener('click', function () { traceToast(NK.traceMsgs.clear); });
+    document.getElementById('traceExport').addEventListener('click', function () { traceToast(NK.traceMsgs.exportOn); });
+  }
+  staggerShow(Array.prototype.slice.call(wrap.querySelectorAll('.tracerow')), 90);
+}
+
+/* ================= Module 02 · tariffs ================= */
+var tariffBuilt = false, tariffActive = 0;
+function tariffRender(n) {
+  tariffActive = n;
+  [0, 1, 2].forEach(function (i) { document.getElementById('ttab' + i).classList.toggle('on', i === n); });
+  var d = NK.tariff[n];
+  var wrap = document.getElementById('tariffRows');
+  wrap.innerHTML = '<div class="trow head shown"><span>Plan</span><span>Monthly charge</span><span>Data</span></div>';
+  d.rows.forEach(function (r) {
+    var el = document.createElement('div');
+    el.className = 'trow';
+    el.innerHTML = '<span class="tcat">' + r[0] + '</span><span class="tv em">' + r[1] + '</span><span class="tv">' + r[2] + '</span>';
+    wrap.appendChild(el);
+  });
+  staggerShow(Array.prototype.slice.call(wrap.querySelectorAll('.trow:not(.head)')), 90);
+  document.getElementById('tariffNote').innerHTML = d.note;
+}
+function resetTariff() {
+  if (!tariffBuilt) {
+    tariffBuilt = true;
+    [0, 1, 2].forEach(function (i) {
+      document.getElementById('ttab' + i).addEventListener('click', function () { tariffRender(i); });
+    });
+  }
+  tariffRender(0);
+}
+
+/* ================= Module 03 · substitution composer ================= */
+var subBuilt = false;
+function subDialog(title, body, bodyEn) {
+  document.getElementById('dlgTitle').textContent = title;
+  document.getElementById('dlgBody').innerHTML = body +
+    '<span class="gloss" style="color:#79818a;margin-top:5px">' + bodyEn + '</span>';
+  document.getElementById('subDialog').classList.add('show');
+}
+function subSend() {
+  var input = document.getElementById('subInput');
+  var text = input.value.trim();
+  if (!text) return;
+  var hit = null;
+  NK.subs.some(function (s) { if (text.indexOf(s.in) > -1) { hit = s; return true; } return false; });
+  var thread = document.getElementById('thread');
+  var b = document.createElement('div');
+  b.className = 'bubble';
+  if (hit && hit.blocked) {
+    b.innerHTML = '<s style="color:#b0303a">' + text + '</s>' +
+                  '<span class="was">전송되지 않았습니다<span class="gloss-i"> · not sent</span></span>';
+  } else if (hit) {
+    var fixed = text.split(hit.in).join('<strong>' + hit.out + '</strong>');
+    b.innerHTML = fixed + '<span class="was">고침: <s>' + hit.in + '</s> &rarr; ' + hit.out + '</span>';
+  } else {
+    b.textContent = text;
+  }
+  thread.appendChild(b);
+  thread.scrollTop = thread.scrollHeight;
+  input.value = '';
+  if (hit) {
+    subDialog(hit.title, hit.body, hit.bodyEn);
+    document.getElementById('subNote').innerHTML = '<div class="inner">' + hit.note + '</div>';
+  } else {
+    subDialog(NK.subClean.title, NK.subClean.body, NK.subClean.bodyEn);
+    document.getElementById('subNote').innerHTML = '<div class="inner">' + NK.subClean.note + '</div>';
+  }
+}
+function resetSub() {
+  if (!subBuilt) {
+    subBuilt = true;
+    var row = document.getElementById('wordRow');
+    NK.subs.forEach(function (s) {
+      var b = document.createElement('button');
+      b.className = 'wordchip';
+      b.textContent = s.in;
+      b.addEventListener('click', function () {
+        document.getElementById('subInput').value = s.in;
+        document.getElementById('subInput').focus();
+      });
+      row.appendChild(b);
+    });
+    document.getElementById('subSend').addEventListener('click', subSend);
+    document.getElementById('dlgOk').addEventListener('click', function () {
+      document.getElementById('subDialog').classList.remove('show');
+    });
+  }
+  document.getElementById('thread').innerHTML = '';
+  document.getElementById('subInput').value = '';
+  document.getElementById('subDialog').classList.remove('show');
+  document.getElementById('subNote').innerHTML = NK.subHint;
+}
+
+/* ================= Module 03 · locked album ================= */
+var albumBuilt = false;
+function resetAlbum() {
+  var wrap = document.getElementById('albumList');
+  if (!albumBuilt) {
+    albumBuilt = true;
+    NK.albums.forEach(function (a) {
+      var el = document.createElement(a.locked ? 'button' : 'div');
+      el.className = 'albumrow' + (a.locked ? ' locked' : '');
+      el.innerHTML = '<span class="cover"></span>' +
+                     '<span><span class="an">' + a.ko + '</span><span class="ac">' + a.n + '</span></span>' +
+                     '<span class="ac">' + (a.locked ? '잠김' : '') + '</span>';
+      if (a.locked) {
+        el.setAttribute('aria-label', 'Open the locked screenshot album');
+        el.addEventListener('click', function () {
+          document.getElementById('albDialog').classList.add('show');
+        });
+      }
+      wrap.appendChild(el);
+    });
+    document.getElementById('albOk').addEventListener('click', function () {
+      document.getElementById('albDialog').classList.remove('show');
+    });
+  }
+  document.getElementById('albDialog').classList.remove('show');
+}
+
+/* ================= English gloss (deck chrome) ================= */
+var glossBtn = document.getElementById('glossBtn');
+glossBtn.addEventListener('click', function () {
+  var on = document.body.classList.toggle('glosson');
+  glossBtn.classList.toggle('on', on);
+  glossBtn.textContent = 'English gloss · ' + (on ? 'on' : 'off');
+});
+
+var onEnterHooks = {
+  resetDrawer: resetDrawer,
+  resetDrill: resetDrill,
+  resetSign: resetSign,
+  resetTrace: resetTrace,
+  resetTariff: resetTariff,
+  resetSub: resetSub,
+  resetAlbum: resetAlbum
+};
+
+show(0);
+</script>
+</body>
+</html>
