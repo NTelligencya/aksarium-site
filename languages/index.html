@@ -24,6 +24,9 @@
 .lang-card__status--ready { color: #c2914c; }
 .si-list { display: flex; flex-wrap: wrap; gap: 12px 26px; font-size: 18px; color: #8b968e; }
 .si-list span { border-bottom: 1px solid rgba(194,145,76,.14); padding-bottom: 4px; }
+.si-band { position: relative; height: 210px; overflow: hidden; flex: none; margin: 0 46px 26px; border-top: 1px solid rgba(194,145,76,.16); }
+.si-band__art { position: absolute; inset: 0; background: url('../assets/images/hebrew_hero.jpeg') center 80%/cover no-repeat; }
+.si-band__shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,12,10,.62) 0%, rgba(8,12,10,.24) 40%, rgba(8,12,10,.92) 100%); }
 @media (max-width: 1100px) { .lang-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -49,7 +52,7 @@
     <div class="eyebrow" style="letter-spacing:.34em">The resource pages</div>
     <h1 style="margin:0;font-family:'Eagle Lake',cursive;font-size:34px;line-height:1.1;color:#d9a95e;font-weight:400">Languages</h1>
   </div>
-  <p style="margin:0 0 4px;max-width:620px;font-size:17px;line-height:1.65;color:#8b968e;text-wrap:pretty">Every language page carries the same parts: script and history, dialect, domain vocabulary, and a keyboard reference with typing practice. The same desk by the same window; only the keyboard and the view change.</p>
+  <p style="margin:0 0 4px;max-width:620px;font-size:17px;line-height:1.65;color:#8b968e;text-wrap:pretty">Every language page carries the same parts: script and history, dialect, domain vocabulary, and a keyboard reference with typing practice.</p>
 </div>
 
 <div class="lang-grid">
@@ -73,12 +76,24 @@
     <div class="lang-card__art"><img src="../assets/images/bengalilang_hero.jpeg" alt="The desk by the window; a Bengali keyboard, fishing boats on a river at sunset."></div>
     <div class="lang-card__caption"><span class="lang-card__name">বাংলা · Bengali</span><span class="lang-card__status lang-card__status--ready">In the archive</span></div>
   </a>
+  <a class="lang-card" href="chinese.html">
+    <div class="lang-card__art"><img src="../assets/images/chineselang_hero.jpeg" alt="The desk by the window; a QWERTY keyboard, apartment blocks lit at dusk beyond the glass."></div>
+    <div class="lang-card__caption"><span class="lang-card__name">中文 · Chinese</span><span class="lang-card__status lang-card__status--ready">In the archive</span></div>
+  </a>
+  <a class="lang-card" href="north-korean.html">
+    <div class="lang-card__art"><img src="../assets/images/nkorealang_hero.jpeg" alt="The desk by the window; a keyboard and monitor, a Pyongyang-style skyline under a crescent moon."></div>
+    <div class="lang-card__caption"><span class="lang-card__name">조선말 · North Korean</span><span class="lang-card__status lang-card__status--ready">In the archive</span></div>
+  </a>
 </div>
 
-<div style="padding:10px 46px 46px;display:flex;flex-direction:column;gap:18px;border-top:1px solid rgba(194,145,76,.16);margin:0 46px 40px;padding-left:0;padding-right:0">
-  <div class="eyebrow" style="padding-top:26px">Special interest · lighter treatment, built as sources allow</div>
+<div class="si-band" aria-hidden="true">
+  <div class="si-band__art"></div>
+  <div class="si-band__shade"></div>
+</div>
+
+<div style="padding:0 46px 46px;display:flex;flex-direction:column;gap:18px;margin:0 46px 40px;padding-left:0;padding-right:0">
   <div class="si-list">
-    <span>Thai</span><span>Amharic</span><span><a href="hebrew.html">Hebrew</a></span><span>Biblical Greek</span><span><a href="korean.html">Korean</a></span><span><a href="georgian.html">Georgian</a></span><span><a href="chinese.html">Chinese</a></span><span>Urdu</span><span>Romanian</span>
+    <span>Thai</span><span>Amharic</span><span><a href="hebrew.html">Hebrew</a></span><span>Biblical Greek</span><span><a href="korean.html">Korean</a></span><span><a href="georgian.html">Georgian</a></span><span>Urdu</span><span>Romanian</span>
   </div>
 </div>
 
