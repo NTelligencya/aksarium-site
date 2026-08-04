@@ -1,0 +1,9 @@
+# www.aksarium.com
+# The walled-gardens pages are deliberately undiscoverable. They are not named here,
+# because robots.txt is public and naming them would advertise them; they carry
+# <meta name="robots" content="noindex, nofollow"> instead, and are absent from the sitemap.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.aksarium.com/sitemap.xml

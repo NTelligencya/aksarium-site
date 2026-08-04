@@ -1,0 +1,193 @@
+/* Aksarium vocabulary table
+   One component, used by every language page and by the combined
+   domain-vocabulary page. Depends on the variables in aksarium.css. */
+
+.vocab {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+  flex: 1;
+}
+
+/* ------------------------------------------------------------ controls */
+.vocab__controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.vocab__search {
+  position: relative;
+  flex: 1 1 220px;
+  min-width: 180px;
+}
+
+.vocab__search input {
+  width: 100%;
+  padding: 9px 12px 9px 32px;
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink-head);
+  background: var(--key-bg);
+  border: 1px solid var(--hairline);
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.vocab__search input::placeholder { color: #6d776f; }
+.vocab__search input:focus { border-color: var(--gold); }
+.vocab__search input:focus-visible { outline: 1px solid var(--gold); outline-offset: 1px; }
+
+.vocab__search::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -6px;
+  border: 1px solid var(--gold-dull);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.vocab__filters { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.vocab__chip {
+  font-family: var(--serif);
+  font-size: 13px;
+  letter-spacing: .04em;
+  color: var(--ink-muted);
+  background: transparent;
+  border: 1px solid var(--hairline);
+  padding: 7px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.vocab__chip:hover { color: var(--ink-head); border-color: var(--hairline-strong); }
+
+.vocab__chip[aria-pressed="true"] {
+  color: #0b0f0d;
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.vocab__chip:focus-visible { outline: 1px solid var(--gold-bright); outline-offset: 2px; }
+
+.vocab__count {
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+/* --------------------------------------------------------------- table */
+/* Interior screens are 1440x900, so the table scrolls internally rather
+   than lengthening the page. Override --vocab-height where a page has
+   more room to give it. */
+.vocab__scroll {
+  flex: 1;
+  min-height: 160px;
+  max-height: var(--vocab-height, clamp(200px, calc(100vh - 738px), 520px));
+  overflow-y: auto;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(194, 145, 76, .34) transparent;
+}
+
+.vocab__scroll::-webkit-scrollbar { width: 8px; }
+.vocab__scroll::-webkit-scrollbar-thumb { background: rgba(194, 145, 76, .3); }
+
+.vocab table { width: 100%; border-collapse: collapse; font-size: 15px; }
+
+.vocab thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  text-align: left;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  background: var(--panel);
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--hairline);
+  white-space: nowrap;
+}
+
+.vocab tbody td {
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(194, 145, 76, .07);
+  vertical-align: baseline;
+  line-height: 1.45;
+}
+
+.vocab tbody tr:hover td { background: rgba(43, 58, 51, .28); }
+
+.vocab__term {
+  font-size: 19px;
+  color: var(--gold-title);
+  white-space: normal;
+}
+
+.vocab__rom { color: var(--teal-mist); font-style: italic; font-size: 14px; }
+.vocab__gloss { color: var(--ink-body); }
+.vocab__pivot { color: var(--ink-muted); font-size: 14px; }
+
+.vocab mark {
+  background: rgba(194, 145, 76, .26);
+  color: inherit;
+  padding: 0 1px;
+}
+
+/* Scripts that need a little more room to be legible at this size. */
+.vocab__term[lang="bn"], .vocab__term[lang="th"],
+.vocab__term[lang="he"], .vocab__term[lang="ar"],
+.vocab__term[lang="fa"] { font-size: 21px; line-height: 1.7; }
+
+.vocab__term[dir="rtl"] { text-align: right; direction: rtl; }
+
+/* --------------------------------------------------------------- notes */
+.vocab__note {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-faint);
+  margin: 0;
+}
+
+.vocab__empty {
+  padding: 28px 12px;
+  color: var(--ink-muted);
+  font-size: 15px;
+}
+
+.vocab__sentinel { height: 1px; }
+
+.vocab[data-state="loading"] .vocab__scroll::after {
+  content: "Loading the vocabulary…";
+  display: block;
+  padding: 26px 12px;
+  color: var(--ink-faint);
+  font-size: 14px;
+}
+
+.vocab__error {
+  padding: 22px 12px;
+  color: var(--ink-muted);
+  font-size: 14px;
+  border: 1px solid var(--hairline);
+}
+
+@media (max-width: 900px) {
+  .vocab__count { margin-left: 0; }
+  .vocab__scroll { max-height: 60vh; }
+  .vocab__pivot, .vocab thead th.vocab__col-pivot { display: none; }
+}

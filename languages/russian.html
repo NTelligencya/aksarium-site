@@ -10,7 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&family=Eagle+Lake&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="stylesheet" href="../assets/css/aksarium.css">
+<link rel="stylesheet" href="../assets/css/vocab-table.css">
 <script src="../assets/js/site.js" defer></script>
+<script src="../assets/js/vocab-table.js" defer></script>
 </head>
 <body>
 <div class="frame">
@@ -54,10 +56,10 @@
   </div>
 
   <div style="padding:32px 40px;display:flex;flex-direction:column;gap:18px">
-    <div class="eyebrow">Domain vocabulary — cyber &amp; security</div>
-    <div class="art-slot" style="min-height:180px">
-      <div class="art-slot__label"><span class="art-slot__diamond"></span>Side-by-side table · awaits the cleaned vocabulary source</div>
-    </div>
+    <div class="eyebrow">Vocabulary</div>
+    <div class="vocab"
+         data-vocab-src="../assets/data/vocab-russian.json"
+         data-vocab-label="Russian vocabulary"></div>
     <div style="margin-top:auto;display:flex;gap:16px;padding-top:20px;border-top:1px solid rgba(194,145,76,.12);flex-wrap:wrap">
       <a class="cross-card" href="../morphorian/index.html">
         <span class="cross-card__section">The Morphorian Underground</span>
