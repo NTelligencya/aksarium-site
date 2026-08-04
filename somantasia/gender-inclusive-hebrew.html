@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Degendering Hebrew — Notes from Somantasia — Aksarium</title>
-<meta name="description" content="Hebrew genders nearly every word a speaker utters. The reform efforts, from slashed suffixes to a third grammatical gender, and what the evidence says.">
+<title>Where languages keep gender — Notes from Somantasia — Aksarium</title>
+<meta name="description" content="Arabic marks it on the person you address, Thai on the person speaking, Mandarin only on the page. A tour of nine languages, their pronoun tables, and the attempts to rebuild them.">
 <link rel="canonical" href="https://www.aksarium.com/somantasia/gender-inclusive-hebrew.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Aksarium">
 <meta property="og:locale" content="en_AU">
-<meta property="og:title" content="Degendering Hebrew — Notes from Somantasia">
-<meta property="og:description" content="Hebrew genders nearly every word a speaker utters. The reform efforts, from slashed suffixes to a third grammatical gender, and what the evidence says.">
+<meta property="og:title" content="Where languages keep gender — Notes from Somantasia">
+<meta property="og:description" content="Arabic marks it on the person you address, Thai on the person speaking, Mandarin only on the page. A tour of nine languages, their pronoun tables, and the attempts to rebuild them.">
 <meta property="og:url" content="https://www.aksarium.com/somantasia/gender-inclusive-hebrew.html">
 <meta property="og:image" content="https://www.aksarium.com/assets/images/og-share.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="The Aksarium wordmark in gold and ivory on a near-black ground, with letters from several scripts at the edges.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Degendering Hebrew — Notes from Somantasia">
-<meta name="twitter:description" content="Hebrew genders nearly every word a speaker utters. The reform efforts, from slashed suffixes to a third grammatical gender, and what the evidence says.">
+<meta name="twitter:title" content="Where languages keep gender — Notes from Somantasia">
+<meta name="twitter:description" content="Arabic marks it on the person you address, Thai on the person speaking, Mandarin only on the page. A tour of nine languages, their pronoun tables, and the attempts to rebuild them.">
 <meta name="twitter:image" content="https://www.aksarium.com/assets/images/og-share.png">
 <meta name="twitter:image:alt" content="The Aksarium wordmark in gold and ivory on a near-black ground, with letters from several scripts at the edges.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,6 +27,119 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="stylesheet" href="../assets/css/aksarium.css">
 <script src="../assets/js/site.js" defer></script>
+<style>
+  /* Tables need more room than the 680px measure, so the body opens out and
+     the running text is held back to reading width on its own. */
+  .essay-body { max-width: 880px; }
+  .essay-body > p,
+  .essay-body > .callout { max-width: 690px; }
+
+  .essay-body h2 {
+    margin: 28px 0 -6px;
+    font-family: 'Eagle Lake', cursive;
+    font-size: 24px;
+    line-height: 1.32;
+    color: #d9a95e;
+    font-weight: 400;
+    letter-spacing: .01em;
+  }
+  .essay-body h3 {
+    margin: 16px 0 -12px;
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 12px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: #a89364;
+    font-weight: 400;
+  }
+
+  /* ---- tables ---- */
+  .tw { overflow-x: auto; margin: 2px 0; }
+  table.gt {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  table.gt caption {
+    caption-side: top;
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: #8a7a58;
+    padding: 0 0 13px;
+  }
+  table.gt th {
+    text-align: left;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #8a7a58;
+    padding: 0 16px 9px 0;
+    border-bottom: 1px solid rgba(194,145,76,.3);
+    white-space: nowrap;
+  }
+  table.gt td {
+    padding: 11px 16px 11px 0;
+    border-bottom: 1px solid rgba(194,145,76,.1);
+    color: #96a199;
+    vertical-align: top;
+  }
+  table.gt td.en { color: #c8bda2; }
+  table.gt td.hi { color: #d9c9a4; }
+  table.gt tr.neutral td { color: #d9a95e; }
+  table.gt tr.rule td { border-bottom-color: rgba(194,145,76,.32); }
+  table.gt tbody tr:last-child td { border-bottom: none; }
+  table.gt .sub { display: block; font-size: 13px; color: #6f7c74; letter-spacing: .04em; }
+
+  .fig-note {
+    max-width: 690px;
+    margin: -4px 0 0;
+    font-size: 15px;
+    line-height: 1.62;
+    color: #8b968e;
+  }
+  .fig-note em { color: #a9b3ab; }
+  .src-note {
+    max-width: 880px;
+    margin: -6px 0 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #8b968e;
+  }
+  .src-note em { color: #a9b3ab; }
+
+  /* ---- script faces ---- */
+  .s-ar {
+    font-family: 'Noto Naskh Arabic', 'Geeza Pro', 'Al Bayan', 'Traditional Arabic', 'Times New Roman', serif;
+    font-size: 1.3em; line-height: 2; direction: rtl; unicode-bidi: isolate;
+  }
+  .s-he {
+    font-family: 'Noto Sans Hebrew', 'Arial Hebrew', 'Times New Roman', serif;
+    font-size: 1.16em; direction: rtl; unicode-bidi: isolate;
+  }
+  .s-th {
+    font-family: 'Noto Sans Thai', 'Thonburi', 'Leelawadee UI', Tahoma, sans-serif;
+    font-size: 1.2em; line-height: 1.9;
+  }
+  .s-cn {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    font-size: 1.15em;
+  }
+  .s-jp {
+    font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
+    font-size: 1.15em;
+  }
+  .tr { font-style: italic; color: #a9b3ab; }
+  .rom { font-size: .62em; font-style: italic; color: #8b968e; }
+
+  @media (max-width: 1100px) {
+    .essay-body { max-width: 100%; }
+    table.gt { font-size: 15px; }
+  }
+</style>
 </head>
 <body>
 <div class="frame">
@@ -42,24 +155,420 @@
 <div class="essay-grid">
   <div class="essay-main">
     <div class="script-reveal">
-      <div class="script-drift">אתה · את · תלמידים · תלמידות · תלמידימות · דרוש/ה · חברימות · שלום · עברית · לשון</div>
+      <div class="script-drift">أنتَ · أنتِ · هما · الذي · التي · אתה · את · תלמידימות · ผม · ดิฉัน · เขา · ครับ · ค่ะ · 他 · 她 · TA · 僕 · あたし · elle · todes · iel · étudiant·e·s · hen · hän · او · o · ő</div>
     </div>
     <div class="essay-body">
-      <div class="essay-meta eyebrow"><span>Language reform</span><span>12 min</span></div>
-      <h1 style="margin:0;font-family:'Eagle Lake',cursive;font-size:38px;line-height:1.26;color:#d9a95e;font-weight:400;text-wrap:pretty">Degendering Hebrew</h1>
+      <div class="essay-meta eyebrow"><span>Language reform</span><span>32 min</span></div>
+      <h1 style="margin:0;font-family:'Eagle Lake',cursive;font-size:38px;line-height:1.26;color:#d9a95e;font-weight:400;text-wrap:pretty">Where languages keep gender</h1>
       <div class="gold-rule" style="width:64px"></div>
-      <p class="lede"><span class="dropcap">I</span>n Hebrew you cannot say "you are reading" without announcing the gender of the person you are talking to. Nouns are gendered, adjectives agree, verbs agree in most of their forms, and the second person splits in two: atah to a man, at to a woman. There is no neutral. For a mixed room, or an unknown reader, the grammar's traditional answer is the masculine plural, which officially includes everyone and visibly names only the men. What happens when speakers of such a language decide that this default no longer describes the world they want to address? Hebrew has become one of the best live experiments there is.</p>
-      <p>The pressure arrived earliest through the law. Since 1988, Israeli employment law has required job advertisements to address both genders, which is why Israeli listings carry the slashed form דרוש/ה, "wanted", masculine and feminine fused at the suffix. From there the convention spread on its own: school notices addressing תלמידים.ות, students in both endings joined by a full stop; clinic forms, union circulars, university tenders. The punctuation is doing grammatical work, holding two inflections in one word. The Academy of the Hebrew Language, the state's arbiter of usage, disapproves; its guidance holds that the masculine form is unmarked, serving "not only for males", that periods and slashes inside words fall outside the rules of Hebrew writing, and that a writer wanting inclusion should write both full forms, students-masculine and students-feminine, the long way. The Academy has also had to deny, on its own website, a rumour that it had permitted feminine address for majority-female groups. It has ruled no such thing.</p>
-      <p>Whether the unmarked masculine is truly neutral is, usefully, an empirical question, and Hebrew has supplied real data. In a 2021 experiment published in npj Science of Learning, nearly a thousand Hebrew speakers sat a mathematics test with instructions randomly phrased in the masculine or the feminine. Women addressed in the feminine performed measurably better, and the gender gap in scores shrank by about a third. An earlier study had found that masculine-generic wording on questionnaires shifts how respondents describe themselves. Effects like these are the serious answer to the shrug that grammar is only grammar; address turns out to be a variable, and it can be moved.</p>
-      <div class="callout">
-        <span class="eyebrow" style="letter-spacing:.3em">Twelve new letters</span>
-        <p style="margin:0">In 2019 the designer Michal Shomer built the problem a typeface. Multi-gender Hebrew adds twelve letterforms that merge the masculine and feminine endings into single glyphs, so a word reads as both at once. It has appeared on school walls, wedding invitations, Knesset offices and vaccination centres, drawn tens of thousands of downloads, and been banned from religious state schools; adopted, attacked and rolled back, sometimes by the same institution. A font, carrying a constitutional argument.</p>
+
+      <p class="lede"><span class="dropcap">E</span>nglish speakers who argue about inclusive language are arguing about a very small number of words. Four pronouns, a handful of possessives, some job titles that used to end in <em>-ess</em>. Almost nothing else in English carries gender at all: the verb does not change, the adjective does not change, the article does not change, the noun does not change. Whatever else is true of the English argument, it is being conducted over a thin seam in an otherwise gender-blind grammar. This is not the normal condition of human language, and it is worth understanding what the same argument looks like in languages where the seam runs through everything.</p>
+
+      <p>What follows is a tour. It starts with the hardest cases, the Semitic languages, where gender is not a feature of certain words but a property of nearly every clause; then it moves through languages that keep gender somewhere quite different, or nowhere at all. The point is not to rank grammars by how enlightened they are. It is to show that the question "how do we make this language more inclusive?" has a different shape in each place, because each language keeps its gender in a different room of the house.</p>
+
+      <p>Before the tour, one piece of vocabulary. English has two words where most languages have one. <em>Sex</em> refers to biological characteristics; <em>gender</em> to the social attributes associated with being male or female, learned through socialisation, which determine a person's position and value in a given context. That distinction is doing enormous work in English-language policy documents, and it does not survive translation intact. Arabic <span class="s-ar" lang="ar">جِنْس</span> <span class="tr">jins</span> covers both, which is why the sentence "sex and gender are different" comes back from Arabic as either "sex and sex are different" or "gender and gender are different", depending on which way the translator jumped. Thai <span class="s-th" lang="th">เพศ</span> <span class="tr">phet</span> covers sex, gender and sexuality together in ordinary usage. The United Nations dealt with its own version of the problem by commissioning a calque, <span class="s-ar" lang="ar">النوع الاجتماعي</span> <span class="tr">al-naw' al-ijtima'i</span>, "the social type", which now appears throughout Arabic policy translation and almost nowhere in Arabic conversation. A concept has to have somewhere to land.</p>
+
+      <h2>Arabic, where the grammar will not let you stay quiet</h2>
+
+      <p>Arabic assigns gender to nearly everything a speaker does. Nouns are masculine or feminine; adjectives agree; verbs agree in both the perfect and the imperfect, marking the gender of the subject and, in the second person, of the person being addressed. There is no neutral option, and no way to route around it, because the marking is not carried by a separate word you could decline to use. It is carried by the prefix and the suffix of the verb itself.</p>
+
+      <p>Start with the pronouns. Modern Standard Arabic has twelve, which already says something: English manages with seven, and Arabic needs twelve because it splits the second and third person by gender and adds a dual number for exactly two people.</p>
+
+      <div class="tw">
+      <table class="gt">
+        <caption>Independent personal pronouns, Modern Standard Arabic</caption>
+        <thead>
+          <tr><th>Person</th><th>Arabic</th><th>Transliteration</th><th>Marks gender?</th></tr>
+        </thead>
+        <tbody>
+          <tr class="neutral"><td>I</td><td class="s-ar" lang="ar">أَنَا</td><td class="tr">ana</td><td>No</td></tr>
+          <tr><td>you, one man</td><td class="s-ar" lang="ar">أَنْتَ</td><td class="tr">anta</td><td class="en">Yes</td></tr>
+          <tr><td>you, one woman</td><td class="s-ar" lang="ar">أَنْتِ</td><td class="tr">anti</td><td class="en">Yes</td></tr>
+          <tr class="neutral"><td>you two</td><td class="s-ar" lang="ar">أَنْتُمَا</td><td class="tr">antuma</td><td>No</td></tr>
+          <tr><td>you, men or mixed</td><td class="s-ar" lang="ar">أَنْتُمْ</td><td class="tr">antum</td><td class="en">Yes</td></tr>
+          <tr><td>you, all women</td><td class="s-ar" lang="ar">أَنْتُنَّ</td><td class="tr">antunna</td><td class="en">Yes</td></tr>
+          <tr><td>he</td><td class="s-ar" lang="ar">هُوَ</td><td class="tr">huwa</td><td class="en">Yes</td></tr>
+          <tr><td>she</td><td class="s-ar" lang="ar">هِيَ</td><td class="tr">hiya</td><td class="en">Yes</td></tr>
+          <tr class="neutral"><td>they two</td><td class="s-ar" lang="ar">هُمَا</td><td class="tr">huma</td><td>No</td></tr>
+          <tr><td>they, men or mixed</td><td class="s-ar" lang="ar">هُمْ</td><td class="tr">hum</td><td class="en">Yes</td></tr>
+          <tr><td>they, all women</td><td class="s-ar" lang="ar">هُنَّ</td><td class="tr">hunna</td><td class="en">Yes</td></tr>
+          <tr class="neutral"><td>we</td><td class="s-ar" lang="ar">نَحْنُ</td><td class="tr">nahnu</td><td>No</td></tr>
+        </tbody>
+      </table>
       </div>
-      <p>The deeper reach for reform goes past merging the two genders toward adding a third. The Nonbinary Hebrew Project, built in 2018 by Lior Gross and Eyal Rivlin at the University of Colorado, proposes a full third paradigm on the vowel ending -eh: talmideh for a student, ateh for "you", running through verbs, adjectives and possessives on the pattern of the existing grammar, with a fused plural, talmidimot, that stitches the masculine and feminine plurals together. Its creators anchor the system in old ground: classical rabbinic law discusses people who fit neither category cleanly, the androgynos, the tumtum and others, categories concerned with bodies and legal obligation rather than identity, but proof at least that Jewish law has spent two millennia aware that not every person slots into two boxes. Reading those categories as ancient nonbinary gender is an interpretive choice, and a contested one; the textual fact that the categories exist is not.</p>
-      <p>The project's reception maps the territory neatly. In North American Jewish settings, camps, synagogues and classrooms, the system has found real use. In Israel it remains close to unknown; native speakers reaching for nonbinary language more often improvise with the tools already in the language, mixing masculine and feminine forms within a sentence, alternating by the day, or routing around gender with impersonal constructions, strategies documented among genderqueer Israelis well before any formal proposal. A youth movement coined its own suffix. Queer communities fused the plurals into chaverimot, friends of all endings, long before a university project systematised the idea. The Academy's senior researcher dismissed the third paradigm flatly: new words have rules, and this is not how Hebrew makes them. The reformers' answer, implicit in every slashed suffix on an Israeli bus shelter, is that usage has never waited for the Academy.</p>
-      <p>The liturgy travelled this road first. Marcia Falk's Book of Blessings, in 1996, rewrote Hebrew prayer from inside, composing new blessings that step away from the masculine sovereign address of the tradition; the arguments were vehement, and passages from it now sit in the prayer books of every major non-Orthodox movement. The American Reform siddur of 2007 dropped the masculine pronoun for God in English and set the four matriarchs beside the patriarchs in the standing prayer; some congregations call people to the Torah as mi-beit, "of the house of", where the traditional formula says son-of or daughter-of. Liturgical Hebrew turns out to be easier to reform than street Hebrew; it is rewritten deliberately, by committees, whereas the street changes by ten million small decisions.</p>
+
+      <p class="fig-note">Four of the twelve carry no gender, and it is worth noticing which four: the first person, singular and plural, and the two duals. Arabic never developed a gendered "I", and it collapsed the gender contrast in the dual. The gold rows are not a design feature. They are gaps.</p>
+
+      <p>The pronoun is the easy part, though, because Arabic mostly drops it. The gender is carried by the verb, and the verb cannot be dropped. Here is one ordinary verb, <span class="s-ar" lang="ar">ذَهَبَ</span> <span class="tr">dhahaba</span>, "to go", in its second and third persons.</p>
+
+      <div class="tw">
+      <table class="gt">
+        <caption>Eleven forms of one verb, "to go"</caption>
+        <thead>
+          <tr><th>Subject</th><th>Perfect, "went"</th><th>Imperfect, "goes"</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">you, one man <span class="sub">anta</span></td><td><span class="s-ar" lang="ar">ذَهَبْتَ</span> <span class="rom">dhahabta</span></td><td><span class="s-ar" lang="ar">تَذْهَبُ</span> <span class="rom">tadhhabu</span></td></tr>
+          <tr><td class="en">you, one woman <span class="sub">anti</span></td><td><span class="s-ar" lang="ar">ذَهَبْتِ</span> <span class="rom">dhahabti</span></td><td><span class="s-ar" lang="ar">تَذْهَبِينَ</span> <span class="rom">tadhhabina</span></td></tr>
+          <tr class="neutral rule"><td>you two <span class="sub">antuma</span></td><td><span class="s-ar" lang="ar">ذَهَبْتُمَا</span> <span class="rom">dhahabtuma</span></td><td><span class="s-ar" lang="ar">تَذْهَبَانِ</span> <span class="rom">tadhhabani</span></td></tr>
+          <tr><td class="en">you, men or mixed <span class="sub">antum</span></td><td><span class="s-ar" lang="ar">ذَهَبْتُمْ</span> <span class="rom">dhahabtum</span></td><td><span class="s-ar" lang="ar">تَذْهَبُونَ</span> <span class="rom">tadhhabuna</span></td></tr>
+          <tr class="rule"><td class="en">you, all women <span class="sub">antunna</span></td><td><span class="s-ar" lang="ar">ذَهَبْتُنَّ</span> <span class="rom">dhahabtunna</span></td><td><span class="s-ar" lang="ar">تَذْهَبْنَ</span> <span class="rom">tadhhabna</span></td></tr>
+          <tr><td class="en">he <span class="sub">huwa</span></td><td><span class="s-ar" lang="ar">ذَهَبَ</span> <span class="rom">dhahaba</span></td><td><span class="s-ar" lang="ar">يَذْهَبُ</span> <span class="rom">yadhhabu</span></td></tr>
+          <tr><td class="en">she <span class="sub">hiya</span></td><td><span class="s-ar" lang="ar">ذَهَبَتْ</span> <span class="rom">dhahabat</span></td><td><span class="s-ar" lang="ar">تَذْهَبُ</span> <span class="rom">tadhhabu</span></td></tr>
+          <tr><td class="en">they two, men <span class="sub">huma</span></td><td><span class="s-ar" lang="ar">ذَهَبَا</span> <span class="rom">dhahaba</span></td><td><span class="s-ar" lang="ar">يَذْهَبَانِ</span> <span class="rom">yadhhabani</span></td></tr>
+          <tr class="rule"><td class="en">they two, women <span class="sub">huma</span></td><td><span class="s-ar" lang="ar">ذَهَبَتَا</span> <span class="rom">dhahabata</span></td><td><span class="s-ar" lang="ar">تَذْهَبَانِ</span> <span class="rom">tadhhabani</span></td></tr>
+          <tr><td class="en">they, men or mixed <span class="sub">hum</span></td><td><span class="s-ar" lang="ar">ذَهَبُوا</span> <span class="rom">dhahabu</span></td><td><span class="s-ar" lang="ar">يَذْهَبُونَ</span> <span class="rom">yadhhabuna</span></td></tr>
+          <tr><td class="en">they, all women <span class="sub">hunna</span></td><td><span class="s-ar" lang="ar">ذَهَبْنَ</span> <span class="rom">dhahabna</span></td><td><span class="s-ar" lang="ar">يَذْهَبْنَ</span> <span class="rom">yadhhabna</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p class="fig-note">The verb is <span class="s-ar" lang="ar">ذَهَبَ</span> <span class="tr">dhahaba</span> in the perfect and <span class="s-ar" lang="ar">يَذْهَبُ</span> <span class="tr">yadhhabu</span> in the imperfect. Read the middle column downward. "You went" is a different word depending on whether the person you are speaking to is a man, a woman, two people, a group of men, or a group of women. There is no sixth option. The dual row is the only place in the whole paradigm where a person can be addressed without the grammar committing to a gender, and it applies only if there happen to be exactly two of them.</p>
+
+      <p>The system is not tidy, either. <span class="s-ar" lang="ar">تَذْهَبُ</span> <span class="tr">tadhhabu</span> is simultaneously "you (one man) go" and "she goes"; <span class="s-ar" lang="ar">تَذْهَبَانِ</span> <span class="tr">tadhhabani</span> is simultaneously "you two go" and "those two women go". A grammar this insistent about gender still produces forms that collapse two people into one shape. Precision and obsession are not the same thing.</p>
+
+      <p>The part of Arabic that stops a room, though, is the relative pronoun. English has "who", "which" and "that", and none of them cares who you are. Arabic requires the relative pronoun to agree with its antecedent in gender, in number, and in the dual, in case as well.</p>
+
+      <div class="tw">
+      <table class="gt">
+        <caption>The relative pronoun: "who", "which", "that"</caption>
+        <thead>
+          <tr><th></th><th>Singular</th><th>Dual, nominative</th><th>Dual, oblique</th><th>Plural</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="en">Masculine</td>
+            <td><span class="s-ar" lang="ar">الَّذِي</span> <span class="rom">alladhi</span></td>
+            <td><span class="s-ar" lang="ar">اللَّذَانِ</span> <span class="rom">alladhani</span></td>
+            <td><span class="s-ar" lang="ar">اللَّذَيْنِ</span> <span class="rom">alladhayni</span></td>
+            <td><span class="s-ar" lang="ar">الَّذِينَ</span> <span class="rom">alladhina</span></td>
+          </tr>
+          <tr>
+            <td class="en">Feminine</td>
+            <td><span class="s-ar" lang="ar">الَّتِي</span> <span class="rom">allati</span></td>
+            <td><span class="s-ar" lang="ar">اللَّتَانِ</span> <span class="rom">allatani</span></td>
+            <td><span class="s-ar" lang="ar">اللَّتَيْنِ</span> <span class="rom">allatayni</span></td>
+            <td><span class="s-ar" lang="ar">اللَّاتِي</span> <span class="rom">allati</span> · <span class="s-ar" lang="ar">اللَّوَاتِي</span> <span class="rom">allawati</span> · <span class="s-ar" lang="ar">اللَّائِي</span> <span class="rom">alla'i</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p class="fig-note">This is the table that does the work in a room of English speakers. Most will accept that a language genders its nouns; they have met French. What they have usually not considered is that a language might require the word <em>who</em> to declare the sex of the person it refers to, so that "the student who arrived" and "the student who arrived" are two different sentences.</p>
+
+      <p>Arabic does hold neutral relativisers, which is worth knowing before anyone concludes the language is uniquely hostile. <span class="s-ar" lang="ar">مَنْ</span> <span class="tr">man</span>, "who", used of people, and <span class="s-ar" lang="ar">مَا</span> <span class="tr">ma</span>, "what", used of things, are invariable for gender and number. Classical grammars also list <span class="s-ar" lang="ar">الأُلَى</span> <span class="tr">al-ula</span> as a common-gender plural relative; it is archaic, largely confined to poetry, and almost nobody uses it, but it exists. The reform question in Arabic is less "why is there no neutral form" than "why did the neutral forms lose".</p>
+
+      <h3>What speakers actually do</h3>
+
+      <p>The workaround most often proposed is the dual, <span class="s-ar" lang="ar">هما</span> and <span class="s-ar" lang="ar">أنتما</span>, on the grounds that these two pronouns do not mark gender. Queer Arabic-speaking communities have promoted it, and it has two problems. The first is practical: Modern Standard Arabic keeps the dual, but most spoken dialects have discarded it everywhere except on nouns, so the form sounds either very formal or simply wrong. The second is conceptual, and the sharpest statement of it comes from inside Arabic scholarship rather than outside. Writing in the Beirut journal <em>Kohl</em> in 2022, Rola Alaedine points out that the dual denotes exactly two people, so using it of a non-binary individual describes one person as two. Escaping a binary by way of a duality is not obviously an improvement.</p>
+
+      <p>Alaedine works through the other options and rejects each: the masculine plural reinforces the default it is meant to soften; pairing <span class="s-ar" lang="ar">هو/هي</span> through a paragraph produces text nobody can read; transliterated English neopronouns invite exactly the accusation that the whole project is a Western import. Her conclusion is that new forms have to arrive through use rather than through committee, which is both correct and unsatisfying, and is roughly where the matter sits.</p>
+
+      <p>Two things are happening anyway, without anyone designing them. In urban Tunisian Arabic the historically feminine second-person singular <span class="s-ar" lang="ar">إنتِي</span> <span class="tr">inti</span> is used to address men and women alike, with the gender distinction in the verb lost along with it; the same generalisation is attested in northern Moroccan varieties. It is a long-standing dialectal development rather than an act of political reorganisation, whatever it later gets recruited for, and it does demonstrate that the second-person gender split is not load-bearing. Separately, most sedentary dialects have quietly dropped the distinct feminine plural in verbs and pronouns, which is a real reduction in gender-marking arrived at the usual way: by generalising the masculine.</p>
+
+      <h3>The vocabulary problem, which is worse than the grammar</h3>
+
+      <p>Alongside the grammar sits a lexical problem that no amount of paradigm design will fix. The standard reference term for transgender is <span class="s-ar" lang="ar">مُتَحَوِّل جِنْسِيًّا</span> <span class="tr">mutahawwil jinsiyyan</span>, built on a root meaning to change, turn or convert. Fed back through a machine translator, the bare participle returns some instructive English.</p>
+
+      <div class="tw">
+      <table class="gt">
+        <caption>What the root gives back</caption>
+        <thead>
+          <tr><th>Arabic</th><th>Transliteration</th><th>English returned</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="s-ar" lang="ar">المتحولين جنسيا</td><td class="tr">al-mutahawwilin jinsiyyan</td><td class="en">transgender</td></tr>
+          <tr><td class="s-ar" lang="ar">المتحولين</td><td class="tr">al-mutahawwilin</td><td class="en">mutants</td></tr>
+          <tr><td class="s-ar" lang="ar">المتحول</td><td class="tr">al-mutahawwil</td><td class="en">unstable</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p class="fig-note">Retyped from screenshots of a machine translator. The point is not that the translator is wrong; it is that the root genuinely carries all of these senses, so a person described with it is being described as something that shifts. Community usage has largely moved to <span class="s-ar" lang="ar">عابِر</span> and <span class="s-ar" lang="ar">عابِرة</span> <span class="tr">'abir, 'abira</span>, "crossing", "passing", and at least one Arabic reference now describes the older term as a slur.</p>
+
+      <p>The same pattern runs through the older vocabulary. <span class="s-ar" lang="ar">شاذ</span> <span class="tr">shadh</span>, "deviant" or "anomalous", was the standard media word for gay until activists in Lebanon spent years replacing it with <span class="s-ar" lang="ar">مثلي</span> and <span class="s-ar" lang="ar">مثلية</span> <span class="tr">mithli, mithliyya</span>, "same", which is now standard in much Arabic media. The community itself is <span class="s-ar" lang="ar">مجتمع الميم</span> <span class="tr">mujtama' al-meem</span>, the meem community, named for the Arabic letter M that begins each of the component words. And searching a major bilingual dictionary for <em>cisgender</em> still returns no exact match in Arabic to English. Some concepts have not yet been given a place to land, and the work of giving them one is being done in Cairo, Beirut and Tunis rather than anywhere else.</p>
+
+      <div class="callout">
+        <span class="eyebrow" style="letter-spacing:.3em">Georgetown, March 2021</span>
+        <p style="margin:0">A first-year Arabic student at Georgetown published a piece in the student paper arguing that the university should open a conversation about gender-inclusive Arabic in its language courses. He did not propose new pronouns; he asked for a discussion. The comment thread, still visible, ran to roughly forty replies and was overwhelmingly hostile, and the charge was consistent: cultural imperialism, a white saviour complex, an American demanding that a language he had studied for six months rearrange itself for his comfort. "Leave Semitic languages alone", wrote one commenter identifying as a Hebrew speaker; "it's for local speakers to deal with." The episode is worth keeping in view for the rest of this tour, because it is the objection most likely to be raised and the one the record handles least kindly. The Arabic gender wiki is Egyptian. The Arabic gender dictionary is Lebanese. The sharpest published critique of the dual-as-neutral proposal was written by an Arabic-speaking scholar in a Beirut journal. And as the Chinese section below shows, the first recorded feminist objection to a gendered pronoun was published in Shanghai in 1929.</p>
+      </div>
+
+      <h2>Hebrew, the same machinery and a different politics</h2>
+
+      <p>Hebrew works like Arabic and has been through far more institutional argument, which makes it the best-documented live experiment in the group. You cannot say "you are reading" in Hebrew without announcing the gender of the person you are talking to: <span class="s-he" lang="he">אתה</span> <span class="tr">atah</span> to a man, <span class="s-he" lang="he">את</span> <span class="tr">at</span> to a woman. Nouns are gendered, adjectives agree, verbs agree in most of their forms. For a mixed room, or an unknown reader, the traditional answer is the masculine plural, which officially includes everyone and visibly names only the men.</p>
+
+      <p>The pressure arrived earliest through the law. Since 1988, Israeli employment law has required job advertisements to address both genders, which is why Israeli listings carry the slashed form <span class="s-he" lang="he">דרוש/ה</span>, "wanted", masculine and feminine fused at the suffix. From there the convention spread on its own: school notices addressing <span class="s-he" lang="he">תלמידים.ות</span>, students in both endings joined by a full stop; clinic forms, union circulars, university tenders. The punctuation is doing grammatical work, holding two inflections in one word. The Academy of the Hebrew Language, the state's arbiter of usage, disapproves; its guidance holds that the masculine form is unmarked, serving "not only for males", that periods and slashes inside words fall outside the rules of Hebrew writing, and that a writer wanting inclusion should write both full forms the long way.</p>
+
+      <p>Whether the unmarked masculine is truly neutral is, usefully, an empirical question, and Hebrew has supplied real data. In a 2021 experiment published in <em>npj Science of Learning</em>, nearly a thousand Hebrew speakers sat a mathematics test with instructions randomly phrased in the masculine or the feminine. Women addressed in the feminine performed measurably better, and the gender gap in scores shrank by about a third. An earlier study had found that masculine-generic wording on questionnaires shifts how respondents describe themselves. Effects like these are the serious answer to the shrug that grammar is only grammar; address turns out to be a variable, and it can be moved.</p>
+
+      <p>The deeper reach for reform goes past merging the two genders toward adding a third. The Nonbinary Hebrew Project, built in 2018 by Lior Gross and Eyal Rivlin at the University of Colorado, proposes a full third paradigm on the vowel ending <em>-eh</em>, running through pronouns, nouns, verbs, adjectives and possessives on the pattern of the existing grammar.</p>
+
+      <div class="tw">
+      <table class="gt">
+        <caption>A third paradigm: the Nonbinary Hebrew Project</caption>
+        <thead>
+          <tr><th>Slot</th><th>Masculine</th><th>Feminine</th><th>Proposed third form</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">you, singular</td><td><span class="s-he" lang="he">אַתָּה</span> <span class="rom">atah</span></td><td><span class="s-he" lang="he">אַתְּ</span> <span class="rom">at</span></td><td class="hi"><span class="s-he" lang="he">אַתֶּה</span> <span class="rom">ateh</span></td></tr>
+          <tr><td class="en">you, plural</td><td><span class="s-he" lang="he">אַתֶּם</span> <span class="rom">atem</span></td><td><span class="s-he" lang="he">אַתֶּן</span> <span class="rom">aten</span></td><td class="hi"><span class="s-he" lang="he">אַתֶּמֶן</span> <span class="rom">atemen</span></td></tr>
+          <tr><td class="en">he, she</td><td><span class="s-he" lang="he">הוּא</span> <span class="rom">hu</span></td><td><span class="s-he" lang="he">הִיא</span> <span class="rom">hi</span></td><td class="hi"><span class="s-he" lang="he">הֵא</span> <span class="rom">heh</span></td></tr>
+          <tr class="rule"><td class="en">they, plural</td><td><span class="s-he" lang="he">הֵם</span> <span class="rom">hem</span></td><td><span class="s-he" lang="he">הֵן</span> <span class="rom">hen</span></td><td class="hi"><span class="s-he" lang="he">הֵמֶן</span> <span class="rom">hemen</span></td></tr>
+          <tr><td class="en">student, singular</td><td><span class="s-he" lang="he">תַּלְמִיד</span> <span class="rom">talmid</span></td><td><span class="s-he" lang="he">תַּלְמִידָה</span> <span class="rom">talmidah</span></td><td class="hi"><span class="s-he" lang="he">תַּלְמִידֶה</span> <span class="rom">talmideh</span></td></tr>
+          <tr class="rule"><td class="en">students, plural</td><td><span class="s-he" lang="he">תַּלְמִידִים</span> <span class="rom">talmidim</span></td><td><span class="s-he" lang="he">תַּלְמִידוֹת</span> <span class="rom">talmidot</span></td><td class="hi"><span class="s-he" lang="he">תַּלְמִידִימוֹת</span> <span class="rom">talmidimot</span></td></tr>
+          <tr><td class="en">learning, singular</td><td><span class="s-he" lang="he">לוֹמֵד</span> <span class="rom">lomed</span></td><td><span class="s-he" lang="he">לוֹמֶדֶת</span> <span class="rom">lomedet</span></td><td class="hi"><span class="s-he" lang="he">לוֹמְדֶה</span> <span class="rom">lomdeh</span></td></tr>
+          <tr><td class="en">learning, plural</td><td><span class="s-he" lang="he">לוֹמְדִים</span> <span class="rom">lomdim</span></td><td><span class="s-he" lang="he">לוֹמְדוֹת</span> <span class="rom">lomdot</span></td><td class="hi"><span class="s-he" lang="he">לוֹמְדִימוֹת</span> <span class="rom">lomdimot</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p class="fig-note">The plural is a splice: <em>-im</em>, the masculine plural ending, welded to <em>-ot</em>, the feminine, giving <em>-imot</em>. The same splice was arrived at independently by an American Jewish summer camp, which coined <span class="s-he" lang="he">חניכול</span> <span class="tr">chanichol</span> for a camper of unspecified gender, and by Israeli queer communities, who had been saying <span class="s-he" lang="he">חברימות</span> <span class="tr">chaverimot</span>, friends of all endings, well before any university systematised the idea.</p>
+
+      <p>The project's creators anchor the system in old ground: classical rabbinic law discusses people who fit neither category cleanly, the <em>androgynos</em>, the <em>tumtum</em> and others, categories concerned with bodies and legal obligation rather than identity, but proof at least that Jewish law has spent two millennia aware that not every person slots into two boxes. Reading those categories as ancient non-binary gender is an interpretive choice, and a contested one; the textual fact that the categories exist is not.</p>
+
+      <p>The reception maps the territory neatly. In North American Jewish settings, camps, synagogues and classrooms, the system has found real use. In Israel it remains close to unknown; native speakers reaching for non-binary language more often improvise with the tools already in the language, mixing masculine and feminine forms within a sentence, alternating by the day, or routing around gender with impersonal constructions, strategies documented among genderqueer Israelis well before any formal proposal. The Academy's senior researcher dismissed the third paradigm flatly: new words have rules, and this is not how Hebrew makes them.</p>
+
+      <p>Hebrew has also produced the one intervention nobody else has tried. In 2019 the designer Michal Shomer built the problem a typeface. Multi-gender Hebrew adds twelve letterforms that merge the masculine and feminine endings into single glyphs, so a word reads as both at once. It has appeared on school walls, wedding invitations, Knesset offices and vaccination centres, drawn tens of thousands of downloads, and been banned from religious state schools; adopted, attacked and rolled back, sometimes by the same institution. A font, carrying a constitutional argument.</p>
+
       <p>The state pushed back in the summer of 2023, when the Civil Service Commissioner directed that official documents use masculine forms only, citing the Academy's position that the masculine serves as neutral. Three major universities publicly refused; an art academy answered by announcing a month of feminine-only forms in its publications. The episode is worth savouring as sociolinguistics: a government instructing its clerks that one gender is neutral, universities declining on the evidence that it is not, and a design school demonstrating, by inversion, exactly how neutral the default feels when it points the other way.</p>
-      <p>No one knows which of these solutions Hebrew will keep. Languages do absorb engineered change; modern Hebrew is itself the standing proof, a vernacular rebuilt from liturgical bone within living memory, which is partly why its speakers argue about deliberate reform with so little embarrassment. The gendered machinery runs deeper than vocabulary, into the agreement system itself, and the contenders are all still on the table: the long double forms the Academy prefers, the punctuation splices it rejects, a typeface that fuses the endings, a third paradigm waiting mostly abroad, and the oldest strategy of all, mixing the forms and letting the listener adjust. What the case already demonstrates is the thing this section keeps returning to: a grammar is not a neutral container. It is a record of who a language expected to be speaking, and to whom; and when the expectation changes, the record gets edited, one suffix at a time.</p>
+
+      <h2>Thai, where you gender yourself</h2>
+
+      <p>Now the tour turns, because Thai puts gender somewhere Arabic and Hebrew do not: on the speaker. Thai first-person pronouns are chosen according to the sex, age and social position of the person talking. The consequence is structural, and rather elegant. A Thai speaker declares their own gender constantly and cannot easily be misgendered by anyone else, because the second and third persons carry almost no gender at all.</p>
+
+      <div class="tw">
+      <table class="gt">
+        <caption>Saying "I" in Thai</caption>
+        <thead>
+          <tr><th>Thai</th><th>Reading</th><th>Speaker</th><th>Register</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="s-th" lang="th">ผม</td><td class="tr">phom</td><td class="en">Men</td><td>Polite default. Literally "hair"</td></tr>
+          <tr><td class="s-th" lang="th">ดิฉัน</td><td class="tr">dichan</td><td class="en">Women</td><td>Very formal; distant enough that it is rare between people who know each other</td></tr>
+          <tr><td class="s-th" lang="th">ฉัน</td><td class="tr">chan</td><td class="en">Mainly women</td><td>Informal; also used by men to women of equal or lower status</td></tr>
+          <tr class="rule"><td class="s-th" lang="th">หนู</td><td class="tr">nu</td><td class="en">Young people; women to elders</td><td>Deferential. Literally "mouse"</td></tr>
+          <tr class="neutral"><td class="s-th" lang="th">เรา</td><td class="tr">rao</td><td>Either</td><td>Informal, with equals or juniors; also means "we"</td></tr>
+          <tr class="neutral"><td class="s-th" lang="th">กู</td><td class="tr">gu</td><td>Either</td><td>Intimate or vulgar; once universal, now profanity outside close friendship</td></tr>
+          <tr class="neutral"><td class="s-th" lang="th">ข้าพเจ้า</td><td class="tr">khaphachao</td><td>Either</td><td>Ceremonial and written; you will see it rather than hear it</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p class="fig-note">Sources disagree about <span class="s-th" lang="th">กู</span>: it is unmarked for gender in the standard pronoun tables, but at least one teaching source describes it as male-skewed in practice. Note the shape of the problem. The neutral options all exist and are all marked for something else, usually informality or ceremony, so a Thai speaker who wants to be polite and ungendered at the same time has nowhere obvious to stand.</p>
+
+      <p>The third person, meanwhile, is genuinely neutral. <span class="s-th" lang="th">เขา</span> <span class="tr">khao</span> is the ordinary word for both "he" and "she". Written Thai sometimes distinguishes <span class="s-th" lang="th">เธอ</span> <span class="tr">thoe</span> as "she", but that is largely a convention of translated fiction and song lyrics rather than of speech; in conversation <span class="s-th" lang="th">เธอ</span> is a second-person pronoun, and an unusual one, because it is semi-feminine in a way that genders the pair rather than either party. It is used when the speaker or the listener, or both, are female.</p>
+
+      <p>Where Thai does gender relentlessly is at the end of the sentence. Polite Thai attaches a final particle, and the particle depends on the sex of the speaker: <span class="s-th" lang="th">ครับ</span> <span class="tr">khrap</span> from a man, <span class="s-th" lang="th">ค่ะ</span> <span class="tr">kha</span> from a woman, shifting to <span class="s-th" lang="th">คะ</span> with a high tone in questions and requests. These attach to almost every polite utterance. A Thai speaker therefore announces their gender several times per conversation, not through pronouns at all but through the tail of each sentence, and there is no polite register that omits them.</p>
+
+      <div class="tw">
+      <table class="gt">
+        <caption>Thai vocabulary for gender and sexuality</caption>
+        <thead>
+          <tr><th>Thai</th><th>Reading</th><th>Sense</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="s-th" lang="th">เพศ</td><td class="tr">phet</td><td class="en">Sex, gender and sexuality together; everyday Thai does not separate them</td></tr>
+          <tr><td class="s-th" lang="th">กะเทย</td><td class="tr">kathoey</td><td class="en">From Khmer. Before the 1960s it covered anyone outside sexual norms; now narrower. Can be pejorative depending on register and compound</td></tr>
+          <tr><td class="s-th" lang="th">สาวประเภทสอง</td><td class="tr">sao praphet song</td><td class="en">"Second type of woman"; the less loaded alternative, roughly "trans woman"</td></tr>
+          <tr><td class="s-th" lang="th">เพศที่สาม</td><td class="tr">phet thi sam</td><td class="en">"Third sex", "third gender"</td></tr>
+          <tr><td class="s-th" lang="th">ทอม</td><td class="tr">tom</td><td class="en">Masculine-presenting woman, often using masculine pronouns. From English "tomboy"</td></tr>
+          <tr><td class="s-th" lang="th">ดี้</td><td class="tr">dee</td><td class="en">Feminine-presenting woman, historically defined by partnership with a tom. From English "lady"</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>Because <em>phet</em> covers all three domains at once, Thai treats these as nouns naming categories rather than as modifiers stacked on a gendered head; where English says "gay man", Thai names a category outright. Anthropologists working on this, Dredge Käng among them, argue that <em>phet</em> categories operate multidimensionally, referencing anatomy, presentation, desire and moral standing simultaneously, and are therefore not equivalent to Western sexuality terms even where the dictionary offers a one-to-one gloss. Whether that constitutes a genuinely different folk model of gender, or an artefact of translation, is contested in the field, which is itself the useful lesson.</p>
+
+      <p>One coda. Thailand's Marriage Equality Act took effect in January 2025, and more than 1,750 same-sex couples married on the first day. A gender recognition bill was rejected by the House of Representatives in February 2024 and, on the sources available to me, has not passed since. So Thailand has same-sex marriage and no legal gender change, which sharpens the linguistic point rather than softening it: the polite particles keep declaring a gender the state will not let you amend.</p>
+
+      <h2>Mandarin, where gender exists only on the page</h2>
+
+      <p>Mandarin is the mirror image of Arabic. It has no grammatical gender at all: no agreement on nouns, adjectives or verbs, and no inflection for agreement to sit in. The entire question reduces to a small closed set of written characters, every one of which is pronounced identically.</p>
+
+      <div class="tw">
+      <table class="gt">
+        <caption>Six characters, one sound</caption>
+        <thead>
+          <tr><th>Character</th><th>Reading</th><th>Refers to</th><th>Where used</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="s-cn" lang="zh">他</td><td class="tr">tā</td><td class="en">Men; historically everyone</td><td>Everywhere</td></tr>
+          <tr><td class="s-cn" lang="zh">她</td><td class="tr">tā</td><td class="en">Women</td><td>Everywhere; invented around 1918</td></tr>
+          <tr><td class="s-cn" lang="zh">它</td><td class="tr">tā</td><td class="en">Inanimate things</td><td>Everywhere</td></tr>
+          <tr><td class="s-cn" lang="zh">牠</td><td class="tr">tā</td><td class="en">Animals</td><td>Traditional characters, chiefly Taiwan</td></tr>
+          <tr><td class="s-cn" lang="zh">祂</td><td class="tr">tā</td><td class="en">Deities</td><td>Christian texts</td></tr>
+          <tr class="rule"><td class="s-cn" lang="zh">妳</td><td class="tr">nǐ</td><td class="en">"You", female addressee</td><td>Chiefly Taiwan; rare in simplified script</td></tr>
+          <tr class="neutral"><td>TA</td><td class="tr">tā</td><td>Anyone</td><td>Online, from around 2013; Latin letters</td></tr>
+          <tr class="neutral"><td class="s-cn" lang="zh">X也</td><td class="tr">tā</td><td>Non-binary</td><td>Proposed 2015; approved for Unicode in September 2025</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p class="fig-note">Every one of these is said <em>tā</em>, first tone. The distinction does not exist in speech. Spoken Mandarin cannot misgender in the third person because it cannot gender in the third person; written Mandarin must choose, on every single occurrence.</p>
+
+      <p>The feminine character has a history that repays attention, because it is the same argument conducted a century early. Before about 1918, <span class="s-cn" lang="zh">他</span> covered everybody. The proposal to split it came from the poet and linguist Liu Bannong, announced publicly by Zhou Zuoren in the journal <em>New Youth</em> in August 1918, and it was contested at once. The rival candidate was <span class="s-cn" lang="zh">伊</span> <span class="tr">yi</span>, the ordinary third-person pronoun of Shanghainese, backed for a time by Zhou Zuoren and Qian Xuantong; a critic writing as Hanbing published a piece in 1920 titled "This is Liu Bannong's Fault"; Liu answered with an essay defending the character; and by the 1930s <span class="s-cn" lang="zh">她</span> had won, helped along by a popular song for which he had written the lyrics.</p>
+
+      <p>The objection that matters came later, and from the direction least expected. The magazine <em>Funü Gongming</em>, "Women's Resonance", founded in 1929, refused on principle to print <span class="s-cn" lang="zh">她</span>. Its argument was structural: <span class="s-cn" lang="zh">他</span> is built on the person radical <span class="s-cn" lang="zh">亻</span>, and <span class="s-cn" lang="zh">她</span> replaces it with the woman radical <span class="s-cn" lang="zh">女</span>. Men got to be people; women got to be women. An article of the same year argued that women's liberation should be working to eliminate gender distinctions in language rather than to invent new ones, so that both sexes could simply be persons. A character created to make women visible in writing was rejected by a feminist magazine precisely because it made them visible, and visible as not-quite-human. That is the whole modern argument, in Shanghai, ninety-seven years ago.</p>
+
+      <p>The woman radical carries a broader complaint. It appears in a conspicuous number of characters with unpleasant meanings: <span class="s-cn" lang="zh">奸</span> adultery and treachery, <span class="s-cn" lang="zh">嫉</span> and <span class="s-cn" lang="zh">妒</span> jealousy and envy, <span class="s-cn" lang="zh">妖</span> monster or witch, <span class="s-cn" lang="zh">妓</span> and <span class="s-cn" lang="zh">娼</span> prostitute. Quantitative claims about this circulate and should be treated with suspicion, since nobody has defined what counts as derogatory; the pattern is real, the percentages are invented. An exhibition built around the character <span class="s-cn" lang="zh">姦</span>, three women stacked, meaning wickedness, was banned by the authorities in November 2015. There is domestic precedent for the reform being asked for: in the early years of the People's Republic the government altered characters used for the names of minority ethnic groups so they no longer carried "insect" or "dog" radicals. What there is not, so far as I could establish, is an organised campaign to do the same for <span class="s-cn" lang="zh">女</span>.</p>
+
+      <p>The modern proposals are correspondingly narrow, because Mandarin's problem is narrow. Writing "TA" in Latin letters became the mainland default for neutral reference from around 2013; it works, and it makes some speakers uncomfortable for the obvious reason that it embeds an alphabet in the middle of a Chinese sentence. The alternative is a new character, <span class="s-cn" lang="zh">X也</span>, created in 2015 by a Chinese intersex information platform: an X-shaped element over <span class="s-cn" lang="zh">也</span>, the phonetic component shared by all the existing forms. The X carries no sound. It cannot; the character is pronounced <em>tā</em> like every other third-person pronoun, so it exists only in writing, which is exactly where the problem is. A Unicode application submitted in late 2020 was approved in September 2025, and implementation across fonts and input methods is still working through. There is also a quieter option, which is to revive <span class="s-cn" lang="zh">伊</span>, the character that lost in 1920, as a neutral form precisely because it never won a gender.</p>
+
+      <h2>Japanese, choosing a self</h2>
+
+      <p>Japanese resembles Thai more than anything else in this tour. It has no grammatical gender and no agreement, and it locates gender where Thai does: in the choice of first-person pronoun, which is a small act of self-presentation performed several times a day.</p>
+
+      <div class="tw">
+      <table class="gt">
+        <caption>Saying "I" in Japanese</caption>
+        <thead>
+          <tr><th>Form</th><th>Reading</th><th>Register</th><th>Association</th></tr>
+        </thead>
+        <tbody>
+          <tr class="neutral"><td class="s-jp" lang="ja">私</td><td class="tr">watashi</td><td>Formal to neutral; the safe default</td><td>None; the expected form in formal male speech too</td></tr>
+          <tr class="neutral rule"><td class="s-jp" lang="ja">わたくし</td><td class="tr">watakushi</td><td>Highly formal, ceremonial</td><td>None</td></tr>
+          <tr><td class="s-jp" lang="ja">僕</td><td class="tr">boku</td><td>Informal, softer, modest</td><td class="en">Masculine; increasingly used by some women and non-binary speakers</td></tr>
+          <tr><td class="s-jp" lang="ja">俺</td><td class="tr">ore</td><td>Casual, assertive</td><td class="en">Masculine</td></tr>
+          <tr><td class="s-jp" lang="ja">あたし</td><td class="tr">atashi</td><td>Casual</td><td class="en">Feminine, typically younger women</td></tr>
+          <tr class="rule"><td class="s-jp" lang="ja">うち</td><td class="tr">uchi</td><td>Casual, regionally marked</td><td class="en">Feminine; associated with Kansai</td></tr>
+          <tr class="neutral"><td class="s-jp" lang="ja">自分</td><td class="tr">jibun</td><td>Casual; also military and sporting registers</td><td>None; often chosen for exactly that reason</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p class="fig-note">Non-binary Japanese speakers interviewed in 2022 described using <em>watashi</em> at work as a screen that gives nothing away, and <em>jibun</em> privately as a statement. The neutral options here are genuinely neutral, and there are three of them, which is more than Thai polite speech offers.</p>
+
+      <p>Japanese also sidesteps the third-person problem structurally rather than by reform. <span class="s-jp" lang="ja">彼</span> <span class="tr">kare</span> and <span class="s-jp" lang="ja">彼女</span> <span class="tr">kanojo</span> exist, but they are recent and were built to order. In pre-modern Japanese <em>kare</em> was a distal demonstrative used of men, women and things alike; contact with European languages created a demand for a masculine and feminine third-person split, at which point <em>kare</em> narrowed to males and <em>kanojo</em> was assembled from <em>kano onna</em>, "that woman", crystallising into a single word only from the Taishō period. Both now also mean "boyfriend" and "girlfriend", which is one reason speakers avoid them. In ordinary conversation Japanese uses names with suffixes, kinship terms, job titles, or simply drops the argument, which the grammar permits freely. It is worth noticing that a language can retire its gendered pronouns by not using them, and that no committee is required.</p>
+
+      <p>Japan's own non-binary vocabulary developed locally and early. <span class="s-jp" lang="ja">Xジェンダー</span> <span class="tr">x-jendā</span>, X-gender, emerged in the Kansai region in the late 1990s through publications and independent documentaries made by transgender people, and was first formally defined in a magazine glossary in 2000. It comes with its own subdivisions: <span class="s-jp" lang="ja">両性</span> <em>ryōsei</em>, both; <span class="s-jp" lang="ja">中性</span> <em>chūsei</em>, neutral; <span class="s-jp" lang="ja">無性</span> <em>musei</em>, none; <span class="s-jp" lang="ja">不定性</span> <em>futeisei</em>, fluid. Scholars of the term stress that although it is often glossed as "genderqueer", it is a specifically Japanese construct shaped by Japanese medical and activist history rather than an import.</p>
+
+      <h2>The Romance repair jobs</h2>
+
+      <p>Spanish and French are where the argument has become properly institutional, complete with academies, circulars, court rulings and a bill before the Senate. Both are gendered throughout, both take the masculine plural as the default for mixed groups, and both have produced a set of typographic devices for holding two forms in one word.</p>
+
+      <div class="tw">
+      <table class="gt">
+        <caption>The devices, and what became of them</caption>
+        <thead>
+          <tr><th>Form</th><th>Language</th><th>Example</th><th>Standing</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">-@</td><td>Spanish</td><td>l@s niñ@s</td><td>In use from the 1970s; written only, unpronounceable; largely superseded</td></tr>
+          <tr><td class="en">-x</td><td>Spanish</td><td>todxs, Latinx</td><td>From online queer communities around 2000; mass visibility in the United States</td></tr>
+          <tr class="rule"><td class="en">-e</td><td>Spanish</td><td>todes, elle, amigues</td><td>Proposed 1976, revived between 2011 and 2013; the live option in the Southern Cone</td></tr>
+          <tr><td class="en">Point médian</td><td>French</td><td>étudiant·e·s</td><td>The current standard device; banned in schools and in official texts</td></tr>
+          <tr><td class="en">Parentheses, internal capital</td><td>French</td><td>étudiant(e)s, étudiantEs</td><td>Older forms, still seen</td></tr>
+          <tr><td class="en">iel</td><td>French</td><td>iel a dit</td><td>Added to Le Robert online in 2021; a national argument followed</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>The Spanish academies have said no, repeatedly and in writing. The Real Academia Española's <em>Libro de estilo</em>, published in November 2018, explicitly rejects @, x and e as devices for referring to both sexes, and generally rejects doubling as well. Its <em>Informe sobre el lenguaje inclusivo</em>, requested by the Spanish government in 2018 and approved in January 2020, concluded that the 1978 Constitution needed no revision and defended the masculine as the unmarked term. The one moment of apparent movement was a misunderstanding: in October 2020 the RAE added <em>elle</em> to its <em>Observatorio de palabras</em>, a watch-list explicitly carrying no normative endorsement, and pulled the entry about a week later, stating that the confusion generated by its presence made removal preferable.</p>
+
+      <p>The pushback has since become governmental. Buenos Aires city banned the e, x and @ forms in teaching materials and school communications in June 2022. In February 2024 the Argentine Ministry of Defence prohibited inclusive language across the ministry and the armed forces by formal resolution, on the stated ground that non-standard variation risks misinterpretation of orders, and the government announced days later that the prohibition would be extended across the national public administration.</p>
+
+      <p>The usage data is instructive, and it does not flatter the American coinage. Pew Research Center surveys of US Hispanic adults found awareness of <em>Latinx</em> rising from 23 per cent in 2019 to 47 per cent by late 2023, while actual use went from 3 per cent to 4 per cent, a change Pew describes as statistically unchanged. Only 18 per cent had heard of <em>Latine</em>, the alternative that actually fits Spanish morphology, since <em>-e</em> is already a neutral nominal ending in words like <em>estudiante</em>. Eighty-one per cent prefer <em>Hispanic</em> or <em>Latino</em>. Awareness clusters among the US-born, English-dominant and college-educated, which is the demographic signature the critics predicted. Worth setting against that: the Modern Language Association's guidance cautions that "few people use it" is a weak argument, because it implies everyone must accept the categories of the majority.</p>
+
+      <p>France has produced the strangest position of the group, which is to ban the typography while mandating the feminisation. The Académie française declared unanimously in October 2017 that faced with this "inclusive aberration" the French language now stood <em>en péril mortel</em>. The following month Prime Minister Édouard Philippe circulated an instruction not to use inclusive writing in texts destined for official publication, and in the same document required systematic feminisation of job titles, ranks and functions held by women. The education ministry repeated the split in May 2021: no point médian in schools, and teachers required to feminise job titles and use gender-neutral formulations. The Conseil d'État upheld that circular in December 2024. In February 2019 the Académie itself accepted, by a large majority, that there is no obstacle in principle to feminising the names of trades and functions, a marked softening of its earlier hostility.</p>
+
+      <p>The Senate voted in October 2023, by 221 to 82, for a bill banning inclusive writing in education and in public bodies, with legal acts containing it rendered void, and extended the ban to neologisms including <em>iel</em>. It has never been voted on by the Assemblée nationale and remains at committee stage. So it is not correct to say that inclusive writing is banned by law in France; it is banned by administrative circular, upheld by the courts, in state publications and in schools.</p>
+
+      <p>One historical claim in this argument deserves care, because it is repeated everywhere. It is true that agreement with the nearest conjunct, the <em>règle de proximité</em>, was normal in Latin, Old French and Renaissance French, and it is true that named grammarians justified the change in frankly sexist terms: Dupleix in 1651 wrote that the masculine gender is the more noble and prevails alone against two or more feminines; Bouhours in 1675 that when the two genders meet, the nobler must win; Beauzée in 1767 grounded it in the superiority of the male over the female. Those quotations are real. The stronger claim built on them, that a coordinated seventeenth-century masculinist project abolished a rule which had been <em>the</em> rule, is contested in the scholarship, with a peer-reviewed rebuttal from Sophie Piron in 2022 and corpus work showing proximity agreement is still common in French today. The grammarians' reasoning is quotable; the conspiracy is not established.</p>
+
+      <h2>Swedish, the one that worked</h2>
+
+      <p>Only one engineered pronoun in this tour has travelled from proposal to dictionary to ordinary use within living memory, and it repays study because the timeline undercuts the tidy story in both directions.</p>
+
+      <div class="tw">
+      <table class="gt">
+        <caption>How <em>hen</em> got in</caption>
+        <thead>
+          <tr><th>Year</th><th>What happened</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">1966</td><td>Proposed by Rolf Dunås in a newspaper column, then effectively dormant for decades</td></tr>
+          <tr><td class="en">1994</td><td>Re-proposed by Hans Karlgren, noting the parallel with Finnish <em>hän</em></td></tr>
+          <tr><td class="en">2012</td><td>Used throughout the children's book <em>Kivi och Monsterhund</em>; a national argument follows</td></tr>
+          <tr><td class="en">2014</td><td>The Swedish Academy announces that <em>hen</em> will be included in its word list</td></tr>
+          <tr class="rule"><td class="en">2015</td><td>Published in the fourteenth edition of the <em>Svenska Akademiens ordlista</em></td></tr>
+          <tr><td class="en">2022</td><td>Norway's Språkrådet admits <em>hen</em> to the bokmål and nynorsk norms</td></tr>
+          <tr><td class="en">2026</td><td>Den Danske Ordbog adds <em>hen</em> and <em>hens</em>, and singular senses of <em>de</em>, <em>dem</em>, <em>deres</em></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>The attitude data is the useful part. Researchers tracked Swedish opinion at six points between 2012 and 2015 and found it inverted: in 2012, 56 per cent were very negative and 17 per cent very positive; by 2015, 69 per cent were very positive and 10 per cent very negative. Time remained one of the strongest predictors even after controlling for sexism, political orientation, age and gender. Behaviour lagged: those who never or almost never used the word fell from half the sample to a quarter, while consistent users stayed at around one in eight. A follow-up on representative samples found roughly half the Swedish population reporting some use by 2018, up fourteen points on 2015, with the largest positive shift among the young.</p>
+
+      <p>A separate eye-tracking study addressed the commonest objection directly, that new pronouns are hard to read. The measured cost was 43 milliseconds, in the region after the pronoun rather than on it, with comprehension unaffected at 93 per cent accuracy. Whatever the case against engineered pronouns is, it is not a processing cost.</p>
+
+      <p>Sweden is also where the argument for linguistic reform as a lever on social attitudes was made most strongly, in a 2019 study in the <em>Proceedings of the National Academy of Sciences</em>: speakers prompted to use <em>hen</em> were less likely to bring men to mind, more likely to name a woman as a hypothetical political candidate, and expressed more favourable views of women and of LGBT people in public life. It is the study the Georgetown student cited, and it is worth reading alongside its best objection, made by Dennis Baron a few weeks later: Sweden acquired its reputation for gender parity during roughly the fifty years when <em>hen</em> lay dormant. The social change preceded the linguistic one by half a century.</p>
+
+      <h2>The languages that never had any of this</h2>
+
+      <p>Something like half the world's languages have no grammatical gender at all. In the standard typological survey, 145 of 256 sampled languages have no gender system, using the test that matters, which is whether gender shows up as agreement on other words rather than merely as separate items of vocabulary. Gender-marking is the minority pattern globally, not the default.</p>
+
+      <div class="tw">
+      <table class="gt">
+        <caption>One word for he, she and it</caption>
+        <thead>
+          <tr><th>Language</th><th>Third person</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Persian</td><td><span class="s-ar" lang="fa" style="font-size:1.25em">او</span> <span class="rom">u</span></td><td>For people; <span class="s-ar" lang="fa" style="font-size:1.15em">آن</span> <em>ān</em> for things. One of very few Indo-European languages without gender even in the pronouns</td></tr>
+          <tr><td class="en">Turkish</td><td style="font-size:1.1em">o</td><td>He, she and it alike. Many given names are unisex, so a person can be described at length with gender unrecoverable</td></tr>
+          <tr><td class="en">Finnish</td><td style="font-size:1.1em">hän</td><td>Colloquial <em>se</em> is also used of people and is equally neutral</td></tr>
+          <tr><td class="en">Hungarian</td><td style="font-size:1.1em">ő</td><td>No gender anywhere in the grammar</td></tr>
+          <tr><td class="en">Estonian</td><td style="font-size:1.1em">tema, ta</td><td>The default for any person</td></tr>
+          <tr><td class="en">Georgian</td><td style="font-size:1.1em">ის</td><td>Neither pronouns nor nouns carry gender</td></tr>
+          <tr class="rule"><td class="en">Armenian</td><td style="font-size:1.1em">նա</td><td>As above</td></tr>
+          <tr><td class="en">Swahili</td><td style="font-size:1.1em">yeye</td><td>Elaborate noun classes with full agreement, but the classes are not sex-based; the human class holds men and women alike</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p class="fig-note">English does not belong in this table. In the typology used by the quantitative literature it is a "natural gender" language: gendered third-person pronouns, no gender agreement anywhere else. Basque nearly belongs but not quite, because the allocutive verb forms in some dialects mark the sex of the person being addressed.</p>
+
+      <p>This set is where the argument about whether grammar matters has to be settled, and the honest answer is that the evidence does not support the causal story in either direction. The paper usually cited to prove that genderless languages produce better outcomes does not say that. Prewitt-Freilino, Caswell and Laakso compared 111 countries in 2012 and found that gendered-language countries showed less gender equality than others, but that the highest scores belonged to <em>natural gender</em> countries, with genderless-language countries in the middle. Their explanation is worth sitting with: where a language marks gender visibly but lightly, sexist usage is easy to see and easy to repair, whereas in a genderless language a male default can travel unchallenged under cover of apparently neutral terms. That is not merely speculative. A 2023 study tested exactly this and reported a male bias in the supposedly neutral pronouns of Turkish and Finnish.</p>
+
+      <p>The economic literature points the other way and is careful about it. Jakiela and Ozier coded 4,336 languages and found grammatical gender associated with an 11.9 percentage-point decline in female labour force participation across 178 countries, with individual-level effects of similar magnitude in four African countries. Their own caveat is the best statement of the problem: these are correlations; modern gender attitudes cannot have caused ancient grammar, but culture could plausibly have shaped both, and no experiment is possible at this level. The general methodological warning is the 2013 <em>PLOS ONE</em> paper in which two researchers deliberately constructed a statistically significant chain linking linguistic diversity to traffic fatalities, to demonstrate that large cross-cultural databases will yield rigorous-looking correlations for anything at all, because languages are not independent observations.</p>
+
+      <p>The simplest check is to look at where the genderless-language countries actually sit. On the World Economic Forum's 2025 index, Finland is second and Iran is 145th; Japan is 118th, Georgia 63rd, Estonia 11th. Persian, Turkish, Georgian, Finnish, Estonian, Japanese and Korean are all genderless, and their countries occupy essentially the entire range. Grammatical gender does not predict outcomes within the genderless set at all. Meanwhile Iceland, which has a full three-gender system, ranks first. The variance is dominated by law, economy, religion and politics; the grammar is somewhere far down the list. Whoever in the Georgetown comment thread suggested the student simply switch to Farsi had a point about the grammar and no point at all about the society.</p>
+
+      <h2>What the tour shows</h2>
+
+      <p>Three things, none of them visible from inside English.</p>
+
+      <p>The first is that these languages are not solving the same problem. Arabic and Hebrew put gender on the person being addressed and then run it through the whole grammar, which is why their reform proposals are enormous, a third paradigm or a new alphabet, and why the proposals mostly fail. Thai and Japanese put it on the person speaking, which makes misgendering by others structurally difficult and self-description unavoidable. Mandarin puts it in the orthography alone, which is why one new character and a Unicode application very nearly finish the job. Asking "is this language inclusive?" without asking "where does it keep gender?" produces answers that are not about anything.</p>
+
+      <p>The second is that every language here already contains the neutral form it is said to lack, and has marginalised it rather than never having had it. Arabic has <span class="s-ar" lang="ar">مَنْ</span> and the archaic <span class="s-ar" lang="ar">الأُلَى</span>, and a dual the spoken dialects discarded. Mandarin has spoken <em>tā</em>, which is perfectly neutral, and <span class="s-cn" lang="zh">伊</span>, which lost a contest in 1920. Thai has <span class="s-th" lang="th">เขา</span> and three neutral ways of saying "I", all marked for something else. Japanese has three, and uses them. The reform question is more often "why did the neutral form lose" than "how do we build one".</p>
+
+      <p>The third is the one the Georgetown thread got wrong. The charge that gender-inclusive language is an Anglophone export does not survive contact with the record. The Arabic gender wiki was founded in Cairo; the Arabic gender dictionary in Beirut; the neutral Chinese character by a Chinese intersex platform; X-gender in Kansai in the 1990s; the fused Hebrew plural by Israeli queer communities before any American systematised it. And the earliest recorded feminist objection to a gendered pronoun anywhere in this tour was published in a Shanghai women's magazine in 1929, arguing that liberation meant eliminating the distinction rather than elaborating it, half a century before the English-speaking world arrived at the same thought. The argument travels, certainly. It does not have a single point of origin, and it never has.</p>
+
+      <p>What none of this settles is whether any of it changes anything, and the evidence there is genuinely mixed rather than politely balanced. Hebrew gives the strongest positive result: address women in the feminine and their mathematics scores rise measurably. Swedish gives the strongest negative one: the country built its reputation for equality during the fifty years its famous pronoun sat unused. Both are true. A grammar is not a neutral container; it is a record of who a language expected to be speaking, and to whom. Editing the record is worth doing. It is not the same thing as changing what was recorded.</p>
+
+      <h2>Sources</h2>
+
+      <h3>Arabic</h3>
+      <p class="src-note">Rola Alaedine, "Gender and the Arabic Language", <em>Kohl</em> 8(1), 24 January 2022. Nassawiyat, "Gender Neutral Language in Arabic", 6 August 2022. Gerald Drißner, "How do you translate they/them into a gendered language like Arabic?", <em>Arabic for Nerds</em>, 10 November 2024. UN ESCWA, <em>Gender-Sensitive Language Guidelines</em>, undated. Lebanon Support, <em>Gender Dictionary</em>, Civil Society Knowledge Centre, launched 2013. Ahmad Gharbeia, "Wikis as Catalysts for Activism: the case of Arabic Wiki Gender", Arab Reform Initiative, 23 January 2020. Immigration and Refugee Board of Canada, <em>SOGIESC List of Terms, Arabic</em>, undated. Paradigms cross-checked against <em>Arabic grammar</em>, <em>Arabic verbs</em>, <em>Varieties of Arabic</em> and <em>Tunisian Arabic morphology</em>, Wikipedia, and <span class="s-ar" lang="ar">اسم موصول</span>, Arabic Wikipedia, all accessed 4 August 2026. Donovan Barnes, "Viewpoint: Develop Gender-Neutral Language in Arabic", <em>The Hoya</em>, 26 March 2021.</p>
+
+      <h3>Hebrew</h3>
+      <p class="src-note">Academy of the Hebrew Language, guidance on egalitarian writing (2021) and on addressing mixed groups (2010, updated 2020). Employment (Equal Opportunities) Law 5748-1988, s. 8. Kricheli-Katz, T. and Regev, T., <em>npj Science of Learning</em> 6:9, 2021. Vainapel, S. et al., "The dark side of gendered language", <em>Psychological Assessment</em> 27(4), 2015. Bershtling, O., "Speech creates a kind of commitment: queering Hebrew", in <em>Queer Excursions</em>, Oxford, 2014. Nonbinary Hebrew Project, from 2018. <em>The Forward</em> on Michal Shomer's Multi-gender Hebrew typeface, 2021. JTA and <em>Times of Israel</em> on the Nonbinary Hebrew Project, 2018, and on the Civil Service directive, 2023.</p>
+
+      <h3>Thai</h3>
+      <p class="src-note">Dredge Byung'chu Käng, "Kathoey In Trend: emergent genderscapes, national anxieties and the re-signification of male-bodied effeminacy in Thailand", <em>Asian Studies Review</em> 36(4), December 2012. Megan J. Sinnott, <em>Toms and Dees</em>, University of Hawai'i Press, 2004. <em>Thai pronouns</em> and <em>Thai language</em>, Wikipedia, accessed 4 August 2026. "Third person pronouns in Thai", Thai With Grace, 29 September 2021. UN Human Rights Office, Bangkok, statement on the Marriage Equality Act, 23 January 2025.</p>
+
+      <h3>Chinese</h3>
+      <p class="src-note">Huang Xingtao, <em>A Cultural History of the Character 她</em>, Fujian Education Press, 2009. "她自何处来", China Writers' Association, 6 July 2020. Lu Zhao, "他/TA/X也: what pronouns do Chinese queer people use?", RADII, 25 June 2021. Victor Mair, "Another sinograph for Unicode", <em>Language Log</em>, 17 January 2026, and "Misogyny as reflected in Chinese characters", <em>Language Log</em>, 25 December 2015. CNN, on the Unicode approval, 25 December 2025. Tang, Yi and Bedin, "Mandarin Chinese", Gender in Language Project, 2025.</p>
+
+      <h3>Japanese</h3>
+      <p class="src-note">S. P. F. Dale, "X-Jendā", <em>TSQ: Transgender Studies Quarterly</em> 1(1–2), 2014. Iori Hamada, <em>Japanese Introductory 1</em>, CAUL OER Collective, 2024. Kat Joplin, "Queer Japan: towards gender freedom in Japanese language", <em>Tokyo Weekender</em>, 29 June 2022. <em>Nihon Kokugo Daijiten</em> and <em>Daijisen</em> entries for 彼女, via Kotobank.</p>
+
+      <h3>Spanish and French</h3>
+      <p class="src-note">Real Academia Española, <em>Libro de estilo de la lengua española</em>, 27 November 2018, and <em>Informe sobre el lenguaje inclusivo y cuestiones conexas</em>, approved 16 January 2020. Ben Papadopoulos, "Una breve historia del español no binario", <em>DEP</em> 48, 2022. Boletín Oficial de la República Argentina, Ministerio de Defensa Resolución 160/2024, published 26 February 2024. Pew Research Center, surveys of US Hispanic adults, 11 August 2020 and 12 September 2024. MLA Style Center, "Latina/o, Latinx, Latine", 10 September 2024. Académie française, <em>Déclaration sur l'écriture dite inclusive</em>, 26 October 2017, and <em>La féminisation des noms de métiers et de fonctions</em>, 28 February 2019. Circulaire du 21 novembre 2017, Légifrance. Conseil d'État decision of 20 December 2024. Sénat, PPL 21-404, adopted 30 October 2023. Sophie Piron, "Le masculin polémique", <em>Circula</em> 15, 2022.</p>
+
+      <h3>Swedish and the comparative literature</h3>
+      <p class="src-note">Gustafsson Sendén, M., Bäck, E. A. and Lindqvist, A., "Introducing a gender-neutral pronoun in a natural gender language", <em>Frontiers in Psychology</em> 6:893, 2015. Gustafsson Sendén, M., Renström, E. and Lindqvist, A., "Pronouns beyond the binary", <em>Gender &amp; Society</em> 35(4), 2021. Vergoossen, H. P. et al., "Are new gender-neutral pronouns difficult to process in reading?", <em>Frontiers in Psychology</em> 11:574356, 2020. Tavits, M. and Pérez, E. O., "Language influences mass opinion toward gender and LGBT equality", <em>PNAS</em> 116(34), 5 August 2019. Dennis Baron, "Can a Swedish pronoun cure sexism?", <em>The Web of Language</em>, 29 August 2019. Språkrådet, "Normering av hen", June 2022. Det Danske Sprog- og Litteraturselskab, update announcement, 26 June 2026. Prewitt-Freilino, J. L., Caswell, T. A. and Laakso, E. K., "The gendering of language: a comparison of gender equality in countries with gendered, natural gender, and genderless languages", <em>Sex Roles</em> 66(3–4), 2012. Jakiela, P. and Ozier, O., "Gendered Language", World Bank Policy Research Working Paper 8464, June 2018. Renström, E. A. et al., "Are gender-neutral pronouns really neutral?", <em>Journal of Language and Social Psychology</em>, 2023. Roberts, S. and Winters, J., "Linguistic diversity and traffic accidents", <em>PLOS ONE</em> 8(8), 2013. Greville G. Corbett, "Number of Genders", WALS chapter 30. World Economic Forum, <em>Global Gender Gap Report 2025</em>, 11 June 2025.</p>
+
     </div>
   </div>
 
@@ -69,24 +578,28 @@
       <div class="aside-figure__shade"></div>
     </div>
     <div class="aside-block">
-      <div class="eyebrow">Sources</div>
+      <div class="eyebrow">Where the gender sits</div>
       <div class="source-list">
-        <span>Academy of the Hebrew Language, guidance on egalitarian writing (2021) and on addressing mixed groups (2010, upd. 2020).</span>
-        <span>Employment (Equal Opportunities) Law 5748-1988, s. 8.</span>
-        <span>Kricheli-Katz, T. &amp; Regev, T. (2021). <em>Do gendered languages fail women in maths?</em> npj Science of Learning 6:9.</span>
-        <span>Vainapel, S. et al. (2015). <em>The dark side of gendered language.</em> Psychological Assessment 27(4).</span>
-        <span>Bershtling, O. (2014). <em>"Speech creates a kind of commitment": queering Hebrew.</em> In Queer Excursions. Oxford.</span>
-        <span>The Forward (2021), on Michal Shomer's Multi-gender Hebrew typeface.</span>
-        <span>JTA and Times of Israel (2018), on the Nonbinary Hebrew Project.</span>
-        <span>Times of Israel (2023), on the Civil Service directive and the universities' refusal.</span>
-        <span>Falk, M. (1996). <em>The Book of Blessings.</em> Harper.</span>
+        <span><em>On the person addressed.</em> Arabic, Hebrew. The second person splits and the verb agrees, so reform means rebuilding the agreement system.</span>
+        <span><em>On the person speaking.</em> Thai, Japanese. First-person pronouns, and in Thai the sentence-final particles. Misgendering by others is structurally difficult.</span>
+        <span><em>On the noun and everything touching it.</em> Spanish, French. Articles, adjectives and participles all agree, so reform means typography.</span>
+        <span><em>On the page only.</em> Mandarin. Six homophonous characters; speech is already neutral.</span>
+        <span><em>Nowhere.</em> Persian, Turkish, Finnish, Hungarian, Estonian, Georgian, Armenian, Korean, Vietnamese, Indonesian. Roughly half the world's languages.</span>
+      </div>
+    </div>
+    <div class="aside-block">
+      <div class="eyebrow">Two numbers</div>
+      <div class="source-list">
+        <span><span style="color:#c8bda2">145 of 256</span> sampled languages have no gender system at all, on the agreement test used by the World Atlas of Language Structures.</span>
+        <span><span style="color:#c8bda2">43 milliseconds</span> is the measured reading cost of Swedish <em>hen</em>, and it falls after the pronoun rather than on it. Comprehension is unaffected.</span>
       </div>
     </div>
     <div class="aside-block" style="margin-top:auto">
       <div class="eyebrow">Reads on from here</div>
       <div style="display:flex;flex-direction:column;gap:11px;font-size:18px;color:#c8bda2">
-        <a href="biblical-mistranslation.html" style="color:#c8bda2">Lost in the copying</a>
         <a href="sapir-whorf.html" style="color:#c8bda2">Sapir-Whorf, carefully</a>
+        <a href="two-blues.html" style="color:#c8bda2">Two blues</a>
+        <a href="biblical-mistranslation.html" style="color:#c8bda2">Lost in the copying</a>
       </div>
     </div>
   </aside>
