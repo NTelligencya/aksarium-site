@@ -59,6 +59,13 @@
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
   .navhint { position: fixed; right: 30px; bottom: 14px; color: var(--ink-dim); font-size: 12px; letter-spacing: 1px; }
 
+  /* Module opening plate: atmosphere only, never behind body copy */
+  .plate { position: relative; margin: 22px 0 4px; border: 1px solid rgba(194,145,76,.24); overflow: hidden; }
+  .plate img { display: block; width: 100%; height: 300px; object-fit: cover; object-position: center 34%; filter: saturate(.9); }
+  .plate::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,12,10,.34) 0%, rgba(8,12,10,0) 34%, rgba(8,12,10,.86) 100%); pointer-events: none; }
+  .platecap { position: absolute; left: 20px; right: 20px; bottom: 14px; z-index: 2; font-size: 12.5px; line-height: 1.6; color: var(--ink-dim); }
+  @media (max-width: 760px) { .plate img { height: 200px; } }
+
   /* Shared */
   .eyebrow { color: var(--ink-faint); font-size: 12px; letter-spacing: .32em; text-transform: uppercase; margin-bottom: 14px; }
   h1 { font-family: var(--display); font-weight: 400; font-size: 44px; line-height: 1.15; color: var(--gold-title); }
@@ -589,6 +596,10 @@
       <div class="eyebrow">Module 02 · A contrast case, not a travel guide</div>
       <h1>The walled garden made physical</h1>
       <div class="myth">Myth we'll unpick: "It's just a stricter version of the same internet."</div>
+      <div class="plate">
+        <img src="../assets/images/nkorealang_hero.jpeg" alt="A darkened room; a desk with a keyboard and monitor by a window looking out over Pyongyang, the Taedong river and a slogan banner in the sky.">
+        <div class="platecap">Illustration, not photography. A composed scene made for this deck; the view is a Pyongyang-style skyline, not a documentary image of a real room.</div>
+      </div>
       <p class="lede">North Korea's Kwangmyong (광명) is not a filtered internet. It is a <strong>separate network that was never connected to the world to begin with</strong>; the wall is not software, it is the topology itself. Module 01 showed control built into an app; this shows control built into the wires. You cannot visit Kwangmyong from outside the country, which makes how we know anything about it part of the lesson.</p>
     </section>
 

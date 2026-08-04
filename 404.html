@@ -11,8 +11,11 @@
 <link rel="stylesheet" href="/assets/css/aksarium.css">
 </head>
 <body>
-<div class="frame">
-  <header class="site-header site-header--solid">
+<div class="frame" style="position:relative">
+  <!-- Quiet ground plate; the copy sits well clear of it. -->
+  <div style="position:absolute;inset:0;background:url('/assets/images/hero-shore-clean.png') center 42%/cover no-repeat;opacity:.62"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,10,8,.96) 0%,rgba(6,10,8,.86) 34%,rgba(6,10,8,.3) 62%,rgba(6,10,8,.1) 100%)"></div>
+  <header class="site-header site-header--solid" style="position:relative;z-index:2">
     <a class="brand" href="/index.html">
       <svg class="brand__mark" width="25" height="25" viewBox="0 0 132 132" fill="none" aria-hidden="true"><path d="M66 8l58 58-58 58L8 66z" stroke="#c2914c" stroke-width="4"/><path d="M66 24l42 42-42 42-42-42z" stroke="#c2914c" stroke-width="4" stroke-opacity=".35"/><text x="66" y="84" text-anchor="middle" font-family="'IM Fell DW Pica',serif" font-size="54" fill="#e8dcc4">A</text></svg>
       <span class="brand__name">Aksarium</span>
@@ -26,7 +29,7 @@
     <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
   </header>
 
-  <div style="flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:24px;padding:80px 72px;max-width:720px">
+  <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:24px;padding:80px 72px;max-width:720px">
     <div class="eyebrow" style="letter-spacing:.34em">Error 404</div>
     <h1 style="margin:0;font-family:'Eagle Lake',cursive;font-size:52px;line-height:1.1;color:#d9a95e;font-weight:400">A letter that isn't here</h1>
     <div class="gold-rule"></div>
@@ -34,7 +37,7 @@
     <a class="btn-line" href="/index.html" style="width:auto;gap:12px">Return to the archive<span>⟶</span></a>
   </div>
 
-  <footer class="site-footer">
+  <footer class="site-footer" style="position:relative;z-index:2">
     <span class="eyebrow">Aksarium · a working archive</span>
     <nav aria-label="Footer">
       <a href="/index.html">Home</a>
