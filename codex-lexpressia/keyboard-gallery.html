@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Keyboard gallery — Codex Lexpressia — Aksarium</title>
-<meta name="description" content="Keyboard layouts for Arabic, Persian and Russian with live typing practice; more layouts to follow.">
+<meta name="description" content="Keyboard layouts for Arabic, Persian, Russian, Bengali, Thai, Georgian and Korean, with live typing practice and a short guide to installing them on a Mac or on Windows.">
 <link rel="canonical" href="https://www.aksarium.com/codex-lexpressia/keyboard-gallery.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Aksarium">
 <meta property="og:locale" content="en_AU">
 <meta property="og:title" content="Keyboard gallery — Codex Lexpressia">
-<meta property="og:description" content="Keyboard layouts for Arabic, Persian and Russian with live typing practice; more layouts to follow.">
+<meta property="og:description" content="Keyboard layouts for Arabic, Persian, Russian, Bengali, Thai, Georgian and Korean, with live typing practice and a short guide to installing them on a Mac or on Windows.">
 <meta property="og:url" content="https://www.aksarium.com/codex-lexpressia/keyboard-gallery.html">
 <meta property="og:image" content="https://www.aksarium.com/assets/images/og-share.png">
 <meta property="og:image:width" content="1200">
@@ -18,7 +18,7 @@
 <meta property="og:image:alt" content="The Aksarium wordmark in gold and ivory on a near-black ground, with letters from several scripts at the edges.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Keyboard gallery — Codex Lexpressia">
-<meta name="twitter:description" content="Keyboard layouts for Arabic, Persian and Russian with live typing practice; more layouts to follow.">
+<meta name="twitter:description" content="Keyboard layouts for Arabic, Persian, Russian, Bengali, Thai, Georgian and Korean, with live typing practice and a short guide to installing them on a Mac or on Windows.">
 <meta name="twitter:image" content="https://www.aksarium.com/assets/images/og-share.png">
 <meta name="twitter:image:alt" content="The Aksarium wordmark in gold and ivory on a near-black ground, with letters from several scripts at the edges.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,10 +42,43 @@
 .drill-ref-row__n { font-size: 13px; color: #5f6b64; }
 .drill-ref-row__t { font-size: 22px; color: #c8bda2; }
 .drill-ref-row__en { font-size: 16px; color: #8b968e; }
+.kb-key.is-dead { opacity: .34; }
+.layout-list a { color: inherit; text-decoration: none; display: block; padding: 0 0 0 16px; border-left: 2px solid transparent; }
+.layout-list a:hover { color: #c8bda2; }
+
+/* setup band */
+.kb-setup {
+  position: relative; z-index: 3;
+  border-top: 1px solid rgba(194,145,76,.14);
+  border-bottom: 1px solid rgba(194,145,76,.14);
+  background: rgba(8,12,10,.55);
+  padding: 26px 46px 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 320px;
+  gap: 40px;
+  align-items: start;
+}
+.kb-setup__intro { grid-column: 1 / -1; margin: 0; font-size: 15.5px; line-height: 1.6; color: #8b968e; max-width: 960px; text-wrap: pretty; }
+.kb-setup__col { display: flex; flex-direction: column; gap: 12px; }
+.kb-setup__col h2 {
+  margin: 0; font-family: inherit; font-weight: 400;
+  font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: #c2914c;
+}
+.kb-setup__step { display: grid; grid-template-columns: 92px 1fr; gap: 16px; font-size: 14.5px; line-height: 1.55; color: #8b968e; }
+.kb-setup__step > span:first-child { color: #6f7c74; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; padding-top: 3px; }
+.kb-setup__step b { color: #c8bda2; font-weight: 400; }
+.kb-setup__now { border-left: 1px solid rgba(194,145,76,.16); padding-left: 34px; }
+.kb-setup__pick { display: flex; flex-direction: column; gap: 3px; }
+.kb-setup__pick span { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: #6f7c74; }
+.kb-setup__pick b { font-size: 21px; color: #d9a95e; font-weight: 400; }
+.kb-setup__aside { margin: 0; font-size: 13.5px; line-height: 1.6; color: #6f7c74; text-wrap: pretty; }
+
 @media (max-width: 1100px) {
   .kb-grid { grid-template-columns: 1fr; }
   .kb-aside { border-right: none; border-bottom: 1px solid rgba(194,145,76,.14); }
   .kb-key { width: 48px; height: 48px; font-size: 19px; }
+  .kb-setup { grid-template-columns: 1fr; gap: 26px; padding: 22px 26px 26px; }
+  .kb-setup__now { border-left: none; padding-left: 0; border-top: 1px solid rgba(194,145,76,.16); padding-top: 22px; }
 }
 </style>
 </head>
@@ -62,6 +95,34 @@
   <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
 </header>
 
+<section class="kb-setup" aria-labelledby="kb-setup-intro">
+  <p class="kb-setup__intro" id="kb-setup-intro">The typing practice below wants a real keyboard layout, not a substitute; the drill reads whatever your operating system sends it. Both systems already carry every layout on this page, so nothing needs downloading or buying, and adding one takes about a minute.</p>
+
+  <div class="kb-setup__col">
+    <h2>On a Mac</h2>
+    <div class="kb-setup__step"><span>Add it</span><span>Apple menu, <b>System Settings</b>, <b>Keyboard</b>, then <b>Text Input</b> and <b>Edit</b>. Use the add button, search for the language, and choose the layout.</span></div>
+    <div class="kb-setup__step"><span>See it</span><span>In the same panel, tick <b>Show Input menu in menu bar</b>. That menu is how you switch, and it also opens the viewer.</span></div>
+    <div class="kb-setup__step"><span>Switch</span><span><b>Control and space</b> returns to your previous source; <b>control, option and space</b> steps forward through the list.</span></div>
+    <div class="kb-setup__step"><span>Find a key</span><span>Input menu, then <b>Show Keyboard Viewer</b>. Hold shift or option and the display redraws as that layer.</span></div>
+  </div>
+
+  <div class="kb-setup__col">
+    <h2>On Windows</h2>
+    <div class="kb-setup__step"><span>Add it</span><span><b>Settings</b>, <b>Time &amp; language</b>, <b>Language &amp; region</b>. Click the ellipsis beside the language, then <b>Language options</b> and <b>Add a keyboard</b>.</span></div>
+    <div class="kb-setup__step"><span>New language</span><span>If the language is not in your list yet, use <b>Add a language</b> first. A language pack only changes what Windows itself is written in; you do not need one in order to type.</span></div>
+    <div class="kb-setup__step"><span>Switch</span><span><b>Windows key and space</b> steps forward, <b>windows key, shift and space</b> steps back. <b>Ctrl and shift</b> also switches layout.</span></div>
+    <div class="kb-setup__step"><span>Find a key</span><span><b>Settings</b>, <b>Accessibility</b>, <b>Keyboard</b>, then <b>On-Screen Keyboard</b>; or press <b>windows, ctrl and O</b>. It draws whichever layout is active.</span></div>
+  </div>
+
+  <div class="kb-setup__col kb-setup__now">
+    <h2>For the layout shown</h2>
+    <div class="kb-setup__pick"><span>On a Mac, add</span><b data-kbsource-mac>Arabic</b></div>
+    <div class="kb-setup__pick"><span>On Windows, add</span><b data-kbsource-win>Arabic (101)</b></div>
+    <p class="kb-setup__aside">The letters printed on your keys will not change. Both vendors point at the on-screen viewer as the way to find out which key produces which character; the alternatives are keycap stickers, or learning the positions, which is what the drill below is for.</p>
+    <p class="kb-setup__aside">Korean and Chinese are not layouts in the ordinary sense; what you add is an input method, and the software assembles the characters as you type. Windows files them under Add a keyboard regardless.</p>
+  </div>
+</section>
+
 <div class="kb-grid">
   <aside class="kb-aside">
     <div class="eyebrow">Layout</div>
@@ -69,11 +130,12 @@
       <button type="button" data-layoutbtn="arabic" class="is-active">Arabic — Mac 102</button>
       <button type="button" data-layoutbtn="persian">Persian — Standard 9147</button>
       <button type="button" data-layoutbtn="russian">Russian — ЙЦУКЕН</button>
-      <span class="is-planned">Bengali — InScript</span>
-      <span class="is-planned">Thai — Kedmanee</span>
-      <span class="is-planned">Georgian — QWERTY</span>
-      <span class="is-planned">Amharic — Power Geez</span>
-      <span class="is-planned">Chinese — Pinyin IME</span>
+      <button type="button" data-layoutbtn="bengali">Bengali — InScript</button>
+      <button type="button" data-layoutbtn="thai">Thai — Kedmanee</button>
+      <button type="button" data-layoutbtn="georgian">Georgian — QWERTY</button>
+      <button type="button" data-layoutbtn="korean">Korean — Dubeolsik</button>
+      <a href="pinyin-ime.html">Chinese — Pinyin IME</a>
+      <span class="is-planned">Amharic — phonetic input</span>
     </div>
     <div class="stat-block" style="margin-top:auto">
       <div class="stat-row"><span class="eyebrow">Time</span><span class="stat-row__value stat-row__value--gold" data-stat-clock>00:00</span></div>
