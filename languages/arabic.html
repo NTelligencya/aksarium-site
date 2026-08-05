@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Arabic — Languages — Aksarium</title>
-<meta name="description" content="The Arabic resource page: script and history, dialect and diglossia, domain vocabulary and the keyboard reference.">
+<meta name="description" content="The Arabic resource page: an alphabet too small for the language, the two layers of dots that fixed it, the six hands, and the diglossia between fusha and everything people actually speak.">
 <link rel="canonical" href="https://www.aksarium.com/languages/arabic.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Aksarium">
 <meta property="og:locale" content="en_AU">
 <meta property="og:title" content="Arabic — Languages">
-<meta property="og:description" content="The Arabic resource page: script and history, dialect and diglossia, domain vocabulary and the keyboard reference.">
+<meta property="og:description" content="An alphabet too small for the language, the two layers of dots that fixed it, the six hands, and the diglossia between fusha and everything people actually speak.">
 <meta property="og:url" content="https://www.aksarium.com/languages/arabic.html">
 <meta property="og:image" content="https://www.aksarium.com/assets/images/og-share.png">
 <meta property="og:image:width" content="1200">
@@ -18,15 +18,41 @@
 <meta property="og:image:alt" content="The Aksarium wordmark in gold and ivory on a near-black ground, with letters from several scripts at the edges.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Arabic — Languages">
-<meta name="twitter:description" content="The Arabic resource page: script and history, dialect and diglossia, domain vocabulary and the keyboard reference.">
+<meta name="twitter:description" content="An alphabet too small for the language, the two layers of dots that fixed it, the six hands, and the diglossia between fusha and everything people actually speak.">
 <meta name="twitter:image" content="https://www.aksarium.com/assets/images/og-share.png">
 <meta name="twitter:image:alt" content="The Aksarium wordmark in gold and ivory on a near-black ground, with letters from several scripts at the edges.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=IM+Fell+DW+Pica:ital@0;1&family=Eagle+Lake&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=IM+Fell+DW+Pica:ital@0;1&family=Eagle+Lake&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="stylesheet" href="../assets/css/aksarium.css">
 <script src="../assets/js/site.js" defer></script>
+<style>
+  .ar { font-family: 'Noto Naskh Arabic', 'IM Fell DW Pica', serif; }
+  .ar-in { font-family: 'Noto Naskh Arabic', 'IM Fell DW Pica', serif; color: #d9c9a4; font-size: 1.06em; }
+  .conf { font-size: 12px; letter-spacing: .04em; color: #8a7a58; }
+  .module + .module { margin-top: 58px; padding-top: 52px; border-top: 1px solid rgba(194,145,76,.16); }
+  .sub-block { margin: 2px 0; display: flex; flex-direction: column; gap: 16px; }
+  .sub-head { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #8a7a58; }
+  .ins-table { display: grid; grid-template-columns: 1.15fr .8fr 1.5fr; gap: 0; margin: 6px 0 2px; }
+  .ins-table > div { padding: 11px 14px; border-bottom: 1px solid rgba(194,145,76,.1); font-size: 16px; line-height: 1.5; }
+  .ins-table .ih { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #8a7a58; border-bottom: 1px solid rgba(194,145,76,.3); }
+  .ins-table .nm { color: #d9c9a4; }
+  .ins-table .dt { color: var(--gold); white-space: nowrap; }
+  .ins-table .nt { color: #8b968e; font-size: 15px; }
+  .iso-table { display: grid; grid-template-columns: .8fr .85fr 2.1fr; gap: 0; margin: 6px 0 2px; }
+  .iso-table > div { padding: 10px 14px; border-bottom: 1px solid rgba(194,145,76,.1); font-size: 16px; line-height: 1.5; }
+  .iso-table .ih { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #8a7a58; border-bottom: 1px solid rgba(194,145,76,.3); }
+  .iso-table .ft { color: #d9c9a4; display: flex; flex-direction: column; gap: 3px; }
+  .iso-table .ft small { font-size: 13px; color: #8b968e; letter-spacing: .04em; }
+  .iso-table .vl { color: var(--gold); }
+  .iso-table .wh { color: #8b968e; font-size: 15px; }
+  .iso-table .cont { color: transparent; }
+  .rail-gap { flex: 1 1 0; min-height: 0; }
+  .jump { display: flex; gap: 26px; flex-wrap: wrap; margin-top: 14px; }
+  .jump a { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+  @media (max-width: 1100px) { .rail-gap { display: none; } }
+</style>
 </head>
 <body>
 <div class="frame">
@@ -45,7 +71,7 @@
     <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
   </header>
   <div style="position:absolute;left:70px;bottom:32px;display:flex;align-items:flex-end;gap:30px;z-index:4;flex-wrap:wrap">
-    <h1 style="margin:0;font-size:72px;line-height:1;color:#d9a95e;font-weight:400" lang="ar" dir="rtl">العربية</h1>
+    <h1 style="margin:0;font-size:72px;line-height:1;color:#d9a95e;font-weight:400" class="ar" lang="ar" dir="rtl">العربية</h1>
     <div style="display:flex;flex-direction:column;gap:12px;padding-bottom:12px">
       <div style="font-family:'Eagle Lake',cursive;font-size:30px;color:#e8dcc4">Arabic</div>
       <div class="diamond-rule"><i></i></div>
@@ -53,82 +79,357 @@
   </div>
 </div>
 
-<div style="flex:1;display:grid;grid-template-columns:1fr 2fr;border-top:1px solid rgba(194,145,76,.16)" class="essay-grid">
-  <div style="padding:28px 36px 30px;border-right:1px solid rgba(194,145,76,.12);display:flex;flex-direction:column;gap:18px">
-    <div class="eyebrow">Script &amp; history</div>
-    <div class="entry">
-      <div class="entry__title">The Arabic abjad</div>
-      <p class="entry__blurb">Nabataean roots, the dotting reforms, and six centuries of hands. With an ancient-literacy sidebar. Content to come.</p>
+<div style="padding:22px 46px 10px">
+  <div class="eyebrow">The resource pages</div>
+  <p style="max-width:880px;font-size:17px;line-height:1.65;color:#8b968e;margin-top:10px;text-wrap:pretty">Arabic gives Aksarium two of its recurring problems at full strength. The first is a writing system that inherited an alphabet too small for the language, and spent four centuries building the machinery to compensate. The second is a language that exists in two registers at once, one learned at home and one learned at school, with nobody speaking the prestigious one as a first language. The grammar walkthrough lives in <a href="../morphorian/root-and-pattern.html">The Morphorian Underground</a>; the keyboard is in the <a href="../codex-lexpressia/keyboard-gallery.html">gallery</a>; this page is the ground the other two stand on.</p>
+  <div class="jump">
+    <a href="#script">An alphabet too small for the language <span aria-hidden="true">↓</span></a>
+    <a href="#diglossia">Fusha and the rest <span aria-hidden="true">↓</span></a>
+  </div>
+</div>
+
+<div class="essay-grid" style="border-top:1px solid rgba(194,145,76,.16)">
+  <div class="essay-main">
+    <div class="script-reveal">
+      <div class="script-drift ar">رسم · إعجام · تشكيل · فصحى · عامية · نسخ · كوفي · ثلث · مغربي · نستعليق · خط منسوب</div>
     </div>
-    <div class="entry">
-      <div class="eyebrow">Dialect &amp; diglossia</div>
-      <div class="entry__title">Fuṣḥā and the rest</div>
-      <p class="entry__blurb">Cross-reads with the <a href="korean.html">Korean North-South divide</a>, a parallel case of one language pulling apart. Content to come.</p>
+
+    <!-- ================= MODULE ONE ================= -->
+    <div class="essay-body module" id="script">
+      <div class="essay-meta eyebrow"><span>Script and history</span><span>Reading note</span></div>
+      <h2 style="margin:0;font-family:'Eagle Lake',cursive;font-size:36px;line-height:1.28;color:#d9a95e;font-weight:400;text-wrap:pretty">An alphabet too small for the language</h2>
+      <div class="gold-rule" style="width:64px"></div>
+
+      <p class="lede">Twenty-eight consonants, drawn with eighteen shapes, and no vowels. That is what the Arabic language inherited when it borrowed a writing system from its neighbours, and almost everything interesting about the script since follows from the shortfall. Two successive layers of marks were built on top of the skeleton to resolve it, four centuries apart in the telling and rather less in the evidence; and once the marks were in place, the whole apparatus was turned into an art with a geometry of its own. The other thing worth knowing before starting is that the tradition supplies tidy named inventors at every stage, and the evidence, almost every time, supplies gradual anonymous process instead.</p>
+
+      <div class="sub-block">
+        <div class="sub-head">Where the letters come from</div>
+        <p>The Arabic script descends from the Nabataean variety of Aramaic, which descends in turn from Imperial Aramaic and, behind that, from Phoenician. Theodor Nöldeke made the argument in 1865 and it has held; the derivation of the letterforms is now close to consensus, and where scholars still differ is over the cultural route rather than the graphic ancestry, with a Syriac-influence thesis alive in the background and the Lakhmid court at al-Hira as the usual candidate for the crossing point.</p>
+        <p>The Nabataeans themselves are the interesting part. They appear to have spoken Arabic and written Aramaic, which is a mismatch a modern reader recognises immediately, and from about the third century they began using their Aramaic letters to write their own language. The script does not so much begin as drift. Current epigraphy handles this by refusing a single starting date: the CNRS DiCoNab project distinguishes Nabataean proper, then Nabataeo-Arabic, transitional and generally no later than the mid-fifth century, then Palaeo-Arabic, already recognisably Arabic; the last two together are "Developing Arabic", spanning the late third century to the early seventh.</p>
+      </div>
+
+      <div class="ins-table">
+        <div class="ih">Inscription</div>
+        <div class="ih">Date</div>
+        <div class="ih">What it is</div>
+
+        <div class="nm">Namara</div>
+        <div class="dt">328 CE</div>
+        <div class="nt">Arabic language, Nabataean letters. Southern Syria; now Louvre AO 4083.</div>
+
+        <div class="nm">Hima-Sud PalAr 1</div>
+        <div class="dt">470 CE</div>
+        <div class="nt">Earliest precisely dated inscription in the Arabic script. Near Najran.</div>
+
+        <div class="nm">Zabad</div>
+        <div class="dt">512 CE</div>
+        <div class="nt">Trilingual Greek, Syriac and Arabic lintel, near Aleppo.</div>
+
+        <div class="nm">Jabal Usays</div>
+        <div class="dt">528 CE</div>
+        <div class="nt">A frontier guard's graffito, south-east of Damascus. A reading of 532 or 533 is also proposed.</div>
+
+        <div class="nm">Harran</div>
+        <div class="dt">568 CE</div>
+        <div class="nt">Greek and Arabic bilingual, the Leja, Syria.</div>
+
+        <div class="nm" style="border-bottom:none">Zuhayr</div>
+        <div class="dt" style="border-bottom:none">644 CE</div>
+        <div class="nt" style="border-bottom:none">24 AH. The oldest dated inscription of the Islamic period.</div>
+      </div>
+
+      <p>The earliest precisely dated inscription in the Arabic script is a Christian grave marker from south Hima, about ninety kilometres north of Najran, dated by its own text to the year 364 of the Bostran era, which is 470 CE. Above it is carved a cross. The whole text reads: Thawban, son of Malik, in the month of <em style="color:#c8bda2">burak</em>, of the year 364. It was published in 2014 by Christian Robin, Ali ibn Ibrahim al-Ghabban and Sa'id Faiz al-Sa'id, and it displaced Zabad, in Syria, by forty-two years.</p>
+
+      <p>The forty-two years are the smaller part of it. Zabad sits in the Byzantine Levant, where the script's maturation had traditionally been located; Hima sits in deep southern Arabia. The direction of travel is now an open argument, and it is one with national stakes, so it is worth watching rather than settling <span class="conf">(the classification of the Hima hand as fully Arabic rather than transitional is not universally accepted)</span>.</p>
+
+      <div class="sub-block">
+        <div class="sub-head">Two layers of dots</div>
+        <p>Popular accounts run these together and they are separate systems doing separate jobs. <span class="ar-in" lang="ar" dir="rtl">إعجام</span>, i'jam, is the pointing that tells apart letters sharing a skeleton, so that one shape becomes ba, ta or tha. <span class="ar-in" lang="ar" dir="rtl">تشكيل</span>, tashkil, the harakat, marks the short vowels, and later the sukun, the shadda, the madda and the hamza.</p>
+        <p>The tradition dates i'jam to a reform under al-Hajjaj ibn Yusuf, governor of Iraq, who died in 714. The inscriptions do not co-operate. The Raqush stone of 267 CE already carries dots on dal, shin and ra; the fourth-century Jabal Ramm text has them on jim, ya and nun; a Greek and Arabic papyrus of 642 to 643 is full of them. Beatrice Gruendler's conclusion is that the system had finished developing in the first half of the first Islamic century, applied by habit rather than by rule. What al-Hajjaj's administration plausibly did was mandate the practice in official and Qur'anic copies, which is a different thing from inventing it. There are, in any case, three mutually inconsistent versions of who he asked, and the existence of three is the argument against relying on any.</p>
+        <p>The vowel marks have a better story and a worse provenance. Abu al-Aswad al-Du'ali, who died in 688 or 689, is credited with a system of coloured dots, and the scheme reported in the <em style="color:#c8bda2">Fihrist</em> is charmingly physical: a dot above the letter for fatha, the open mouth; beside it for damma, the mouth rounded; below for kasra, the lips parted.</p>
+        <p>The manuscripts do carry coloured dots, and the colours vary by region. Al-Dani, writing in eleventh-century al-Andalus, records Medina and the Maghrib using red for the vowels and yellow specifically for hamza, and Iraq using red for everything. An Andalusi Qur'an of 842 adds green, for the initial alif al-wasl.</p>
+        <p>What cannot be established is the attribution. Alain George's assessment is that the sources naming Abu al-Aswad and the others are not reliable enough to be treated as historical information, and that the accounts show a process of amplification and harmonisation, growing backwards from the practice to a founder. The red dots are real and datable to the Umayyad period. The man is a story.</p>
+        <p>The marks in use today are credited to al-Khalil ibn Ahmad al-Farahidi, who died around 786, and here the attribution matters less than the design. He replaced the dots with miniature letters: a small waw above for damma, a slanted alif for fatha, a fragment of ya below for kasra, a small shin for the shadda. The gain is that dots stopped doing two jobs at once. Before al-Khalil, a mark on a page might be identifying a consonant or supplying a vowel, and which one it was could come down to the colour of the ink.</p>
+      </div>
+
+      <div class="callout">
+        <div class="sub-head">The dictionary that starts at 'ayn</div>
+        <p>Al-Khalil's other project was the <em style="color:#c8bda2">Kitab al-'Ayn</em>, the first Arabic dictionary, ordered not alphabetically but phonetically, from the back of the mouth forward. It begins at <span class="ar-in" lang="ar" dir="rtl">ع</span>.</p>
+      </div>
+
+      <div class="sub-block">
+        <div class="sub-head">The proportioned hand</div>
+        <p>By the tenth century the script had its machinery and acquired a geometry. Ibn Muqla, three times vizier in Baghdad and eventually mutilated and imprisoned by the man who displaced him, is credited with <span class="ar-in" lang="ar" dir="rtl">الخط المنسوب</span>, al-khatt al-mansub, proportioned writing, in which every letterform is specified as a ratio against three measures. The first is the nuqta, which is not a round dot but the rhombus left by pressing the obliquely cut reed nib once against the page, so the unit scales with the pen. The second is the height of the alif, counted in those rhombi. The third is a circle whose diameter is that height, against which the curved letters are set.</p>
+        <p>It is an elegant system, it is recoverable in outline, and not one authenticated line in Ibn Muqla's hand survives. Everything known about it comes through later writers. Sheila Blair's warning covers the whole first two-thirds of the Islamic period: there are no surviving examples of a script identified by a named sample. The proportioned script as usually illustrated is a reconstruction from texts.</p>
+        <p>The first verifiable anchor is a generation later. The Qur'an copied by Ibn al-Bawwab at Baghdad in 391 AH, 1000 or 1001 CE, is in the Chester Beatty Library in Dublin, and it exists. It is also, on the usual account, the earliest surviving Qur'an written on paper, which is not a coincidence; the proportioned cursive hands are a response to a smoother surface. There is a twelfth-century anecdote in which Ibn al-Bawwab forges Ibn Muqla's hand so exactly that nobody can tell, and the anecdote is more useful than it looks: it records the tradition itself admitting that "a hand by Ibn Muqla" was already an uncertain category within a century of his death.</p>
+      </div>
+
+      <div class="sub-block">
+        <div class="sub-head">The hands</div>
+        <p>The classical canon is the six pens, <span class="ar-in" lang="ar" dir="rtl">الأقلام الستة</span>, al-aqlam al-sitta: naskh, thuluth, muhaqqaq, rayhani, tawqi' and riqa'. They are a system rather than a list, six hands differentiated by proportion and curvature on a shared metrical basis, which is why they read as a family.</p>
+        <p>Kufic, the angular hand of the early Qur'ans, is the one to be careful with. Kufa was founded in 638, and the script that later took its name is attested well before that; the name is a modern scholarly convenience applied backwards, and François Déroche built an alternative classification of early Qur'anic hands specifically to get out from under it. Its most striking descendant is square Kufic, developed in twelfth-century Iraq, where the brick and the tile become the unit and the wall is written at building scale.</p>
+        <p>Naskh, from the root meaning to copy, is the plainer hand that lost the prestige contest and won everything else. It was the everyday administrative script while Kufic held the Qur'anic page; it became the basis of Arabic printing; and it is the default for Arabic typefaces in operating systems, which means it is the hand most Arabic is read in today.</p>
+        <p>Two names get conflated and should not be. Riqa', one of the six pens, is a small classical chancery hand. Ruq'ah is a modern Ottoman handwriting style, regularised in the nineteenth century by Mumtaz Efendi and Mustafa Izzet Efendi out of forms already in daily use, made of short straight strokes and simple curves, and it is what most handwriting and most street signage actually look like.</p>
+        <p>Nasta'liq belongs to the Persian page rather than the Arabic one. The name is a contraction of naskh-e ta'liq, hanging naskh, and it became the standard hand for Persian literature and later for Urdu; Elaine Wright's work indicates it descends from naskh alone and not from a marriage of naskh and ta'liq, so the name misdescribes its parentage. It is not a standard hand for Arabic, and the reason usually given is structural: the definite article al- gives Arabic a verticality that nasta'liq's long horizontals fight.</p>
+        <p>Diwani, the Ottoman chancery hand of the sixteenth century, is worth a sentence for its logic rather than its shape. It is dense, tightly interlocked, and rises from right to left, and the standard explanation is that its difficulty served confidentiality and made forgery hard. That explanation is universally repeated and it does read like received wisdom, so take it as plausible rather than demonstrated.</p>
+      </div>
+
+      <div class="callout">
+        <div class="sub-head">The dots are not universal</div>
+        <p>Maghribi, the hand of North Africa and al-Andalus, descends from Kufic rather than from the eastern proportioned tradition, and it is a parallel line rather than a deviation. Its technical signature is the nib: pointed, <span class="ar-in" lang="ar" dir="rtl">القلم المدبب</span>, al-qalam al-mudabbab, giving a line of even thickness, where the east cuts a chisel and gets thick-and-thin modulation. That single difference accounts for most of what looks unfamiliar about a Maghribi page.</p>
+        <p>It also points its letters differently. Maghribi writes fa' with the dot below, <span class="ar-in" lang="ar" dir="rtl">ڢ</span>, and qaf with one dot above, <span class="ar-in" lang="ar" dir="rtl">ڧ</span>, where the east writes one above and two above. The i'jam that resolved the ambiguity in the first place turns out not to have resolved it the same way everywhere.</p>
+      </div>
+
+      <div class="sub-block">
+        <div class="sub-head">The arithmetic underneath</div>
+        <p>Strip every dot and every vowel mark from a page of Arabic and what is left is the <span class="ar-in" lang="ar" dir="rtl">رسم</span>, the rasm, the consonantal skeleton. It is the oldest layer of the script and the layer in which the Qur'anic text was fixed; the canonical readings differ from each other, very largely, within a single rasm.</p>
+        <p>The counting is the point. Twenty-eight letters resolve to eighteen skeletal shapes, excluding the lam-alif ligature. In isolated and final position all eighteen are distinct. Connected on the left, in initial and medial position, the count falls to fifteen, because nun and ya collapse into the ba, ta and tha shape and fa collapses into qaf.</p>
+        <p>Two mechanical consequences are worth knowing before touching the keyboard. Arabic is obligatorily cursive: it joins in print as well as by hand, which is unusual among the world's writing systems. And six letters, <span class="ar-in" lang="ar" dir="rtl">ا د ذ ر ز و</span>, join only to the right, so they have two forms each and they break a word open. A written word in Arabic is a run of connected clusters with gaps inside it, and the gaps are not word boundaries. That is a real obstacle for a new reader, and no amount of practice with the keyboard removes it, because it is a fact about the script rather than about the typing.</p>
+      </div>
+
+      <a class="link-forward" href="../codex-lexpressia/keyboard-gallery.html" style="justify-content:space-between;display:flex;padding-top:20px;border-top:1px solid rgba(194,145,76,.12)">Keyboard reference, and the Arabic layout<span>⟶</span></a>
     </div>
-    <a class="link-forward" href="../codex-lexpressia/keyboard-gallery.html" style="margin-top:auto;justify-content:space-between;display:flex;padding-top:18px;border-top:1px solid rgba(194,145,76,.12)">Keyboard reference<span>⟶</span></a>
+
+    <!-- ================= MODULE TWO ================= -->
+    <div class="essay-body module" id="diglossia">
+      <div class="essay-meta eyebrow"><span>Dialect and diglossia</span><span>Reading note</span></div>
+      <h2 style="margin:0;font-family:'Eagle Lake',cursive;font-size:36px;line-height:1.28;color:#d9a95e;font-weight:400;text-wrap:pretty">Fusha and the rest</h2>
+      <div class="gold-rule" style="width:64px"></div>
+
+      <p class="lede">The second Arabic problem is not in the writing but in the arrangement. There is a high variety with the grammars, the dictionaries, the scripture and the newspapers, and there are the varieties people actually grow up speaking, and the two are not in competition because they are not doing the same job. Charles Ferguson named the arrangement in 1959 and Arabic was his central case; the concept has been picked apart since, mostly in the direction of showing that the two poles are the ends of a continuum rather than a pair of boxes. What has not been shown is that the arrangement is dissolving.</p>
+
+      <div class="sub-block">
+        <div class="sub-head">What Ferguson said, and what he did not</div>
+        <p>Ferguson borrowed the term from William Marçais, who had written on <em style="color:#c8bda2">la diglossie arabe</em> in 1930, and gave it a definition and nine rubrics: function, prestige, literary heritage, acquisition, standardisation, stability, grammar, lexicon and phonology. His four cases were Arabic, Modern Greek, Swiss German and Haiti, and Arabic is the one that carries the argument, because it is the only one where the high variety is a codified older stage of the same language with a sacred text attached to it.</p>
+        <p>Two of his observations survive better than the model. The first is that speakers' reports do not match their behaviour: educated speakers told him they never used the low variety, and observation showed them using it constantly, and when he asked how they spoke to their children they conceded the children would not understand the other one. The second is that he did not, in fact, claim a clean binary. He describes relatively uncodified, unstable, intermediate forms and cites the Arabic term for them, <span class="ar-in" lang="ar" dir="rtl">اللغة الوسطى</span>, al-lugha al-wusta, the middle language.</p>
+        <p>He also predicted that Arabic would break into several regional standards. Greek went the way he expected, and Dhimotiki was made official in 1976. Arabic has not.</p>
+      </div>
+
+      <div class="sub-block">
+        <div class="sub-head">The middle ground</div>
+        <p>The refinements have mostly been attempts to describe the middle. Alan Kaye's point in 1972 has the sharpest teeth: the colloquials are well-defined systems because they have native speakers whose intuitions settle what is grammatical, and Modern Standard Arabic is ill-defined because it has none. That is why questions like "is this sentence grammatical in MSA" are harder than they look.</p>
+        <p>El-Said Badawi's five levels for Egypt, published in 1973, run from heritage fusha through contemporary fusha, the colloquial of the cultured, the colloquial of the basically educated, and the colloquial of the illiterate. The detail usually lost is that he drew them as overlapping bands, not steps, with the proportion of standard features falling and vernacular features rising down the diagram, and loanwords peaking in the middle rather than at either end.</p>
+        <p>Recent computational work gives the continuum some hard edges. The ALDi project scores sentences on a scale from pure standard to fully dialectal, with a corpus of 127,835 annotated sentences. The most informative number in it is the inter-annotator agreement, a Fleiss' kappa of 0.44; even trained annotators do not agree crisply on where a sentence sits, which is what a continuum looks like from the inside.</p>
+        <p>One distinction to keep. Educated Spoken Arabic is the flexible register of the conference and the current-affairs interview, and Gunvor Mejdell's summary of it is that no stability exists in it even at the level of the individual speaker. It is a zone of negotiated mixing rather than a variety with a grammar. Middle Arabic is a different thing altogether, a philological term for the mixed written register of papyri, Christian and Jewish Arabic texts and popular literature; Kees Versteegh warns explicitly against reading it as a stage on the Old, Middle and Modern English model.</p>
+      </div>
+
+      <div class="sub-block">
+        <div class="sub-head">Classical, Modern Standard, and why Arabic has one word for both</div>
+        <p>There is no agreed boundary between Classical Arabic and Modern Standard Arabic, and that is the first thing to say rather than the last. The morphology and syntax are essentially continuous. The substantial difference is lexical: MSA carries a modern vocabulary built by coining from existing roots, <span class="ar-in" lang="ar" dir="rtl">سيارة</span> for a car from the root meaning to travel; by extending old words; and by adapting loanwords. Beyond that the differences are tendencies, not rules, mostly toward shorter sentences and a plainer list construction.</p>
+        <p>It emerged from the <em style="color:#c8bda2">nahda</em>, and specifically from journalism and translation rather than from any committee. Napoleon's press reached Egypt in 1798 and left with the French in 1801; the Bulaq press followed in Cairo; <em style="color:#c8bda2">al-Waqa'i' al-Misriyya</em>, the first Arabic printed newspaper, appeared in 1828; Rifa'a al-Tahtawi founded the school of languages in 1836; <em style="color:#c8bda2">al-Ahram</em> began in 1875. The academies came afterwards, to regulate what was already happening: Damascus in 1918, Cairo by royal decree at the end of 1932. Their coinages have frequently failed to displace the loanwords already in use, which is the usual fate of language academies.</p>
+        <p>The terminology is worth getting right, because English gets it wrong. Arabic speakers do not ordinarily treat Classical and Modern Standard as two languages; both are <span class="ar-in" lang="ar" dir="rtl">العربية الفصحى</span>, al-'arabiyya al-fusha, and where the distinction is needed the terms are fusha al-'asr, contemporary fusha, and fusha al-turath, heritage fusha. Those are the same two labels sitting at the top of Badawi's five levels. "Modern Standard Arabic" is a coinage of Western Arabists with no exact everyday Arabic equivalent.</p>
+      </div>
+
+      <div class="sub-block">
+        <div class="sub-head">Nobody speaks it natively</div>
+        <p>Ethnologue records roughly 335 million users of Standard Arabic and zero first-language speakers. The zero is not an error. A child acquires a regional variety at home and meets fusha at school, in the Qur'an class and on the news, and learns it the way a second language is learned.</p>
+        <p>The psycholinguistics supports this better than most claims in this area. Saiegh-Haddad and Haj tested 120 children from kindergarten to Year 6 on whether they could judge pronunciations correct across three kinds of word: identical in dialect and standard, partly overlapping, and standard-only. Phonological distance predicted accuracy at every grade, and there was no improvement at all between kindergarten and Year 1. Asadi and Kasperski found the components of reading swap places between the two varieties: in the spoken variety, listening comprehension contributes more than decoding; in the literary variety, decoding dominates. That is the shape you would expect if the standard were being processed as a learned second system.</p>
+        <p>What does not follow, and is asserted constantly, is that diglossia damages literacy. Lama Bergstrand Othman's 2025 review makes the comparison nobody makes and sets minimum-reading-proficiency figures side by side: Brazil, which is not diglossic, at 43.5 per cent in 2019, against Egypt at 44.57 and Jordan at 46.64 in 2021, and Qatar at 80.39 and the UAE at 80.94 in the same year. The spread among the diglossic countries is much larger than the gap between the lowest of them and the non-diglossic comparator, which points at schooling, funding and household conditions rather than at the language arrangement. Othman also notes that the early-grade effects shrink, and sometimes disappear, by late primary <span class="conf">(figures as reported by Othman from UNESCO)</span>.</p>
+      </div>
+
+      <div class="sub-block">
+        <div class="sub-head">The map, and the four features that draw it</div>
+        <p>Classification here is conventional rather than principled. SIL treats about thirty varieties as separate languages; the Library of Congress treats them all as dialects of one. Neither position is neutral and neither is wrong.</p>
+        <p>Two dimensions organise the variation. The obvious one is geography, running west to east. The less obvious one is the split between Bedouin-type and sedentary-type varieties, which cuts across geography and is a historical artefact of which populations settled where and when. Bedouin-type varieties keep the interdentals, use g for qaf, and preserve the feminine plural; sedentary-type varieties lose or shift the interdentals, use a glottal stop or q, and innovate a new indicative marker with a preverbal particle. The classification is historical, though, and modern urban speech mixes freely across it.</p>
+      </div>
+
+      <div class="iso-table">
+        <div class="ih">Feature</div>
+        <div class="ih">Value</div>
+        <div class="ih">Where</div>
+
+        <div class="ft"><span class="ar" lang="ar">قاف</span><small>qaf</small></div>
+        <div class="vl">q</div>
+        <div class="wh">Tunisia, Algeria, many urban Moroccan, northern Iraq, parts of Yemen and Oman</div>
+
+        <div class="cont" aria-hidden="true"></div>
+        <div class="vl">glottal stop</div>
+        <div class="wh">Cairo and the Delta, urban Levant, Tlemcen, Fez</div>
+
+        <div class="cont" aria-hidden="true"></div>
+        <div class="vl">g</div>
+        <div class="wh">Arabian Peninsula, southern Iraq, Upper Egypt, Sudan, Bedouin Levant, Libya, Hassaniya</div>
+
+        <div class="ft"><span class="ar" lang="ar">جيم</span><small>jim</small></div>
+        <div class="vl">dʒ</div>
+        <div class="wh">Peninsula, Iraq, Algeria, Upper Egypt, Sudan, parts of the Levant</div>
+
+        <div class="cont" aria-hidden="true"></div>
+        <div class="vl">ʒ</div>
+        <div class="wh">Levant, most of North Africa</div>
+
+        <div class="cont" aria-hidden="true"></div>
+        <div class="vl">g</div>
+        <div class="wh">Cairo and the Delta, parts of Yemen and Oman</div>
+
+        <div class="ft"><span class="ar" lang="ar">ث ذ ظ</span><small>interdentals</small></div>
+        <div class="vl">retained</div>
+        <div class="wh">Most of the Peninsula, Iraq, much of Tunisia, rural Palestinian, eastern Libya, Hassaniya</div>
+
+        <div class="cont" aria-hidden="true"></div>
+        <div class="vl">shifted to t, d</div>
+        <div class="wh">Egypt, Sudan, urban Levant, urban Hijaz, most of North Africa</div>
+
+        <div class="ft"><span>First person</span><small>imperfect prefix</small></div>
+        <div class="vl">ʾa- and ni-</div>
+        <div class="wh">The Mashriq</div>
+
+        <div class="cont" aria-hidden="true" style="border-bottom:none"></div>
+        <div class="vl" style="border-bottom:none">n- and n-…-u</div>
+        <div class="wh" style="border-bottom:none">The Maghreb, including Hassaniya. <em style="color:#a9b3ab">niktib</em> "I write", <em style="color:#a9b3ab">niktbu</em> "we write"</div>
+      </div>
+
+      <p>Baghdad is the case that makes the point best. The city's Muslim dialect is of the southern gilit type and its Christian dialect, along with the formerly Jewish one, is of the northern qeltu type. The dialect boundary runs through the community rather than around the city.</p>
+
+      <p>Three varieties on the edge are worth knowing about. Cypriot Maronite Arabic has been isolated since somewhere between the seventh and thirteenth centuries and restructured under Greek contact to the point of being essentially unintelligible to mainland speakers; it has lost the emphatic consonants entirely. Central Asian Arabic survives in four varieties that are not mutually intelligible with each other, and which have taken on a Turkic and Iranian syntax, including a tendency to put the verb last, while staying conservative in vocabulary and sound. And Juba Arabic and Nubi are not dialects at all but Arabic-lexified creoles, which have shed the root-and-pattern morphology completely; which is to say that the machinery described one section up is not, in the end, load-bearing.</p>
+
+      <div class="sub-block">
+        <div class="sub-head">How different, actually</div>
+        <p>This is where the gap between what is repeated and what is known is widest, so it is worth stating the gap first. Trentman and Shiri open their 2020 study by observing that despite a plethora of beliefs about Arabic dialect intelligibility, empirical research remains extremely limited. The percentage tables that circulate on language-learning sites are not traceable to any study.</p>
+        <p>One test has been run properly. Čéplö and colleagues, in 2016, put Maltese, Libyan and Tunisian speakers through a three-part audio protocol, 160 words, 60 sentences and two comprehension passages, with 24 respondents at each of three sites and no prior exposure between them. Tunisian and Libyan listeners understood each other at roughly 73 to 80 per cent. Maltese listeners understood about 30 per cent of both. Tunisian and Libyan listeners understood about 40 per cent of Maltese, which makes the asymmetry itself a finding.</p>
+        <p>What that study does not do is the comparison everyone actually asks about, which is Moroccan against Gulf, or Moroccan against Egyptian. As far as I can establish, nobody has run it. The honest position is that Maghrebi and Mashriqi speakers reportedly struggle with each other, that this is close to universally reported, and that it has not been measured the way the central Maghreb has <span class="conf">(a search that finds nothing is not proof of absence)</span>.</p>
+        <p>Trentman and Shiri's own result is the surprising one. Proficiency in a familiar dialect, or in fusha, did not predict comprehension of an unfamiliar one. The assumption that a strong standard base carries a listener across the map does not survive testing.</p>
+        <p>On the Egyptian question, the exposure is real: a century of Egyptian cinema, music and broadcasting, and Egyptian teachers staffing school systems across the Gulf and parts of North Africa. But the best evidence is behavioural rather than comprehension-based. Sonia S'hiri found that Tunisian speakers converge unilaterally toward Middle Eastern speech in mixed encounters, and argued that this reflects the relations between the communities rather than communicative necessity. That is worth sitting with, because one-way accommodation produces the asymmetry as much as it reflects it. If Tunisians always adjust and Egyptians never do, Egyptians never get the practice, and the incapacity becomes self-sustaining.</p>
+      </div>
+
+      <div class="sub-block">
+        <div class="sub-head">Writing the spoken language</div>
+        <p>Arabizi is what happens when a script meets a system that cannot render it. Latin letters plus digits chosen for their resemblance to Arabic letters: 3 for 'ayn, 7 for ha, 2 for hamza, 5 for kha. It emerged with SMS and early web forums, and the spelling conventions split along the colonial language of literacy, so Morocco and Lebanon write on French lines with ch and ou, and Egypt and the Gulf on English lines with sh and oo.</p>
+        <p>The detail worth noticing is that Arabizi is written from the sound rather than from the etymology, so it records the dialect where the Arabic script conceals it. A Cairene writes <em style="color:#a9b3ab">2alb</em> for "heart" and a Gulf writer writes <em style="color:#a9b3ab">galb</em>; the standard spelling, <span class="ar-in" lang="ar" dir="rtl">قلب</span>, is the one that hides which of them is speaking.</p>
+        <p>The larger shift is not romanisation, though, but dialect written in Arabic script, which has expanded enormously since the mid-2000s. The measurable proxy is that identifying a writer's province from a tweet is now a tractable machine-learning task, because there is enough naturally written dialect to train on; one shared task covers a hundred provinces across twenty-one countries.</p>
+        <p>And it is not new. Muhammad Taymur was writing in Egyptian colloquial between 1918 and 1928; Naguib Mahfouz, Tawfiq al-Hakim and Yusuf Idris each negotiated the same problem, usually by narrating in fusha and letting the dialogue move toward the vernacular. In Morocco, <span class="ar-in" lang="ar" dir="rtl">دارجة</span>, darija, now appears in newspapers, advertising, fiction and literary translation, including novels written entirely in it. The internet changed the volume and the domains; it did not invent the practice.</p>
+        <p>Whether this amounts to the arrangement breaking down is an open question and should be left as one. Lotfi Sayahi describes a gradual encroachment of the vernacular on standard domains, with electronic communication driving it. Against that, no Arab state has adopted a vernacular as its written standard, no vernacular has a codified orthography with institutional backing, and fusha is still the language of the law, the sermon, the news bulletin and the classroom. What has changed is that a large informal written register now exists which Ferguson's model had no slot for, because in 1959 writing was expensive and gatekept, and now it is neither.</p>
+      </div>
+
+      <div class="sub-block">
+        <div class="sub-head">The one that left</div>
+        <p>Maltese is the test case for what would have to happen for a dialect to become a language, and it is instructive that the answer is not the one people expect.</p>
+        <p>It descends from the Arabic of Muslim Sicily, arrived in Malta with settlers in the early eleventh century, and was cut off by the Norman conquest of 1091 and the expulsions completed by 1249; it has developed on its own for roughly eight hundred years. It is written in Latin script, and its dictionary is about a third Arabic and half Sicilian and Italian, though that count understates the Arabic, because it is a dictionary count rather than a count of running text and the high-frequency core and the whole grammatical system are Semitic.</p>
+        <p>Neither the script nor the vocabulary is the argument, though. The argument is that Maltese stands in no diglossic relation to fusha. Every Arabic vernacular has Standard Arabic above it as its written form, its liturgical register and its prestige norm. Maltese has its own standard, its own orthography, formalised in 1924, its own literature and its own official status, and Standard Arabic plays no part in the speech community at all. That is what makes it a language and the vernaculars dialects, notwithstanding that Maltese is probably structurally closer to Tunisian than Tunisian is to Iraqi.</p>
+        <p>It is also the only standardised Semitic language written exclusively in Latin script, and the only Semitic official language of the European Union.</p>
+      </div>
+    </div>
   </div>
 
-  <div style="padding:32px 40px;display:flex;flex-direction:column;gap:18px">
-    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap">
-      <div class="eyebrow">Domain vocabulary — cyber &amp; security</div>
-      <span class="link-forward" style="font-size:11px;letter-spacing:.2em;color:#8a7a58">Full table awaits the cleaned vocabulary source</span>
+  <!-- ================= ASIDE ================= -->
+  <aside class="essay-aside">
+    <div class="aside-figure">
+      <div style="background-image:url('../assets/images/keys-arabic-horizon.jpeg');background-position:center 50%"></div>
+      <div class="aside-figure__shade"></div>
     </div>
 
-    <!-- Sample rows carried over from the design mockup. The full side-by-side
-         table is fed by the consolidated vocabulary source (cyber/AI plus
-         military/international security) once cleaning is finished; it is one
-         cross-language table, not per-language lists. -->
-    <div class="vocab-table" style="grid-template-columns:1.1fr 1fr 1fr 1fr">
-      <div class="vocab-table__head">English</div>
-      <div class="vocab-table__head" lang="ar">العربية</div>
-      <div class="vocab-table__head" lang="fa">فارسی</div>
-      <div class="vocab-table__head" lang="ru">Русский</div>
-
-      <div class="vocab-table__cell vocab-table__cell--en">encryption</div>
-      <div class="vocab-table__cell vocab-table__cell--focus vocab-table__cell--script" lang="ar" dir="rtl">تشفير</div>
-      <div class="vocab-table__cell vocab-table__cell--script" lang="fa" dir="rtl">رمزگذاری</div>
-      <div class="vocab-table__cell" lang="ru">шифрование</div>
-
-      <div class="vocab-table__cell vocab-table__cell--en">firewall</div>
-      <div class="vocab-table__cell vocab-table__cell--focus vocab-table__cell--script" lang="ar" dir="rtl">جدار حماية</div>
-      <div class="vocab-table__cell vocab-table__cell--script" lang="fa" dir="rtl">دیوار آتش</div>
-      <div class="vocab-table__cell" lang="ru">межсетевой экран</div>
-
-      <div class="vocab-table__cell vocab-table__cell--en">malware</div>
-      <div class="vocab-table__cell vocab-table__cell--focus vocab-table__cell--script" lang="ar" dir="rtl">برمجيات خبيثة</div>
-      <div class="vocab-table__cell vocab-table__cell--script" lang="fa" dir="rtl">بدافزار</div>
-      <div class="vocab-table__cell" lang="ru">вредоносное ПО</div>
-
-      <div class="vocab-table__cell vocab-table__cell--en">vulnerability</div>
-      <div class="vocab-table__cell vocab-table__cell--focus vocab-table__cell--script" lang="ar" dir="rtl">ثغرة</div>
-      <div class="vocab-table__cell vocab-table__cell--script" lang="fa" dir="rtl">آسیب‌پذیری</div>
-      <div class="vocab-table__cell" lang="ru">уязвимость</div>
-
-      <div class="vocab-table__cell vocab-table__cell--en" style="border-bottom:none">threat actor</div>
-      <div class="vocab-table__cell vocab-table__cell--focus vocab-table__cell--script" lang="ar" dir="rtl" style="border-bottom:none">جهة تهديد</div>
-      <div class="vocab-table__cell vocab-table__cell--script" lang="fa" dir="rtl" style="border-bottom:none">عامل تهدید</div>
-      <div class="vocab-table__cell" lang="ru" style="border-bottom:none">субъект угрозы</div>
+    <div class="aside-block" style="border-top:none">
+      <div class="eyebrow">Writing where nobody needed it</div>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e">The desert graffiti of northern Arabia are the largest body of casual writing to survive from the ancient world, and they are strange evidence. Michael Macdonald counts well over forty thousand Ancient North Arabian texts found, with far more recorded but unpublished, and roughly 98 per cent of them are graffiti; some twenty thousand in Safaitic alone, scratched on the black basalt of the Syrian and Jordanian deserts. On the face of it, literacy among the nomads looks close to universal, and Macdonald has said as much.</p>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e">The qualification he adds is the better story. A literate society is one in which reading and writing are necessary to its functioning. An oral society is one where memory and speech do that work. The two are not exclusive, and the harrah appears to have been an oral society full of individuals who could write: there is no archive, no letter collection, no law code, no accounts. People carved their names, their genealogies, their grief and their prayers on rocks, and then went on running everything else by memory. Macdonald's comparison is Tifinagh among the Tuareg, used for games, puzzles and short messages.</p>
     </div>
 
-    <div style="margin-top:auto;display:flex;gap:16px;padding-top:20px;border-top:1px solid rgba(194,145,76,.12);flex-wrap:wrap">
-      <a class="cross-card" href="../morphorian/root-and-pattern.html">
-        <span class="cross-card__section">The Morphorian Underground</span>
-        <span class="cross-card__title">Root and pattern</span>
-      </a>
-      <a class="cross-card" href="../morphorian/index.html">
-        <span class="cross-card__section">The Morphorian Underground</span>
-        <span class="cross-card__title">Persian–Arabic shared words</span>
-      </a>
+    <div class="rail-gap" style="flex-grow:1.0" aria-hidden="true"></div>
+    <div class="aside-block">
+      <div class="eyebrow">Two facts about the earliest writing</div>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e"><span style="color:#c8bda2">There is Safaitic graffiti in Pompeii.</span> Nine groups were found in 1987 in a corridor of the theatre complex. Kyle Helms argues the writers were men from the basalt desert absorbed into the Roman army and marched into Italy with Legio III Gallica in the civil war that made Vespasian emperor. They scratched their names on a Campanian wall in a desert alphabet, and Vesuvius sealed it.</p>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e"><span style="color:#c8bda2">The famous first Arabic inscription is not in Arabic script.</span> The Namara stone of 328 CE, now in the Louvre, is the funerary inscription of Imru' al-Qays, and it is written in the Arabic language using Nabataean Aramaic letters. Its one Aramaic word is <em style="color:#a9b3ab">bar</em>, "son of", a fossil that outlived the language and turns up again in inscriptions of the Islamic period.</p>
     </div>
-  </div>
+
+    <div class="rail-gap" style="flex-grow:1.2" aria-hidden="true"></div>
+    <div class="aside-block">
+      <div class="eyebrow">What radiocarbon dating measures</div>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e">It measures when the animal died. Not when a scribe wrote on its skin. Blank parchment was expensive and was stored, sometimes for decades; palimpsests carry two texts over one date; and four laboratories testing a single folio from the Sana'a manuscript returned ranges spanning from the fifth century to the mid-seventh. The Birmingham Qur'an leaves were dated at Oxford to between 568 and 645 CE with 95.4 per cent confidence, announced in July 2015, and that range is a statement about a sheep. Everything after it is inference.</p>
+    </div>
+
+    <div class="rail-gap" style="flex-grow:1.7" aria-hidden="true"></div>
+    <div class="aside-block">
+      <div class="eyebrow">The numbers, and what they are worth</div>
+      <div class="stat-block">
+        <div class="stat-row">
+          <span class="eyebrow">UN official since</span>
+          <span class="stat-row__value stat-row__value--gold">1973</span>
+        </div>
+        <div class="stat-row">
+          <span class="eyebrow">Daily users, per the UN</span>
+          <span class="stat-row__value">400m+</span>
+        </div>
+        <div class="stat-row">
+          <span class="eyebrow">Standard Arabic, L1</span>
+          <span class="stat-row__value">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="eyebrow">Liturgical reach</span>
+          <span class="stat-row__value">2.0bn</span>
+        </div>
+        <div class="stat-row" style="border-bottom:none">
+          <span class="eyebrow">Share of websites</span>
+          <span class="stat-row__value">0.6%</span>
+        </div>
+      </div>
+      <p style="margin:0;font-size:15px;line-height:1.6;color:#8b968e">Arabic became the sixth official language of the United Nations on 18 December 1973, by General Assembly resolution 3190 (XXVIII); World Arabic Language Day falls on 18 December because of that resolution. The UN puts daily users above 400 million, though a legacy UNESCO page still says 290 million and nothing reconciles the two.</p>
+      <p style="margin:0;font-size:15px;line-height:1.6;color:#8b968e">Ethnologue's 2026 data records no first-language speakers of Standard Arabic at all, and does not publish a single macrolanguage total; adding the varieties up would count many people twice. Egyptian Arabic runs to 118 million, Levantine 58 million, Sudanese 54 million.</p>
+      <p style="margin:0;font-size:15px;line-height:1.6;color:#8b968e">Two billion is Pew's count of Muslims worldwide in 2020, and it is a measure of liturgical reach rather than of speakers; the four largest Muslim populations live in countries where Arabic is not a community language.</p>
+      <p style="margin:0;font-size:15px;line-height:1.6;color:#8b968e">The web share is W3Techs data dated 4 August 2026, twentieth by rank, below Persian at 0.9 per cent and Turkish at 1.6, just above Hebrew at 0.4. Set against roughly 4.9 per cent of the world's population using Arabic daily, that is a shortfall of about eight to one; treat it as arithmetic rather than as a statistic, and note that it counts sites, not pages, traffic or words, and that most Arabic written today lives inside platforms, which register as nothing at all.</p>
+    </div>
+
+    <div class="rail-gap" style="flex-grow:1.0" aria-hidden="true"></div>
+    <div class="aside-block">
+      <div class="eyebrow">Domain vocabulary</div>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e">Cyber, computing and security terms across eleven languages, set beside each other rather than split into per-language lists. Arabic is one of the three columns shown by default.</p>
+      <a class="link-forward" href="domain-vocabulary.html" style="justify-content:space-between;display:flex">The full table<span>⟶</span></a>
+    </div>
+
+    <div class="rail-gap" style="flex-grow:0.6" aria-hidden="true"></div>
+    <div class="aside-block">
+      <div class="eyebrow">Sources used</div>
+      <div class="source-list">
+        <span>Prochwicz-Studnicka, B. (2019). <em>The formation and the development of the Arabic script.</em> Polish Journal of the Arts and Culture 9.</span>
+        <span>Blair, S. (2006). <em>Islamic Calligraphy.</em> Edinburgh University Press.</span>
+        <span>George, A. (2015). <em>Coloured Dots and the Question of Regional Origins in Early Qur'ans, Part I.</em> Journal of Qur'anic Studies.</span>
+        <span>Robin, C., al-Ghabban, A. and al-Sa'id, S. (2014). Publication of the Hima Palaeo-Arabic inscriptions. <em>CRAI.</em></span>
+        <span>Ferguson, C. (1959). <em>Diglossia.</em> Word 15(2), 325 to 340.</span>
+        <span>Čéplö, S. et al. (2016). <em>Mutual intelligibility of spoken Maltese, Libyan Arabic and Tunisian Arabic functionally tested.</em> Folia Linguistica 50(2).</span>
+        <span>Trentman, E. and Shiri, S. (2020). <em>The Mutual Intelligibility of Arabic Dialects.</em> Critical Multilingualism Studies 8(1).</span>
+        <span>Saiegh-Haddad, E. and Haj, L. (2018). <em>Does phonological distance impact quality of phonological representations?</em> Journal of Child Language 45(6).</span>
+        <span>Othman, L. B. (2025). <em>Arabic diglossia: advocating for a non-deficit model.</em> Frontiers in Education.</span>
+        <span>Macdonald, M. C. A. (2003). <em>Literacy in an Oral Environment.</em> In Writing and Ancient Near Eastern Society, Routledge.</span>
+        <span>Helms, K. (2021). <em>Pompeii's Safaitic Graffiti.</em> Journal of Roman Studies 111.</span>
+        <span>Full record, with per-claim confidence ratings and dates, in the research file at the repository root.</span>
+      </div>
+    </div>
+
+    <div class="rail-gap" style="flex-grow:0.4" aria-hidden="true"></div>
+    <div class="aside-block">
+      <div class="eyebrow">Reads on from here</div>
+      <div style="display:flex;flex-direction:column;gap:11px;font-size:18px;color:#c8bda2">
+        <a href="../morphorian/root-and-pattern.html" style="color:#c8bda2">Root and pattern, the machinery underneath</a>
+        <a href="../somantasia/hello-world-in-arabic.html" style="color:#c8bda2">Hello world in Arabic</a>
+        <a href="../codex-lexpressia/programming-non-latin-scripts.html" style="color:#c8bda2">Programming in non-Latin scripts</a>
+        <a href="persian-dari.html" style="color:#c8bda2">Persian and Dari, and the hand that went east</a>
+        <a href="korean.html" style="color:#c8bda2">Korean: one language, two states</a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div style="padding:26px 46px 30px;display:flex;gap:16px;flex-wrap:wrap;border-top:1px solid rgba(194,145,76,.16)">
+  <a class="cross-card" href="../morphorian/root-and-pattern.html">
+    <span class="cross-card__section">The Morphorian Underground</span>
+    <span class="cross-card__title">Root and pattern</span>
+  </a>
+  <a class="cross-card" href="../codex-lexpressia/keyboard-gallery.html">
+    <span class="cross-card__section">Codex Lexpressia</span>
+    <span class="cross-card__title">The Arabic layout, with drills</span>
+  </a>
+  <a class="cross-card" href="../somantasia/gender-inclusive-hebrew.html">
+    <span class="cross-card__section">Notes from Somantasia</span>
+    <span class="cross-card__title">Where languages keep gender</span>
+  </a>
 </div>
 
 <footer class="site-footer">
   <span class="eyebrow">Aksarium · Languages · Arabic</span>
   <nav aria-label="Footer">
     <a href="index.html">Languages</a>
+    <a href="domain-vocabulary.html">Domain vocabulary</a>
     <a href="../codex-lexpressia/keyboard-gallery.html">Keyboard gallery</a>
-    <a href="../morphorian/root-and-pattern.html">Root and pattern</a>
+    <a href="../index.html">Home</a>
   </nav>
 </footer>
 
