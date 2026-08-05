@@ -23,7 +23,7 @@
 <meta name="twitter:image:alt" content="The Aksarium wordmark in gold and ivory on a near-black ground, with letters from several scripts at the edges.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&family=Eagle+Lake&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=IM+Fell+DW+Pica:ital@0;1&family=Eagle+Lake&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <style>
   :root {
@@ -52,8 +52,9 @@
     gap: 28px; flex-wrap: wrap; flex-shrink: 0;
     padding: 20px 36px; border-bottom: 1px solid var(--hairline);
   }
-  header .brand { display: flex; align-items: baseline; gap: 18px; }
-  header .wordmark { font-size: 15px; letter-spacing: .4em; text-transform: uppercase; color: var(--ink-head); }
+  header .brand { display: flex; align-items: center; gap: 15px; }
+  header .deckmark { flex: none; width: 26px; height: 26px; display: block; }
+  header .wordmark { font-family: 'Cinzel', var(--serif); font-size: 15px; letter-spacing: .4em; text-transform: uppercase; color: var(--ink-head); }
   header .crumb { font-family: var(--display); font-size: 13px; color: var(--gold-dull); }
   header .modtag { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-faint); }
   footer {
@@ -258,7 +259,7 @@
 <body>
 <div id="stage">
   <header>
-    <span class="brand"><span class="wordmark">Aksarium</span><span class="crumb">The Morphorian Underground</span></span>
+    <span class="brand"><img class="deckmark" src="../assets/images/logo-keycap-a.png" width="26" height="26" alt="" aria-hidden="true"><span class="wordmark">Aksarium</span><span class="crumb">The Morphorian Underground</span></span>
     <span class="modtag" id="hdrRight">Press M for menu</span>
   </header>
   <main id="main">
