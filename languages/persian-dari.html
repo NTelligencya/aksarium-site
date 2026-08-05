@@ -28,63 +28,58 @@
 <link rel="stylesheet" href="../assets/css/aksarium.css">
 <script src="../assets/js/site.js" defer></script>
 <style>
+  /* shared with arabic.html: module, sub-block, rail-gap and jump conventions */
   .fa { font-family: 'Noto Naskh Arabic', 'IM Fell DW Pica', serif; unicode-bidi: isolate; }
-  .fa--lg { font-size: 21px; color: #d9c9a4; }
+  .fa-in { font-family: 'Noto Naskh Arabic', 'IM Fell DW Pica', serif; unicode-bidi: isolate; color: #d9c9a4; font-size: 1.12em; }
+  .module + .module { margin-top: 58px; padding-top: 52px; border-top: 1px solid rgba(194,145,76,.16); }
+  .sub-block { margin: 2px 0; display: flex; flex-direction: column; gap: 16px; }
+  .sub-head { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #8a7a58; }
+  .rail-gap { flex: 1 1 0; min-height: 0; }
+  .jump { display: flex; gap: 26px; flex-wrap: wrap; margin-top: 14px; }
+  .jump a { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
 
-  /* three-letter reference tables in the script essay */
-  .letter-grid { display: grid; grid-template-columns: 92px 1.1fr 1.4fr; margin: 4px 0; }
-  .letter-grid > div { padding: 12px 16px 12px 0; border-bottom: 1px solid rgba(194,145,76,.1); font-size: 17px; color: #a9b3ab; }
-  .letter-grid .lh { padding-top: 0; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: #8a7a58; border-bottom: 1px solid rgba(194,145,76,.3); }
-  .letter-grid .lg { font-size: 30px; color: #d9c9a4; line-height: 1.2; text-align: left; }
+  /* the four added letters */
+  .letter-table { display: grid; grid-template-columns: 92px 1.1fr 1.5fr; gap: 0; margin: 6px 0 2px; }
+  .letter-table > div { padding: 11px 14px 11px 0; border-bottom: 1px solid rgba(194,145,76,.1); font-size: 16px; line-height: 1.5; color: #a9b3ab; }
+  .letter-table .ih { padding-top: 0; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #8a7a58; border-bottom: 1px solid rgba(194,145,76,.3); }
+  /* an RTL span stretched in a grid cell would align right; keep the column flush left */
+  .letter-table .gl { font-size: 30px; color: #d9c9a4; line-height: 1.2; text-align: left; }
 
-  /* the three standards, at a glance */
-  .state-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid rgba(194,145,76,.16); }
-  .state-cell { padding: 26px 30px; display: flex; flex-direction: column; gap: 9px; }
-  .state-cell + .state-cell { border-left: 1px solid rgba(194,145,76,.12); }
-  .state-cell__name { font-family: 'Eagle Lake', cursive; font-size: 21px; color: #d9a95e; }
-  /* RTL spans stretch to the cell and would align right; keep all three flush left */
-  .state-cell__script { font-size: 27px; color: #d9c9a4; line-height: 1.3; align-self: flex-start; }
-  .state-cell__note { font-size: 15px; line-height: 1.6; color: #8b968e; margin: 0; }
-
-  /* merged-sound sets and the estimate table */
-  .set-box { margin: 4px 0; padding: 22px 26px; border: 1px solid rgba(194,145,76,.18); display: flex; flex-direction: column; gap: 14px; }
+  /* merged-sound sets, and the six Tajik letters */
+  .set-box { margin: 4px 0 2px; padding: 22px 26px; border: 1px solid rgba(194,145,76,.18); display: flex; flex-direction: column; gap: 14px; }
   .set-row { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
-  .set-row__label { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #8a7a58; min-width: 108px; }
+  .set-row__label { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #8a7a58; min-width: 112px; }
   .set-row__glyphs { font-size: 27px; color: #d9c9a4; }
 
-  .est-grid { display: grid; grid-template-columns: 1.15fr 1fr 1fr; margin: 4px 0; }
-  .est-grid > div { padding: 13px 16px 13px 0; border-bottom: 1px solid rgba(194,145,76,.1); font-size: 16px; line-height: 1.55; color: #a9b3ab; }
-  .est-grid .eh { padding-top: 0; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: #8a7a58; border-bottom: 1px solid rgba(194,145,76,.3); }
-  .est-grid .esrc { color: #c8bda2; }
+  /* the speaker estimates */
+  .est-table { display: grid; grid-template-columns: 1.15fr 1fr 1.15fr; gap: 0; margin: 6px 0 2px; }
+  .est-table > div { padding: 12px 14px 12px 0; border-bottom: 1px solid rgba(194,145,76,.1); font-size: 16px; line-height: 1.5; color: #a9b3ab; }
+  .est-table .ih { padding-top: 0; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #8a7a58; border-bottom: 1px solid rgba(194,145,76,.3); }
+  .est-table .src { color: #d9c9a4; }
 
-  .essay-body h2 {
-    margin: 14px 0 0; font-family: 'Eagle Lake', cursive; font-weight: 400;
-    font-size: 26px; line-height: 1.3; color: #d9a95e; text-wrap: pretty;
-  }
-  .essay-body h3 {
-    margin: 10px 0 -8px; font-weight: 400; font-size: 12px;
-    letter-spacing: .24em; text-transform: uppercase; color: #8a7a58;
-  }
-  .vocab-band { padding: 34px 70px 38px; border-top: 1px solid rgba(194,145,76,.16); display: flex; flex-direction: column; gap: 20px; }
+  /* the three standards, in the rail */
+  .std { display: flex; flex-direction: column; gap: 4px; padding-bottom: 13px; }
+  .std + .std { padding-top: 13px; border-top: 1px solid rgba(194,145,76,.1); }
+  .std__head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .std__name { font-family: 'Eagle Lake', cursive; font-size: 17px; color: #d9a95e; }
+  .std__script { font-size: 21px; color: #d9c9a4; }
+  .std__note { margin: 0; font-size: 15px; line-height: 1.6; color: #8b968e; }
 
-  @media (max-width: 1100px) {
-    .state-row { grid-template-columns: 1fr; }
-    .state-cell + .state-cell { border-left: none; border-top: 1px solid rgba(194,145,76,.12); }
-    .vocab-band { padding: 30px 34px 34px; }
-  }
+  @media (max-width: 1100px) { .rail-gap { display: none; } }
   @media (max-width: 720px) {
-    .letter-grid, .est-grid { grid-template-columns: 1fr; }
-    .letter-grid .lh, .est-grid .eh { display: none; }
+    .letter-table, .est-table { grid-template-columns: 1fr; }
+    .letter-table .ih, .est-table .ih { display: none; }
   }
 </style>
 </head>
 <body>
 <div class="frame">
 
-<!-- Hero art: Persian & Dari departs from the desk-by-the-window room used by
-     the other comprehensive-language pages. The night-tree banner carries the
-     Persian line across it, so it does the work a hero should. The desk room is
-     retained below as the closing band, and still fronts the card on the hub. -->
+<!-- Hero art: a sanctioned exception to the desk-by-the-window rule. Sally chose the
+     night-tree banner over the desk room on 5 August 2026, because it carries the
+     Persian line across it and does the work a hero should. The desk room is kept as
+     the closing band, and still fronts this language's card on the hub. The banner is
+     also the hero of codex-lexpressia/index.html at center 45%; the reuse is intended. -->
 <div style="position:relative;height:336px;overflow:hidden;flex:none">
   <div style="position:absolute;inset:0;background:url('../assets/images/persianbanner.png') center 38%/cover no-repeat"></div>
   <div style="position:absolute;left:0;top:0;bottom:0;width:44%;background:linear-gradient(90deg,rgba(6,10,8,.99) 0%,rgba(6,10,8,.98) 58%,rgba(6,10,8,.8) 80%,rgba(6,10,8,0) 100%)"></div>
@@ -107,292 +102,251 @@
   </div>
 </div>
 
-<!-- Lede strip -->
-<div style="padding:26px 70px 22px">
+<div style="padding:22px 46px 10px">
   <div class="eyebrow">The resource pages</div>
-  <p style="max-width:900px;font-size:17px;line-height:1.68;color:#8b968e;margin-top:11px;text-wrap:pretty">One language, three states, two alphabets. Persian is written in a script it borrowed from Arabic and then rebuilt, and in Central Asia in a second script it was given by decree. Below: what the alphabet had to change to hold Persian, and what is happening to the language at both ends of the region that speaks it.</p>
-</div>
-
-<div class="state-row">
-  <div class="state-cell">
-    <span class="state-cell__name">Iran</span>
-    <span class="state-cell__script fa" lang="fa" dir="rtl">فارسی</span>
-    <p class="state-cell__note">Farsi. Perso-Arabic script. Roughly 60 million native speakers, and the innovating standard of the three.</p>
-  </div>
-  <div class="state-cell">
-    <span class="state-cell__name">Afghanistan</span>
-    <span class="state-cell__script fa" lang="fa" dir="rtl">دری</span>
-    <p class="state-cell__note">Dari, officially, since 1964. The same script. The country's lingua franca, and under pressure from the state.</p>
-  </div>
-  <div class="state-cell">
-    <span class="state-cell__name">Tajikistan</span>
-    <span class="state-cell__script" lang="tg">тоҷикӣ</span>
-    <p class="state-cell__note">Tajik. Cyrillic since the late 1930s. Roughly 6 to 8 million speakers who cannot read the other two.</p>
+  <p style="max-width:880px;font-size:17px;line-height:1.65;color:#8b968e;margin-top:10px;text-wrap:pretty">Persian is one language with three official standards and two alphabets, which makes it the best case on the site for what a script does to a language and what a state does to a script. The first half of this page is the alphabet: what Persian had to add to Arabic to hold itself, and what it kept and stopped pronouncing. The second is what is happening at both ends of the region that speaks it, in an Afghanistan squeezing Persian out of public writing and a Tajikistan teaching a script it does not write in. The alphabet it borrowed is on the <a href="arabic.html">Arabic page</a>; the keyboard is in the <a href="../codex-lexpressia/keyboard-gallery.html">gallery</a>.</p>
+  <div class="jump">
+    <a href="#script">An Indo-European language in a Semitic alphabet <span aria-hidden="true">↓</span></a>
+    <a href="#standards">One language, three states, two scripts <span aria-hidden="true">↓</span></a>
   </div>
 </div>
 
-<!-- Feature essay one: the script -->
 <div class="essay-grid" style="border-top:1px solid rgba(194,145,76,.16)">
   <div class="essay-main">
     <div class="script-reveal">
-      <div class="script-drift fa">پ · چ · ژ · گ · ک · ی · ع · ص · ط · ظ · اضافه · نستعلیق</div>
+      <div class="script-drift fa">پ · چ · ژ · گ · اضافه · نستعلیق · دانشگاه · پوهنتون · دری · тоҷикӣ · ниёгон</div>
     </div>
-    <div class="essay-body">
-      <div class="essay-meta eyebrow"><span>Script &amp; history</span><span>Persian, Arabic and Pashto</span></div>
-      <h1 style="margin:0;font-family:'Eagle Lake',cursive;font-size:36px;line-height:1.28;color:#d9a95e;font-weight:400;text-wrap:pretty">An Indo-European language in a Semitic alphabet</h1>
+
+    <!-- ================= MODULE ONE ================= -->
+    <div class="essay-body module" id="script">
+      <div class="essay-meta eyebrow"><span>Script and history</span><span>Reading note</span></div>
+      <h2 style="margin:0;font-family:'Eagle Lake',cursive;font-size:36px;line-height:1.28;color:#d9a95e;font-weight:400;text-wrap:pretty">An Indo-European language in a Semitic alphabet</h2>
       <div class="gold-rule" style="width:64px"></div>
 
       <p class="lede">Persian is an Indo-European language written in a Semitic alphabet, and that mismatch is the whole story of the script. Before the Arab conquest, Middle Persian was written in Pahlavi, a script descended from Aramaic that had grown so ambiguous that scribes needed word lists to read it. Arabic script replaced it gradually rather than by decree; the Tahirid and Samanid courts adopted it for Persian in the eighth century, and by the ninth it was dominant across Greater Khorasan.</p>
 
       <p>What survives is not the Arabic alphabet. It is a Persian alphabet built out of Arabic parts, and the modifications tell you exactly which sounds Persian had that Arabic did not.</p>
 
-      <h2>The four letters Persian added</h2>
-
-      <p>Persian has 32 letters: the 28 of Arabic, plus four invented for Persian sounds with no Arabic equivalent.</p>
-
-      <div class="letter-grid">
-        <div class="lh">Letter</div><div class="lh">Sound</div><div class="lh">Built from</div>
-        <div class="lg fa" lang="fa" dir="rtl">پ</div><div>p</div><div><span class="fa fa--lg" lang="fa" dir="rtl">ب</span> with three dots</div>
-        <div class="lg fa" lang="fa" dir="rtl">چ</div><div>ch</div><div><span class="fa fa--lg" lang="fa" dir="rtl">ج</span> with three dots</div>
-        <div class="lg fa" lang="fa" dir="rtl">ژ</div><div>zh, as in <em>measure</em></div><div><span class="fa fa--lg" lang="fa" dir="rtl">ز</span> with three dots</div>
-        <div class="lg fa" lang="fa" dir="rtl">گ</div><div>g</div><div><span class="fa fa--lg" lang="fa" dir="rtl">ک</span> with a second stroke</div>
+      <div class="sub-block">
+        <div class="sub-head">The four letters Persian added</div>
+        <p>Persian has 32 letters: the 28 of Arabic, plus four invented for Persian sounds with no Arabic equivalent.</p>
+        <div class="letter-table">
+          <div class="ih">Letter</div><div class="ih">Sound</div><div class="ih">Built from</div>
+          <div class="gl fa" lang="fa" dir="rtl">پ</div><div>p</div><div><span class="fa-in" lang="fa" dir="rtl">ب</span> with three dots</div>
+          <div class="gl fa" lang="fa" dir="rtl">چ</div><div>ch</div><div><span class="fa-in" lang="fa" dir="rtl">ج</span> with three dots</div>
+          <div class="gl fa" lang="fa" dir="rtl">ژ</div><div>zh, as in <em>measure</em></div><div><span class="fa-in" lang="fa" dir="rtl">ز</span> with three dots</div>
+          <div class="gl fa" lang="fa" dir="rtl">گ</div><div>g</div><div><span class="fa-in" lang="fa" dir="rtl">ک</span> with a second stroke</div>
+        </div>
+        <p>The pattern is worth pausing on, because it is the clearest example anywhere of how an alphabet gets extended: take the nearest existing letter, add a mark. Three of the four use the same trick, tripling the dot. It is also why the Persian keyboard puts these four in awkward places. They were latecomers to the alphabet and they are latecomers to the board.</p>
       </div>
 
-      <p>The pattern is worth pausing on, because it is the clearest example anywhere of how an alphabet gets extended: take the nearest existing letter, add a mark. Three of the four use the same trick, tripling the dot. It is also why the Persian keyboard puts these four in awkward places. They were latecomers to the alphabet and they are latecomers to the board.</p>
-
-      <h2>The letters Persian kept and stopped pronouncing</h2>
-
-      <p>The more interesting half of the story is the letters Persian did not discard. Arabic distinguishes sounds Persian does not have, and rather than drop the letters, Persian kept them for Arabic loanwords and collapsed the pronunciations.</p>
-
-      <div class="set-box">
-        <div class="set-row"><span class="set-row__label">All /s/</span><span class="set-row__glyphs fa" lang="fa" dir="rtl">س ص ث</span></div>
-        <div class="set-row"><span class="set-row__label">All /z/</span><span class="set-row__glyphs fa" lang="fa" dir="rtl">ز ذ ض ظ</span></div>
-        <div class="set-row"><span class="set-row__label">Both /t/</span><span class="set-row__glyphs fa" lang="fa" dir="rtl">ت ط</span></div>
-        <div class="set-row"><span class="set-row__label">Both /h/</span><span class="set-row__glyphs fa" lang="fa" dir="rtl">ح ه</span></div>
-        <div class="set-row"><span class="set-row__label">Silent</span><span class="set-row__glyphs fa" lang="fa" dir="rtl">ع</span><span style="font-size:16px;color:#8b968e">the Arabic pharyngeal; in Persian a glottal stop, or nothing at all</span></div>
+      <div class="sub-block">
+        <div class="sub-head">The letters Persian kept and stopped pronouncing</div>
+        <p>The more interesting half of the story is the letters Persian did not discard. Arabic distinguishes sounds Persian does not have, and rather than drop the letters, Persian kept them for Arabic loanwords and collapsed the pronunciations.</p>
+        <div class="set-box">
+          <div class="set-row"><span class="set-row__label">All /s/</span><span class="set-row__glyphs fa" lang="fa" dir="rtl">س ص ث</span></div>
+          <div class="set-row"><span class="set-row__label">All /z/</span><span class="set-row__glyphs fa" lang="fa" dir="rtl">ز ذ ض ظ</span></div>
+          <div class="set-row"><span class="set-row__label">Both /t/</span><span class="set-row__glyphs fa" lang="fa" dir="rtl">ت ط</span></div>
+          <div class="set-row"><span class="set-row__label">Both /h/</span><span class="set-row__glyphs fa" lang="fa" dir="rtl">ح ه</span></div>
+          <div class="set-row"><span class="set-row__label">Silent</span><span class="set-row__glyphs fa" lang="fa" dir="rtl">ع</span><span style="font-size:16px;color:#8b968e">the Arabic pharyngeal; in Persian a glottal stop, or nothing at all</span></div>
+        </div>
+        <p>The consequence is a spelling system where a Persian schoolchild has to memorise which /z/ a word takes, the answer being whichever one Arabic used. It is roughly the problem an English speaker has with <em>there</em>, <em>their</em> and <em>they're</em>, running through the whole learned vocabulary.</p>
+        <p>It also makes the script a permanent record of which words came from Arabic. If a word contains <span class="fa-in" lang="fa" dir="rtl">ث ح ذ ص ض ط ظ ع</span>, it is almost certainly an Arabic loan. That is close to a complete test, and it means a page of Persian can be read as a map of its own borrowing.</p>
       </div>
 
-      <p>The consequence is a spelling system where a Persian schoolchild has to memorise which /z/ a word takes, the answer being whichever one Arabic used. It is roughly the problem an English speaker has with <em>there</em>, <em>their</em> and <em>they're</em>, running through the whole learned vocabulary.</p>
-
-      <p>It also makes the script a permanent record of which words came from Arabic. If a word contains <span class="fa fa--lg" lang="fa" dir="rtl">ث ح ذ ص ض ط ظ ع</span>, it is almost certainly an Arabic loan. That is close to a complete test, and you can read a page of Persian as a map of its own borrowing.</p>
-
-      <h2>What the script does not write down</h2>
-
-      <p>Persian, like Arabic, does not normally write short vowels. The three diacritics exist, <em>zabar</em>, <em>zir</em> and <em>pesh</em>, but they appear in the Qur'an, in dictionaries, in children's books and almost nowhere else. A reader supplies them from knowing the word. This is why Persian is unusually hard to read aloud at a beginner's level and unusually fast to read once you are fluent.</p>
-
-      <p>Two Persian mechanics have no Arabic equivalent and both are invisible on the page.</p>
-
-      <h3>The ezafe</h3>
-      <p>Persian links a noun to what follows it with an unwritten <em>-e</em>. So <em>ketāb-e man</em>, my book, is written <span class="fa fa--lg" lang="fa" dir="rtl">کتاب من</span>, which on the page is just "book" then "me". The grammar is carried by a vowel that is not there. It is the hardest thing about reading Persian, and there is nothing to point at.</p>
-
-      <h3>The zero-width non-joiner</h3>
-      <p>Persian breaks words internally more than Arabic does, using an invisible character, U+200C, to stop two letters joining while keeping them one word. The verb <span class="fa fa--lg" lang="fa" dir="rtl">می&#x200C;روم</span>, <em>mi-ravam</em>, "I go", is one word with a deliberate seam in it. Get it wrong and the word is still readable but looks illiterate, roughly like writing "does'nt". It also breaks naive text processing, since the character is invisible and still counts.</p>
-
-      <h2>Nastaliq, and why Persian looks different</h2>
-
-      <p>Arabic's default hand is Naskh, which sits on a level baseline. Persian's is <em style="color:#c8bda2">Nastaliq</em>, which hangs each word from upper right down to lower left, so a line of text descends in a series of sloping cascades. It developed in fourteenth-century Persia and became the standard hand for Persian, and later for Urdu, while Arabic stayed with Naskh.</p>
-
-      <p>Nastaliq is very hard to render digitally, because the shape and vertical position of every letter depend on the whole word. Most Persian on a screen is therefore set in Naskh-based fonts, including this page, which is why Persian on a screen looks more Arabic than Persian on paper does. Urdu, which resisted the compromise, is the reason Noto Nastaliq exists at all.</p>
-
-      <h2>The same alphabet, extended again, for Pashto</h2>
-
-      <p>Pashto is not a Persian dialect. It is a separate Iranian language, further from Persian than Persian is from Kurdish, and it is written in the same Perso-Arabic script extended a second time. Pashto uses 45 to 46 letters: the Persian 32 plus retroflex and other consonants Persian lacks, <span class="fa fa--lg" lang="ps" dir="rtl">ټ ډ ړ ږ ښ ڼ ځ څ</span>, several of them introduced by Bayazid Pir Roshan in the sixteenth century.</p>
-
-      <p>So the script layer of the Afghan language question is not a division at all. Persian and Pashto share an alphabet. The fight is over which language gets written in it in public, and that is the subject of the second half of this page.</p>
-    </div>
-  </div>
-
-  <aside class="essay-aside">
-    <div class="aside-block" style="border-top:none">
-      <div class="eyebrow">A trap for anything that compares text</div>
-      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e">Two letters are drawn differently from their Arabic counterparts. Persian <span class="fa" style="font-size:21px;color:#a9b3ab" lang="fa" dir="rtl">ک</span> uses a plain sloped form where Arabic <span class="fa" style="font-size:21px;color:#a9b3ab" lang="ar" dir="rtl">ك</span> carries a flourish; Persian <span class="fa" style="font-size:21px;color:#a9b3ab" lang="fa" dir="rtl">ی</span> drops the two dots that Arabic <span class="fa" style="font-size:21px;color:#a9b3ab" lang="ar" dir="rtl">ي</span> keeps.</p>
-      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e">They are separate Unicode code points: U+06A9 and U+06CC against U+0643 and U+064A. Text typed on an Arabic keyboard and text typed on a Persian one will not match on a string comparison even when it looks identical on screen. It surfaces in search, in database matching, and in anything analysing text across the two languages.</p>
-    </div>
-    <div class="aside-block">
-      <div class="eyebrow">Reads across</div>
-      <div style="display:flex;flex-direction:column;gap:11px;font-size:18px;color:#c8bda2">
-        <a href="arabic.html" style="color:#c8bda2">Arabic: the abjad these letters came from</a>
-        <a href="../morphorian/root-and-pattern.html" style="color:#c8bda2">Root and pattern, and why the loanwords behave</a>
+      <div class="sub-block">
+        <div class="sub-head">What the script does not write down</div>
+        <p>Persian, like Arabic, does not normally write short vowels. The three diacritics exist, <em>zabar</em>, <em>zir</em> and <em>pesh</em>, but they appear in the Qur'an, in dictionaries, in children's books and almost nowhere else. A reader supplies them from knowing the word. This is why Persian is unusually hard to read aloud at a beginner's level and unusually fast to read once you are fluent.</p>
+        <p>Two Persian mechanics have no Arabic equivalent, and both are invisible on the page. The first is the <em style="color:#c8bda2">ezafe</em>. Persian links a noun to what follows it with an unwritten <em>-e</em>, so <em>ketāb-e man</em>, my book, is written <span class="fa-in" lang="fa" dir="rtl">کتاب من</span>, which on the page is just "book" then "me". The grammar is carried by a vowel that is not there, which is the hardest thing about reading Persian and the one thing you cannot point at.</p>
+        <p>The second is the <em style="color:#c8bda2">zero-width non-joiner</em>. Persian breaks words internally more than Arabic does, using an invisible character, U+200C, to stop two letters joining while keeping them one word. The verb <span class="fa-in" lang="fa" dir="rtl">می&#x200C;روم</span>, <em>mi-ravam</em>, "I go", is one word with a deliberate seam in it. Get it wrong and the word is still readable but looks illiterate, roughly like writing "does'nt". It also breaks naive text processing, since the character is invisible and still counts.</p>
       </div>
-      <a class="link-forward" href="../codex-lexpressia/keyboard-gallery.html" style="justify-content:space-between;display:flex;margin-top:6px;padding-top:16px;border-top:1px solid rgba(194,145,76,.12)">Persian keyboard layout<span>⟶</span></a>
-    </div>
-  </aside>
-</div>
 
-<!-- Standard resource-page furniture -->
-<div class="vocab-band">
-  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap">
-    <div class="eyebrow">Domain vocabulary — cyber &amp; security</div>
-    <span class="link-forward" style="font-size:11px;letter-spacing:.2em;color:#8a7a58">One cross-language table, not per-language lists</span>
-  </div>
-  <div class="art-slot" style="min-height:170px">
-    <div class="art-slot__label"><span class="art-slot__diamond"></span>Side-by-side table · awaits the cleaned vocabulary source</div>
-  </div>
-  <p style="margin:0;max-width:860px;font-size:16px;line-height:1.65;color:#8b968e">One decision is pending before this table can carry Persian at all. Iranian Persian took its modern technical vocabulary from French and then English, Tajik took its from Russian, and Dari takes increasingly from Pashto and Urdu. The three diverge most severely on exactly the terms a cyber and security table is made of, so the Persian column is either Iranian Persian alone, or it is three columns.</p>
-  <div style="display:flex;gap:16px;padding-top:8px;flex-wrap:wrap">
-    <a class="cross-card" href="../morphorian/index.html">
-      <span class="cross-card__section">The Morphorian Underground</span>
-      <span class="cross-card__title">Grammar walkthroughs</span>
-    </a>
-    <a class="cross-card" href="../somantasia/index.html">
-      <span class="cross-card__section">Notes from Somantasia</span>
-      <span class="cross-card__title">Essays and decipherment</span>
-    </a>
-    <a class="cross-card" href="../codex-lexpressia/keyboard-gallery.html">
-      <span class="cross-card__section">Codex Lexpressia</span>
-      <span class="cross-card__title">Keyboard reference</span>
-    </a>
-  </div>
-</div>
+      <div class="sub-block">
+        <div class="sub-head">Nastaliq, and why Persian looks different</div>
+        <p>Arabic's default hand is Naskh, which sits on a level baseline. Persian's is <em style="color:#c8bda2">Nastaliq</em>, which hangs each word from upper right down to lower left, so a line of text descends in a series of sloping cascades. It developed in fourteenth-century Persia and became the standard hand for Persian, and later for Urdu, while Arabic stayed with Naskh.</p>
+        <p>Nastaliq is very hard to render digitally, because the shape and vertical position of every letter depend on the whole word. Most Persian on a screen is therefore set in Naskh-based fonts, including this page, which is why Persian on a screen looks more Arabic than Persian on paper does. Urdu, which resisted the compromise, is the reason Noto Nastaliq exists at all.</p>
+      </div>
 
-<!-- Feature essay two: the three states -->
-<div class="essay-grid" style="border-top:1px solid rgba(194,145,76,.16)">
-  <div class="essay-main">
-    <div class="script-reveal">
-      <div class="script-drift fa">دانشگاه · پوهنتون · امارت · فارسی · دری · тоҷикӣ · ниёгон</div>
+      <div class="sub-block">
+        <div class="sub-head">The same alphabet, extended again, for Pashto</div>
+        <p>Pashto is not a Persian dialect. It is a separate Iranian language, further from Persian than Persian is from Kurdish, and it is written in the same Perso-Arabic script extended a second time. Pashto uses 45 to 46 letters: the Persian 32 plus retroflex and other consonants Persian lacks, <span class="fa-in" lang="ps" dir="rtl">ټ ډ ړ ږ ښ ڼ ځ څ</span>, several of them introduced by Bayazid Pir Roshan in the sixteenth century.</p>
+        <p>So the script layer of the Afghan language question is not a division at all. Persian and Pashto share an alphabet. The fight is over which language gets written in it in public, and that is the subject of the second module.</p>
+      </div>
     </div>
-    <div class="essay-body">
-      <div class="essay-meta eyebrow"><span>Dialect &amp; register</span><span>Iran · Afghanistan · Tajikistan</span></div>
-      <h1 style="margin:0;font-family:'Eagle Lake',cursive;font-size:36px;line-height:1.28;color:#d9a95e;font-weight:400;text-wrap:pretty">One language, three states, two scripts</h1>
+
+    <!-- ================= MODULE TWO ================= -->
+    <div class="essay-body module" id="standards">
+      <div class="essay-meta eyebrow"><span>Dialect and register</span><span>Reading note</span></div>
+      <h2 style="margin:0;font-family:'Eagle Lake',cursive;font-size:36px;line-height:1.28;color:#d9a95e;font-weight:400;text-wrap:pretty">One language, three states, two scripts</h2>
       <div class="gold-rule" style="width:64px"></div>
 
       <p class="lede">Persian is the clearest live case of a pluricentric language: one language with more than one official standard, each with a state behind it. Speakers of all three can hold a conversation. An educated Tehrani and an educated Kabuli understand each other without difficulty, and a Dushanbe speaker is further away in vocabulary but still within range. What they cannot do is read each other, and the barrier is entirely the script. A Tajik and an Afghan share a language and cannot share a page of it.</p>
 
-      <h2>What actually differs</h2>
-
-      <p>The differences between Iranian Persian and Dari are smaller than the political noise implies, and they run in an unexpected direction. Dari and Tajik are the conservative varieties; Iranian Persian is the innovator.</p>
-
-      <p><strong style="color:#c8bda2;font-weight:400">The majhul vowels.</strong> Classical Persian distinguished long <em>ē</em> from <em>ī</em>, and long <em>ō</em> from <em>ū</em>. Iranian Persian merged both pairs; Dari and Tajik keep them. So <em>shēr</em>, lion, and <em>shīr</em>, milk, are two words in Kabul and one in Tehran.</p>
-
-      <p><strong style="color:#c8bda2;font-weight:400">Qaf and ghayn.</strong> Dari keeps <span class="fa fa--lg" lang="fa" dir="rtl">ق</span> and <span class="fa fa--lg" lang="fa" dir="rtl">غ</span> apart. Most Iranian speech merges them. <strong style="color:#c8bda2;font-weight:400">W against V:</strong> Dari and Tajik keep the classical /w/, Iranian Persian has moved to /v/.</p>
-
-      <p><strong style="color:#c8bda2;font-weight:400">The borrowed layer.</strong> This is where the three genuinely part. Iranian Persian took its modern technical and administrative vocabulary largely from French and later English, Tajik took its from Russian comprehensively, and Dari takes some from English and increasingly from Pashto and Urdu. A word like "aeroplane" is a different word in each.</p>
-
-      <h2>The name</h2>
-
-      <p>"Dari" is an old word. It appears in Arabic and Persian sources from the tenth century, generally taken to derive from <em>dar</em> or <em>darbār</em>, court, and to have meant the formal court language of the Sasanians. What is recent is its use as the official name of the language of Afghanistan, which dates from the 1964 constitution.</p>
-
-      <p>Whether that renaming was a linguistic tidy-up or a political act is contested. Nile Green argues the impulses behind renaming Afghan Persian as Dari were more nationalistic than linguistic. Zalmai Nishat frames it as one move in a longer project of anchoring Afghan sovereignty in Pashtun identity, running back through Mahmud Tarzi's Ottoman-influenced nationalism to Amir Abdul Rahman; on that reading, a separate name detached Afghanistan's Persian speakers from the wider Persian world and made Persian look like a local Afghan language rather than the regional one. The case on the other side is that pluricentric languages routinely carry different names in different states, that <em>dari</em> is not an invention, and that a state may reasonably name its own official standard.</p>
-
-      <p>What is not in doubt is that many Afghan Persian speakers themselves prefer "Farsi" and treat "Dari" as imposed. When the BBC rebranded its Afghan service BBC Dari rather than BBC Persian in 2017, more than 180 cultural figures from Afghanistan, Iran and Tajikistan signed a protest calling the change misleading and divisive.</p>
-
-      <h2>Afghanistan: the majority language of a minority state</h2>
-
-      <p>Afghanistan has had no reliable census since 1979, and the estimates that exist are contested along the exact ethnic lines the argument is about. The range is the finding.</p>
-
-      <div class="est-grid">
-        <div class="eh">Estimate</div><div class="eh">Persian / Dari</div><div class="eh">Pashto</div>
-        <div class="esrc">Britannica</div><div>About half, natively</div><div>More than two fifths natively; about 20% as a second language</div>
-        <div class="esrc">Encyclopaedia Iranica</div><div>About a quarter, natively</div><div>50 to 55% natively; under 10% as a second language</div>
-        <div class="esrc">Javeed Ahwar, 2023</div><div>About 50% first language; over 75% including second</div><div>40% first language; 48% including second</div>
+      <div class="sub-block">
+        <div class="sub-head">What actually differs</div>
+        <p>The differences between Iranian Persian and Dari are smaller than the political noise implies, and they run in an unexpected direction. Dari and Tajik are the conservative varieties; Iranian Persian is the innovator.</p>
+        <p>Classical Persian distinguished long <em>ē</em> from <em>ī</em>, and long <em>ō</em> from <em>ū</em>. Iranian Persian merged both pairs; Dari and Tajik keep them, so <em>shēr</em>, lion, and <em>shīr</em>, milk, are two words in Kabul and one in Tehran. Dari keeps <span class="fa-in" lang="fa" dir="rtl">ق</span> and <span class="fa-in" lang="fa" dir="rtl">غ</span> apart where most Iranian speech merges them, and Dari and Tajik keep the classical /w/ where Iranian Persian has moved to /v/.</p>
+        <p>Where the three genuinely part is the borrowed layer. Iranian Persian took its modern technical and administrative vocabulary largely from French and later English, Tajik took its from Russian comprehensively, and Dari takes some from English and increasingly from Pashto and Urdu. A word like "aeroplane" is a different word in each.</p>
       </div>
 
-      <p>The first two lines disagree by a factor of two on the same question. Two things are nonetheless widely agreed: Persian is Afghanistan's lingua franca, the language strangers from different groups use with each other, and its second-language reach is much wider than its native base; and Pashto is the language of the group that has held the state for most of its modern existence.</p>
-
-      <p>There is a cartographic wrinkle worth noticing. Persian speakers in Afghanistan are routinely mapped as three separate ethnic blocks, Tajik, Hazara and Aimaq, while Pashto speakers are mapped as one. The effect, as Martin Lewis has pointed out, is that Persian looks smaller on a map of Afghanistan than it is. The Hazara case deserves its own line: Hazaras speak Hazaragi, a Persian variety with retroflex consonants and a distinct vocabulary layer, and are Shia in a Sunni-majority state. They are Persian speakers, but they are not Tajiks, and treating "Persian speakers" as a bloc hides that their marginalisation is religious as much as linguistic.</p>
-
-      <h2>The Pashto project is ninety years old</h2>
-
-      <p>The Taliban did not invent this. Promoting Pashto as the language of the Afghan state is a project of the 1930s, run by a monarchy, and it long predates any Islamist politics. Pashto was given official status by royal decree under Zahir Shah in 1936, and by 1937 Prime Minister Muhammad Hashim was declaring it the only language of state, mandating it in government and education.</p>
-
-      <p>Through the 1930s to the 1960s, state-funded bodies, notably the Anjuman-i Adabi-yi Kabul, built Pashto technical and administrative terminology specifically to displace Persian. This is where <em>pohantun</em>, university, comes from, coined against Persian <em>dāneshgāh</em>. That word is now the centre of the fight, which is a neat historical irony: it was manufactured for this purpose in the first place.</p>
-
-      <p>The 1964 constitution named Dari and Pashto both official, and renamed Farsi to Dari. Persian regained ground between 1979 and 1992 under communist rule and the Tajik-led mujahideen government, and the national anthem shifted from Pashto to Persian. Regional languages gained official status where they held a local majority, first in 1980 and then in the 2004 constitution, which named Uzbek, Turkmen, Balochi, Pashayi, Nuristani and Pamiri as third official languages in their areas. The first Taliban government, 1996 to 2001, resumed the 1930s policies.</p>
-
-      <p>So the pattern is a state repeatedly trying to make its administrative language match its ruling group's language, against a population that mostly does not speak it. The unusual feature of Afghanistan is not that the state promotes a language; every state does. It is that the state promotes a minority language against the country's own lingua franca.</p>
-
-      <h2>Since 2021</h2>
-
-      <p>The Taliban have not formally removed Dari's official status. On paper, Dari and Pashto remain co-official and the third-language provision stands. The pressure is administrative and symbolic rather than legal, which makes it harder to point at and harder to reverse.</p>
-
-      <p>In August 2021, immediately after the takeover, Persian was removed from public billboards and the word <em>dāneshgāh</em> was taken off university signage nationally; Balkh University's trilingual signboard in Pashto, Persian and English was replaced with Pashto and English only. That October a lawyer in Kabul reported that ministries were conducting official communications in Pashto alone, that ministry logos were being redrawn with the Dari text removed, and that the central bank was writing to commercial banks in Pashto only. The same dispatch records a Taliban official correcting a journalist's <em>dāneshgāh</em> and demanding <em>pohantun</em>.</p>
-
-      <p>By September 2022, Herat University's new signboard read <em>Herat Pohantoon</em>, Pashto only, and the <em>Sanaie</em> weekly in Ghazni had switched from mixed Persian and Pashto to Pashto alone, in a majority-Persian-speaking province. In August 2023 the Taliban deputy minister of information and culture told graduates in Bamiyan not to waste their time learning Persian literature. Bamiyan is a Hazara, Persian-speaking province, which is presumably the point.</p>
-
-      <p>June 2024 brought a broad renaming campaign. Hamid Karzai International Airport became Kabul International Airport; Great Masud Road, Martyr Mazari Square and Burhanuddin Rabbani University lost their names; Charikar was renamed Imam Azam, and Education Square in Herat became Iqra Square. By January 2026 the new National Cancer Diagnostic and Therapeutic Hospital in Kabul was carrying Pashto and English signage only.</p>
-
-      <div class="callout">
-        <div class="eyebrow">5 April 2026</div>
-        <p>Hibatullah Akhundzada ordered that all foreign terms used in government offices be reviewed and justified, and replaced with Islamic and Afghan terms. A committee was appointed across the ministries of justice, higher education, education, and information and culture, plus the Academy of Sciences. The decree does not define "foreign", which is the most consequential thing about it. An undefined category of foreign words, adjudicated by a committee, is a mechanism rather than a policy; it can be applied to whatever the committee decides.</p>
+      <div class="sub-block">
+        <div class="sub-head">The name</div>
+        <p>"Dari" is an old word. It appears in Arabic and Persian sources from the tenth century, generally taken to derive from <em>dar</em> or <em>darbār</em>, court, and to have meant the formal court language of the Sasanians. What is recent is its use as the official name of the language of Afghanistan, which dates from the 1964 constitution.</p>
+        <p>Whether that renaming was a linguistic tidy-up or a political act is contested. Nile Green argues the impulses behind renaming Afghan Persian as Dari were more nationalistic than linguistic. Zalmai Nishat frames it as one move in a longer project of anchoring Afghan sovereignty in Pashtun identity, running back through Mahmud Tarzi's Ottoman-influenced nationalism to Amir Abdul Rahman; on that reading, a separate name detached Afghanistan's Persian speakers from the wider Persian world and made Persian look like a local Afghan language rather than the regional one. The case on the other side is that pluricentric languages routinely carry different names in different states, that <em>dari</em> is not an invention, and that a state may reasonably name its own official standard.</p>
+        <p>What is not in doubt is that many Afghan Persian speakers themselves prefer "Farsi" and treat "Dari" as imposed. When the BBC rebranded its Afghan service BBC Dari rather than BBC Persian in 2017, more than 180 cultural figures from Afghanistan, Iran and Tajikistan signed a protest calling the change misleading and divisive.</p>
       </div>
 
-      <h2>Where Arabic sits, and where it does not</h2>
-
-      <p>The Taliban's Arabic layer is real and it sits at the top of the register. The state calls itself an <em>Imārat</em>, an emirate, an Arabic word for an Arabic institutional form, in preference to <em>jomhūrī</em>, republic. Its leader's title is <em>Amīr al-Muʾminīn</em>, Commander of the Faithful, Arabic and deliberately caliphal. The flag carries the shahada in Arabic. The movement's official media has long run an Arabic edition alongside Pashto, Dari, Urdu and English.</p>
-
-      <p>The renaming campaign drew its replacements from Arabic and Islamic vocabulary rather than from either Pashto or Dari: <em>Iqra</em>, "recite", the first word of the Qur'anic revelation, replacing "Education"; <em>Imam Azam</em>, the honorific of Abu Hanifa, replacing Charikar. And the April 2026 decree pairs "Islamic" with "Afghan" as the two acceptable sources of terminology, which puts Arabic-derived religious vocabulary on the approved side of the line alongside Pashto.</p>
-
-      <p>The mechanism is educational. Taliban leaders were trained in Pakistani Deobandi madrasas where instruction ran in Pashto or Urdu, and where medieval Arabic texts and their translations replaced the Persian Islamic literature that had been the vehicle of Islamic learning in Afghanistan for centuries. Afghan Islam was historically Persianate; its theology, poetry and jurisprudence were transmitted in Persian. Deobandi Islam is not, and the cohort now running the state was educated in the second tradition. Arabic is in the titles, the naming and the seminary; it is not in the paperwork, and it has no official or working status in the administration.</p>
-
-      <p>Which is why a "de-Persianising, pro-Arabic" reading of this is too simple. Persian is already saturated with Arabic. Something in the order of 40% of the Persian lexicon is Arabic in origin, and the entire religious and legal register is Arabic; every Persian speaker in Afghanistan already says <em>ketāb</em>, <em>hokūmat</em>, <em>qānūn</em>, <em>madrasa</em>. Nobody is introducing Arabic into a language that lacked it.</p>
-
-      <p>What is happening is a register shift inside a shared Arabic-Islamic vocabulary: away from the Persianate tradition, in which Arabic religious terms sit inside Persian sentences and Persian carries the commentary, and towards a Deobandi one, in which the Arabic source text and its Urdu and Pashto gloss are the transmission line and Persian is surplus. The target is not the Arabic words. It is Persian's standing as a language of Islamic learning.</p>
-
-      <p>There is a practical asymmetry underneath the identity argument, and it is the objection Afghan academics actually make. Pashto is a poor substitute in that role. It has a much thinner classical literature than Persian, and its modern technical vocabulary was largely built to order in the twentieth century. Replacing Persian in higher education means replacing it with a language that, for now, has fewer books in it.</p>
-
-      <h2>The case on the other side</h2>
-
-      <p>Put as its proponents would put it: Pashto is the language of a plurality or a majority of Afghans depending on whose figures you take, and it has been the state's official language since 1936, so using it in government is not novel. After ninety years of policy its standing in administration remains weaker than Persian's; from a Pashtun-nationalist view that is the anomaly being corrected rather than an injustice being done. The renaming of places named for mujahideen commanders is, on the Taliban's account, a state removing factional names after defeating those factions, which is ordinary state behaviour however unwelcome to the renamed. And no formal legal change to Dari's status has been made.</p>
-
-      <p>Against which: removing Persian from signage, from a hospital, from a university and from a provincial weekly, in Persian-speaking provinces, is hard to read as anything but a policy of public erasure, and the people affected are not a faction but roughly half the country. The Nowruz bans of both Taliban periods point at a cultural target broader than administrative language.</p>
-
-      <h2>Tajik: the same language, in Cyrillic</h2>
-
-      <p>Tajik has changed alphabet three times in a hundred years, each time by state decision, each time for political reasons. Until the 1920s it was written in the Perso-Arabic script, and was not thought of as a separate language at all, simply Persian. Soviet reform simplified the Persian script from 1923 and then abandoned it; the Decree on Romanisation made a Latin alphabet law in April 1928, based on the Turkic Yañalif. The aim of that one is worth naming: cut Central Asia off from the Persian and Arabic textual world, and from the clergy who controlled literacy in it.</p>
-
-      <p>Cyrillic came in during the late 1930s, and after 1939 Perso-Arabic materials were banned. Near-universal literacy was achieved by the 1950s, in Cyrillic, which is the fact that makes reversal so hard; the script change worked. A reform in 1998 dropped <span lang="tg">ц, щ, ы</span> and <span lang="tg">ь</span>, leaving 35 letters.</p>
-
-      <div class="set-box">
-        <div class="set-row"><span class="set-row__label">Not in Russian</span><span class="set-row__glyphs" lang="tg">ғ &nbsp; ӣ &nbsp; қ &nbsp; ӯ &nbsp; ҳ &nbsp; ҷ</span></div>
-        <div class="set-row"><span class="set-row__label">For</span><span style="font-size:17px;color:#a9b3ab">/ʁ/ &nbsp;·&nbsp; long /iː/ &nbsp;·&nbsp; /q/ &nbsp;·&nbsp; /ɵː/ &nbsp;·&nbsp; /h/ &nbsp;·&nbsp; /dʒ/</span></div>
+      <div class="sub-block">
+        <div class="sub-head">Afghanistan: the majority language of a minority state</div>
+        <p>Afghanistan has had no reliable census since 1979, and the estimates that exist are contested along the exact ethnic lines the argument is about. The range is the finding.</p>
+        <div class="est-table">
+          <div class="ih">Estimate</div><div class="ih">Persian / Dari</div><div class="ih">Pashto</div>
+          <div class="src">Britannica</div><div>About half, natively</div><div>More than two fifths natively; about 20% as a second language</div>
+          <div class="src">Encyclopaedia Iranica</div><div>About a quarter, natively</div><div>50 to 55% natively; under 10% as a second language</div>
+          <div class="src">Javeed Ahwar, 2023</div><div>About 50% first language; over 75% including second</div><div>40% first language; 48% including second</div>
+        </div>
+        <p>The first two lines disagree by a factor of two on the same question. Two things are nonetheless widely agreed: Persian is Afghanistan's lingua franca, the language strangers from different groups use with each other, and its second-language reach is much wider than its native base; and Pashto is the language of the group that has held the state for most of its modern existence.</p>
+        <p>There is a cartographic wrinkle worth noticing. Persian speakers in Afghanistan are routinely mapped as three separate ethnic blocks, Tajik, Hazara and Aimaq, while Pashto speakers are mapped as one. The effect, as Martin Lewis has pointed out, is that Persian looks smaller on a map of Afghanistan than it is. The Hazara case deserves its own line: Hazaras speak Hazaragi, a Persian variety with retroflex consonants and a distinct vocabulary layer, and are Shia in a Sunni-majority state. They are Persian speakers, but they are not Tajiks, and treating "Persian speakers" as a bloc hides that their marginalisation is religious as much as linguistic.</p>
       </div>
 
-      <p>Those six letters exist precisely because Persian has sounds Russian does not, in the same way <span class="fa fa--lg" lang="fa" dir="rtl">پ چ ژ گ</span> exist because Persian has sounds Arabic does not. The same language has now been patched into two different foreign alphabets, and you can read the patches to see what the language needed both times.</p>
+      <div class="sub-block">
+        <div class="sub-head">The Pashto project is ninety years old</div>
+        <p>The Taliban did not invent this. Promoting Pashto as the language of the Afghan state is a project of the 1930s, run by a monarchy, and it long predates any Islamist politics. Pashto was given official status by royal decree under Zahir Shah in 1936, and by 1937 Prime Minister Muhammad Hashim was declaring it the only language of state, mandating it in government and education.</p>
+        <p>Through the 1930s to the 1960s, state-funded bodies, notably the Anjuman-i Adabi-yi Kabul, built Pashto technical and administrative terminology specifically to displace Persian. This is where <em>pohantun</em>, university, comes from, coined against Persian <em>dāneshgāh</em>. That word is now the centre of the fight, which is a neat historical irony: it was manufactured for this purpose in the first place.</p>
+        <p>The 1964 constitution named Dari and Pashto both official, and renamed Farsi to Dari. Persian regained ground between 1979 and 1992 under communist rule and the Tajik-led mujahideen government, and the national anthem shifted from Pashto to Persian. Regional languages gained official status where they held a local majority, first in 1980 and then in the 2004 constitution, which named Uzbek, Turkmen, Balochi, Pashayi, Nuristani and Pamiri as third official languages in their areas. The first Taliban government, 1996 to 2001, resumed the 1930s policies.</p>
+        <p>So the pattern is a state repeatedly trying to make its administrative language match its ruling group's language, against a population that mostly does not speak it. The unusual feature of Afghanistan is not that the state promotes a language; every state does. It is that the state promotes a minority language against the country's own lingua franca.</p>
+      </div>
 
-      <h2>The law, and the retreat from it</h2>
+      <div class="sub-block">
+        <div class="sub-head">Since 2021</div>
+        <p>The Taliban have not formally removed Dari's official status. On paper, Dari and Pashto remain co-official and the third-language provision stands. The pressure is administrative and symbolic rather than legal, which makes it harder to point at and harder to reverse.</p>
+        <p>In August 2021, immediately after the takeover, Persian was removed from public billboards and the word <em>dāneshgāh</em> was taken off university signage nationally; Balkh University's trilingual signboard in Pashto, Persian and English was replaced with Pashto and English only. That October a lawyer in Kabul reported that ministries were conducting official communications in Pashto alone, that ministry logos were being redrawn with the Dari text removed, and that the central bank was writing to commercial banks in Pashto only. The same dispatch records a Taliban official correcting a journalist's <em>dāneshgāh</em> and demanding <em>pohantun</em>.</p>
+        <p>By September 2022, Herat University's new signboard read <em>Herat Pohantoon</em>, Pashto only, and the <em>Sanaie</em> weekly in Ghazni had switched from mixed Persian and Pashto to Pashto alone, in a majority-Persian-speaking province. In August 2023 the Taliban deputy minister of information and culture told graduates in Bamiyan not to waste their time learning Persian literature. Bamiyan is a Hazara, Persian-speaking province, which is presumably the point.</p>
+        <p>June 2024 brought a broad renaming campaign. Hamid Karzai International Airport became Kabul International Airport; Great Masud Road, Martyr Mazari Square and Burhanuddin Rabbani University lost their names; Charikar was renamed Imam Azam, and Education Square in Herat became Iqra Square. By January 2026 the new National Cancer Diagnostic and Therapeutic Hospital in Kabul was carrying Pashto and English signage only.</p>
+        <div class="callout">
+          <div class="eyebrow">5 April 2026</div>
+          <p>Hibatullah Akhundzada ordered that all foreign terms used in government offices be reviewed and justified, and replaced with Islamic and Afghan terms. A committee was appointed across the ministries of justice, higher education, education, and information and culture, plus the Academy of Sciences. The decree does not define "foreign", which is the most consequential thing about it. An undefined category of foreign words, adjudicated by a committee, is a mechanism rather than a policy; it can be applied to whatever the committee decides.</p>
+        </div>
+      </div>
 
-      <p>At the height of perestroika nationalism in 1989, a language law declared Tajik the state language, formally equated Tajik with Persian by placing the word <em>Farsi</em> alongside it in the law, and called for the gradual reintroduction of the Perso-Arabic alphabet. The banning of the Islamic Renaissance Party in 1993, and the civil war, stalled it; the script had become associated with the Islamist side. In 1999 the word <em>Farsi</em> was removed from the state-language law, which is the moment Tajikistan chose a separate national language over a shared Persian one. A new law in 2009 made Tajik the sole state language and removed Russian's standing as the language of interethnic communication.</p>
+      <div class="sub-block">
+        <div class="sub-head">Where Arabic sits, and where it does not</div>
+        <p>The Taliban's Arabic layer is real and it sits at the top of the register. The state calls itself an <em>Imārat</em>, an emirate, an Arabic word for an Arabic institutional form, in preference to <em>jomhūrī</em>, republic. Its leader's title is <em>Amīr al-Muʾminīn</em>, Commander of the Faithful, Arabic and deliberately caliphal. The flag carries the shahada in Arabic. The movement's official media has long run an Arabic edition alongside Pashto, Dari, Urdu and English.</p>
+        <p>The renaming campaign drew its replacements from Arabic and Islamic vocabulary rather than from either Pashto or Dari: <em>Iqra</em>, "recite", the first word of the Qur'anic revelation, replacing "Education"; <em>Imam Azam</em>, the honorific of Abu Hanifa, replacing Charikar. And the April 2026 decree pairs "Islamic" with "Afghan" as the two acceptable sources of terminology, which puts Arabic-derived religious vocabulary on the approved side of the line alongside Pashto.</p>
+        <p>The mechanism is educational. Taliban leaders were trained in Pakistani Deobandi madrasas where instruction ran in Pashto or Urdu, and where medieval Arabic texts and their translations replaced the Persian Islamic literature that had been the vehicle of Islamic learning in Afghanistan for centuries. Afghan Islam was historically Persianate; its theology, poetry and jurisprudence were transmitted in Persian. Deobandi Islam is not, and the cohort now running the state was educated in the second tradition. Arabic is in the titles, the naming and the seminary; it is not in the paperwork, and it has no official or working status in the administration.</p>
+        <p>Which is why a "de-Persianising, pro-Arabic" reading of this is too simple. Persian is already saturated with Arabic. Something in the order of 40% of the Persian lexicon is Arabic in origin, and the entire religious and legal register is Arabic; every Persian speaker in Afghanistan already says <em>ketāb</em>, <em>hokūmat</em>, <em>qānūn</em>, <em>madrasa</em>. Nobody is introducing Arabic into a language that lacked it.</p>
+        <p>What is happening is a register shift inside a shared Arabic-Islamic vocabulary: away from the Persianate tradition, in which Arabic religious terms sit inside Persian sentences and Persian carries the commentary, and towards a Deobandi one, in which the Arabic source text and its Urdu and Pashto gloss are the transmission line and Persian is surplus. The target is not the Arabic words. It is Persian's standing as a language of Islamic learning.</p>
+        <p>There is a practical asymmetry underneath the identity argument, and it is the objection Afghan academics actually make. Pashto is a poor substitute in that role. It has a much thinner classical literature than Persian, and its modern technical vocabulary was largely built to order in the twentieth century. Replacing Persian in higher education means replacing it with a language that, for now, has fewer books in it.</p>
+      </div>
 
-      <p>In 2025, and again in May 2026, President Rahmon ordered expanded teaching of the Perso-Arabic script in schools and universities. It is taught as "Ancestral Alphabet and Texts", twice weekly in years 7 and 8, framed as access to the manuscript heritage rather than as a change of script. Read carefully, this is heritage policy and not script reform. Cyrillic has never been abandoned and there is no live proposal to abandon it. The Perso-Arabic script is being taught as something ancestral, which is to say as something past.</p>
+      <div class="sub-block">
+        <div class="sub-head">The case on the other side</div>
+        <p>Put as its proponents would put it: Pashto is the language of a plurality or a majority of Afghans depending on whose figures you take, and it has been the state's official language since 1936, so using it in government is not novel. After ninety years of policy its standing in administration remains weaker than Persian's; from a Pashtun-nationalist view that is the anomaly being corrected rather than an injustice being done. The renaming of places named for mujahideen commanders is, on the Taliban's account, a state removing factional names after defeating those factions, which is ordinary state behaviour however unwelcome to the renamed. And no formal legal change to Dari's status has been made.</p>
+        <p>Against which: removing Persian from signage, from a hospital, from a university and from a provincial weekly, in Persian-speaking provinces, is hard to read as anything but a policy of public erasure, and the people affected are not a faction but roughly half the country. The Nowruz bans of both Taliban periods point at a cultural target broader than administrative language.</p>
+      </div>
 
-      <h2>Tajik speakers beyond Tajikistan</h2>
+      <div class="sub-block">
+        <div class="sub-head">Tajik: the same language, in Cyrillic</div>
+        <p>Tajik has changed alphabet three times in a hundred years, each time by state decision, each time for political reasons. Until the 1920s it was written in the Perso-Arabic script, and was not thought of as a separate language at all, simply Persian. Soviet reform simplified the Persian script from 1923 and then abandoned it; the Decree on Romanisation made a Latin alphabet law in April 1928, based on the Turkic Yañalif. The aim of that one is worth naming: cut Central Asia off from the Persian and Arabic textual world, and from the clergy who controlled literacy in it.</p>
+        <p>Cyrillic came in during the late 1930s, and after 1939 Perso-Arabic materials were banned. Near-universal literacy was achieved by the 1950s, in Cyrillic, which is the fact that makes reversal so hard; the script change worked. A reform in 1998 dropped <span lang="tg">ц, щ, ы</span> and <span lang="tg">ь</span>, leaving 35 letters.</p>
+        <div class="set-box">
+          <div class="set-row"><span class="set-row__label">Not in Russian</span><span class="set-row__glyphs" lang="tg">ғ &nbsp; ӣ &nbsp; қ &nbsp; ӯ &nbsp; ҳ &nbsp; ҷ</span></div>
+          <div class="set-row"><span class="set-row__label">For</span><span style="font-size:17px;color:#a9b3ab">/ʁ/ &nbsp;·&nbsp; long /iː/ &nbsp;·&nbsp; /q/ &nbsp;·&nbsp; /ɵː/ &nbsp;·&nbsp; /h/ &nbsp;·&nbsp; /dʒ/</span></div>
+        </div>
+        <p>Those six letters exist precisely because Persian has sounds Russian does not, in the same way <span class="fa-in" lang="fa" dir="rtl">پ چ ژ گ</span> exist because Persian has sounds Arabic does not. The same language has now been patched into two different foreign alphabets, and you can read the patches to see what the language needed both times.</p>
+      </div>
 
-      <p>Two populations matter, and neither is in Tajikistan. Tajiks are Afghanistan's largest Persian-speaking group, estimated at a quarter to a third of the population, concentrated in Kabul, the northeast, Herat and Mazar-i-Sharif, and they write in Perso-Arabic rather than Cyrillic. So "Tajik" names an ethnic group across a border and a Cyrillic written standard on one side of it.</p>
+      <div class="sub-block">
+        <div class="sub-head">The law, and the retreat from it</div>
+        <p>At the height of perestroika nationalism in 1989, a language law declared Tajik the state language, formally equated Tajik with Persian by placing the word <em>Farsi</em> alongside it in the law, and called for the gradual reintroduction of the Perso-Arabic alphabet. The banning of the Islamic Renaissance Party in 1993, and the civil war, stalled it; the script had become associated with the Islamist side. In 1999 the word <em>Farsi</em> was removed from the state-language law, which is the moment Tajikistan chose a separate national language over a shared Persian one. A new law in 2009 made Tajik the sole state language and removed Russian's standing as the language of interethnic communication.</p>
+        <p>In 2025, and again in May 2026, President Rahmon ordered expanded teaching of the Perso-Arabic script in schools and universities. It is taught as "Ancestral Alphabet and Texts", twice weekly in years 7 and 8, framed as access to the manuscript heritage rather than as a change of script. Read carefully, this is heritage policy and not script reform. Cyrillic has never been abandoned and there is no live proposal to abandon it. The Perso-Arabic script is being taught as something ancestral, which is to say as something past.</p>
+      </div>
 
-      <p>Samarkand and Bukhara, meanwhile, are historically Persian-speaking cities that ended up inside Soviet Uzbekistan when the borders were drawn in the 1920s. Official statistics put Tajiks at about 5% of Uzbekistan's population; scholarly work suggests substantial undercounting, because registering as Uzbek carries social and economic advantages. Tajik-language schooling has contracted, from 318 schools nationally in 2001 to 282 by 2004, and in Samarkand city down to a single mixed primary school.</p>
+      <div class="sub-block">
+        <div class="sub-head">Tajik speakers beyond Tajikistan</div>
+        <p>Two populations matter, and neither is in Tajikistan. Tajiks are Afghanistan's largest Persian-speaking group, estimated at a quarter to a third of the population, concentrated in Kabul, the northeast, Herat and Mazar-i-Sharif, and they write in Perso-Arabic rather than Cyrillic. So "Tajik" names an ethnic group across a border and a Cyrillic written standard on one side of it.</p>
+        <p>Samarkand and Bukhara, meanwhile, are historically Persian-speaking cities that ended up inside Soviet Uzbekistan when the borders were drawn in the 1920s. Official statistics put Tajiks at about 5% of Uzbekistan's population; scholarly work suggests substantial undercounting, because registering as Uzbek carries social and economic advantages. Tajik-language schooling has contracted, from 318 schools nationally in 2001 to 282 by 2004, and in Samarkand city down to a single mixed primary school.</p>
+        <p>Bukhara adds a third thread. <em style="color:#c8bda2">Bukharian</em>, the variety spoken by Bukharan Jews, is a Tajik-Persian dialect with a Hebrew-script tradition, now almost entirely diasporic in Israel and New York. Which makes three scripts for one language.</p>
+      </div>
 
-      <p>Bukhara adds a third thread. <em style="color:#c8bda2">Bukharian</em>, the variety spoken by Bukharan Jews, is a Tajik-Persian dialect with a Hebrew-script tradition, now almost entirely diasporic in Israel and New York. Which makes three scripts for one language.</p>
-
-      <h2>Both ends at once</h2>
-
-      <p>The two ends of the Persian world are moving in opposite directions at the same moment, and the symmetry is exact enough to state plainly. In April 2026 the government of Afghanistan ordered foreign terms purged from a Persian-speaking administration. In May 2026 the government of Tajikistan ordered wider teaching of the Perso-Arabic script as ancestral heritage.</p>
-
-      <p>One state is removing Persian from the script it is written in. The other is teaching a script it does not write in, to reach the Persian it can no longer read. Neither is really about language. Both are about which past a state wants to claim.</p>
+      <div class="sub-block">
+        <div class="sub-head">Both ends at once</div>
+        <p>The two ends of the Persian world are moving in opposite directions at the same moment, and the symmetry is exact enough to state plainly. In April 2026 the government of Afghanistan ordered foreign terms purged from a Persian-speaking administration. In May 2026 the government of Tajikistan ordered wider teaching of the Perso-Arabic script as ancestral heritage.</p>
+        <p>One state is removing Persian from the script it is written in. The other is teaching a script it does not write in, to reach the Persian it can no longer read. Neither is really about language. Both are about which past a state wants to claim.</p>
+      </div>
     </div>
   </div>
 
   <aside class="essay-aside">
+    <!-- Aside figure slot deliberately left out. Under the ask-first rule no file has
+         been named for it; candidates to be proposed before anything is placed here. -->
     <div class="aside-block" style="border-top:none">
+      <div class="eyebrow">The three standards</div>
+      <div class="std">
+        <div class="std__head"><span class="std__name">Iran</span><span class="std__script fa" lang="fa" dir="rtl">فارسی</span></div>
+        <p class="std__note">Farsi. Perso-Arabic script. Roughly 60 million native speakers, and the innovating standard of the three.</p>
+      </div>
+      <div class="std">
+        <div class="std__head"><span class="std__name">Afghanistan</span><span class="std__script fa" lang="fa" dir="rtl">دری</span></div>
+        <p class="std__note">Dari, officially, since 1964. The same script. The country's lingua franca, and under pressure from the state.</p>
+      </div>
+      <div class="std" style="padding-bottom:0">
+        <div class="std__head"><span class="std__name">Tajikistan</span><span class="std__script" lang="tg">тоҷикӣ</span></div>
+        <p class="std__note">Tajik. Cyrillic since the late 1930s. Roughly 6 to 8 million speakers who cannot read the other two.</p>
+      </div>
+    </div>
+
+    <div class="rail-gap" style="flex-grow:0.5" aria-hidden="true"></div>
+    <div class="aside-block">
+      <div class="eyebrow">A trap for anything that compares text</div>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e">Two letters are drawn differently from their Arabic counterparts. Persian <span class="fa" style="font-size:21px;color:#a9b3ab" lang="fa" dir="rtl">ک</span> uses a plain sloped form where Arabic <span class="fa" style="font-size:21px;color:#a9b3ab" lang="ar" dir="rtl">ك</span> carries a flourish; Persian <span class="fa" style="font-size:21px;color:#a9b3ab" lang="fa" dir="rtl">ی</span> drops the two dots that Arabic <span class="fa" style="font-size:21px;color:#a9b3ab" lang="ar" dir="rtl">ي</span> keeps.</p>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e">They are separate Unicode code points: U+06A9 and U+06CC against U+0643 and U+064A. Text typed on an Arabic keyboard and text typed on a Persian one will not match on a string comparison even when it looks identical on screen. It surfaces in search, in database matching, and in anything analysing text across the two languages.</p>
+    </div>
+
+    <div class="rail-gap" style="flex-grow:2.3" aria-hidden="true"></div>
+    <div class="aside-block">
+      <div class="eyebrow">The word that was built for this fight</div>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e">Every account of Taliban language policy sooner or later reaches a Persian speaker being corrected from <em>dāneshgāh</em> to <em>pohantun</em>. Both mean university. What is easy to miss is that <em>pohantun</em> is not an old Pashto word inherited from anywhere; it was coined in Kabul in the middle of the twentieth century by a state committee whose brief was to build a Pashto vocabulary capable of displacing Persian.</p>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e">The argument over the two words is therefore ninety years old and was designed to happen.</p>
+    </div>
+
+    <div class="rail-gap" style="flex-grow:0.5" aria-hidden="true"></div>
+    <div class="aside-block">
       <div class="eyebrow">A note on the sourcing</div>
       <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e">There is no functioning independent press inside Afghanistan. The incidents recorded here come largely from outlets publishing in exile, chiefly Hasht-e Subh, and from Afghan Persian-speaking writers openly opposed to the Taliban. Several are corroborated across outlets. The state that would be the other side of the story does not publish, and has not since 2021.</p>
     </div>
+
+    <div class="rail-gap" style="flex-grow:0.8" aria-hidden="true"></div>
+    <div class="aside-block">
+      <div class="eyebrow">Domain vocabulary</div>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:#8b968e">Cyber, computing and security terms across eleven languages, set beside each other rather than split into per-language lists. Persian's column carries a live question of its own: Iranian Persian, Dari and Tajik diverge most severely on exactly the modern technical terms the table is made of.</p>
+      <a class="link-forward" href="domain-vocabulary.html" style="justify-content:space-between;display:flex">The full table<span>⟶</span></a>
+    </div>
+
+    <div class="rail-gap" style="flex-grow:0.5" aria-hidden="true"></div>
     <div class="aside-block">
       <div class="eyebrow">Sources used</div>
       <div class="source-list">
         <span>Ahwar, J. (2023). <em>Decoding the Taliban's Anti-Persianism.</em> The Diplomat, August.</span>
         <span>Lewis, M. W. (2023). <em>Afghanistan's Language Policies and the Cartographic Marginalization of Persian.</em> GeoCurrents, 22 Aug.</span>
         <span>Nishat, Z. (2026). <em>'Dari' and the Politics of Cultural and Civilisational Erasure in Afghanistan.</em> Manara Magazine, 24 Jan.</span>
-        <span>Anonymous, a lawyer in Kabul (2021). <em>Afghanistan dispatches.</em> JURIST, 18 Oct.</span>
-        <span>RFE/RL (2024). <em>Taliban's Name-Changing Campaign In Afghanistan.</em> 9 Jun.</span>
-        <span>Hasht-e Subh (2022, 2026). <em>Herat University's signboard</em>, 28 Sep 2022; <em>Foreign terms in government offices</em>, 5 Apr 2026.</span>
+        <span>Anonymous, a lawyer in Kabul (2021). <em>Afghanistan dispatches: the Taliban are using only Pashtu in their official communications.</em> JURIST, 18 Oct.</span>
+        <span>RFE/RL (2024). <em>Taliban's Name-Changing Campaign In Afghanistan An 'Ultimate Act Of Victory'.</em> 9 Jun.</span>
+        <span>Hasht-e Subh (2022). <em>Taliban Removes Persian from Herat University's Signboard and Sanaie Weekly in Ghazni.</em> 28 Sep.</span>
+        <span>Hasht-e Subh (2026). <em>Foreign Terms in Government Offices Should Be Replaced with Islamic and Afghan Terms.</em> 5 Apr.</span>
         <span>Khaama Press (2026). <em>Tajik President Orders Stronger Education Of Persian "Ancestral Alphabet".</em> 29 May.</span>
         <span>Eurasianet (2013). <em>Uzbekistan: Tajik Language Under Pressure in Ancient Samarkand.</em> 5 Nov.</span>
-        <span>Encyclopaedia Iranica, <em>Tajik ii. Tajiki Persian</em>; Britannica and Iranica speaker estimates; Wikipedia entries for the Persian alphabet, Dari, Pashto, Tajik and the languages of Afghanistan, accessed Aug 2026.</span>
+        <span>Encyclopaedia Iranica, <em>Tajik ii. Tajiki Persian.</em> Britannica and Iranica speaker estimates as reported in the Wikipedia entry on the languages of Afghanistan.</span>
+        <span>Full record, with dated sources, in the research file at the repository root.</span>
       </div>
     </div>
+
+    <div class="rail-gap" style="flex-grow:0.3" aria-hidden="true"></div>
     <div class="aside-block">
       <div class="eyebrow">Reads on from here</div>
       <div style="display:flex;flex-direction:column;gap:11px;font-size:18px;color:#c8bda2">
+        <a href="arabic.html" style="color:#c8bda2">Arabic: the abjad these letters came from</a>
+        <a href="../morphorian/root-and-pattern.html" style="color:#c8bda2">Root and pattern, and why the loanwords behave</a>
         <a href="korean.html" style="color:#c8bda2">Korean: one language split by a border</a>
         <a href="hebrew.html" style="color:#c8bda2">Hebrew: the third script Bukharian used</a>
         <a href="russian.html" style="color:#c8bda2">Russian: the layer underneath Tajik</a>
@@ -401,8 +355,24 @@
   </aside>
 </div>
 
-<!-- Closing band: atmosphere only, no copy over it. Cropped to the window view,
-     so the peak reads whole and the lamp and monitor stay out of frame. -->
+<div style="display:flex;gap:16px;padding:26px 46px 30px;border-top:1px solid rgba(194,145,76,.16);flex-wrap:wrap">
+  <a class="cross-card" href="../codex-lexpressia/keyboard-gallery.html">
+    <span class="cross-card__section">Codex Lexpressia</span>
+    <span class="cross-card__title">The Persian layout, with drills</span>
+  </a>
+  <a class="cross-card" href="../morphorian/index.html">
+    <span class="cross-card__section">The Morphorian Underground</span>
+    <span class="cross-card__title">Grammar walkthroughs</span>
+  </a>
+  <a class="cross-card" href="../somantasia/index.html">
+    <span class="cross-card__section">Notes from Somantasia</span>
+    <span class="cross-card__title">Essays and decipherment</span>
+  </a>
+</div>
+
+<!-- Closing band: atmosphere only, no copy over it. The desk-by-the-window room,
+     cropped to the window view so the peak reads whole and the lamp and monitor
+     stay out of frame. -->
 <div style="position:relative;height:190px;overflow:hidden;flex:none;border-top:1px solid rgba(194,145,76,.16)">
   <div style="position:absolute;inset:0;background:url('../assets/images/persianlang_hero.jpeg') center 40%/cover no-repeat"></div>
   <div style="position:absolute;left:0;right:0;top:0;height:70px;background:linear-gradient(180deg,rgba(6,10,8,.9),rgba(6,10,8,0))"></div>
@@ -413,6 +383,7 @@
   <span class="eyebrow">Aksarium · Languages · Persian &amp; Dari</span>
   <nav aria-label="Footer">
     <a href="index.html">Languages</a>
+    <a href="arabic.html">Arabic</a>
     <a href="../codex-lexpressia/keyboard-gallery.html">Keyboard gallery</a>
     <a href="../index.html">Home</a>
   </nav>
